@@ -2,16 +2,20 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+First, install all packages from package.json:
+
+```bash
+npm install
+# or
+npm i
+```
+
+then rename `.env.sample` to `.env` and put your own values in (if you want Airtable support)
+
+then run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
