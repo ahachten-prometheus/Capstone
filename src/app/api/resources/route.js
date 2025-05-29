@@ -1,10 +1,15 @@
 import { getRecords } from "@/app/services/airtable";
 
-export async function GET({ pageSize, offset }) {
+export async function GET(req) {
+  const params = req.nextUrl.searchParams;
+
+  const pageSize = params.get("pageSize");
+  const offset = params.get("offset");
+
   try {
     const data = await getRecords({
       tableName: "Resources",
-      filters: "AND({Status}='Active')",
+      filters: "AND({Status} = 'Active')",
       pageSize: pageSize,
       offset: offset,
     });
