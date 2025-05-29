@@ -9,8 +9,8 @@ export async function GET(req) {
   try {
     const data = await getRecords({
       tableName: "Resources",
-      filters: "AND({Status} = 'Active')",
-      pageSize: pageSize,
+      filters: `{Status} = 'Active'`,
+      pageSize: pageSize ?? 8,
       offset: offset,
     });
 
