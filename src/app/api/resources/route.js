@@ -1,4 +1,4 @@
-import { getRecords } from "@/app/services/airtable";
+import { getRecords } from "@/services/airtable";
 
 export async function GET(req) {
   const params = req.nextUrl.searchParams;

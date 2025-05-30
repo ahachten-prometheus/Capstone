@@ -1,4 +1,4 @@
-import ProvidersDisplayCard from "./components/ProvidersDisplayCard";
+import ProvidersDisplayCard from "@/components/ProvidersDisplayCard";
 
 export default function Home() {
   return <div>
