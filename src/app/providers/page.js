@@ -24,22 +24,61 @@ export default function Providers() {
 
   return <>
     {/* hero header */}
-    <h1 id="providers-hero-header">Providers</h1> 
-
-    <main>
+    <section 
+      className="
+      w-screen
+      w-[1440px] h-[407px]
+      flex items-center justify-center"
+      style={{ backgroundColor: '#C96C86B0' }}>
+      <h1 id="providers-hero-header" className="text-4xl font-bold text-white">Providers</h1> 
+    </section>
+    
+    <main 
+      className="
+      text-black
+      flex flex-col items-center justify-center" 
+      style={{ backgroundColor: '#FFF5EA' }}>
+      
       {/* above the tiles section */}
       {/* next: clear selections option */}
-      <h3 id="providers-tiles-header">Find a Provider</h3>
-      <section id="providers-filters">
-        {/* <p>State:</p> */}
-        <select id="provider-state" defaultValue="blank-state-opt"onChange={handleStateChange} aria-labelledby="filtering-state">
+      <h3 id="providers-tiles-header" 
+      class="
+      w-4/5 mx-auto
+      border-b-1 border-black 
+      text-2xl font-bold text-black
+      flex justify-center
+      pt-8">
+      Find a Provider</h3>
+      
+      <section 
+      id="providers-filters"
+      class="
+      flex justify-between
+      pt-2 pb-8
+      space-x-4">
+        <select 
+        id="provider-state" 
+        class="
+        bg-white hover:bg-[#C96C86B0]
+        text-black
+        py-2 px-4 rounded-full"
+        defaultValue="blank-state-opt" 
+        onChange={handleStateChange} 
+        aria-labelledby="filtering-state">
           <option key="blank-state-opt" value="blank-state-opt" disabled>State?</option>
           { usStates.map((state) => <option key={`${state}-option`} value={state}>{state}</option>) }
         </select>
         {/* <p id="test">You selected this state: {selectedState}</p> */}
         
-        {/* <p>Virtual Only?:</p> */}
-        <select id="provider-mode" defaultValue="blank-mode-opt" onChange={handleModeChange} aria-labelledby="filtering-mode">
+        <select 
+        id="provider-mode" 
+        class="
+        bg-white hover:bg-[#C96C86B0]
+        text-black
+        py-2 px-4 rounded-full"
+        defaultValue="blank-mode-opt" 
+        onChange={handleModeChange} 
+        aria-labelledby="filtering-mode">
           <option key="blank-mode-opt" value="blank-mode-opt" disabled>Virtual Only?</option>
           <option key="yes-opt" value="Yes">Yes</option>
           <option key="no-opt" value="No">No</option>
@@ -49,10 +88,21 @@ export default function Providers() {
       
       {/* tiles section */}
       {/* next: filtering this */}
-      <section id="providers-display"></section>
+      <section 
+      id="providers-display" 
+      class="pt-10 pb-10 pl-130 pr-130">
+        <p>--Tiles here--</p>
+      </section>
 
       {/* next: load more providers using this button */}
-      <button id="more-providers">Load More</button>
+      <button 
+      id="more-providers"
+      className="
+      bg-[#B36078] hover:bg-[#C96C86B0]
+      text-white font-bold 
+      py-2 px-4 rounded-full
+      m-6">
+        Load More</button>
     </main>
 
   </>;
