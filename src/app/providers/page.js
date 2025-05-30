@@ -22,6 +22,10 @@ export default function Providers() {
     setMode(event.target.value);
   }
 
+  const handleLoadMore = (event) => {
+    console.log("Load More was clicked on");
+  }
+
   return <>
     {/* hero header */}
     <section 
@@ -42,7 +46,7 @@ export default function Providers() {
       {/* above the tiles section */}
       {/* next: clear selections option */}
       <h3 id="providers-tiles-header" 
-      class="
+      className="
       w-4/5 mx-auto
       border-b-1 border-black 
       text-2xl font-bold text-black
@@ -52,13 +56,13 @@ export default function Providers() {
       
       <section 
       id="providers-filters"
-      class="
+      className="
       flex justify-between
       pt-2 pb-8
       space-x-4">
         <select 
         id="provider-state" 
-        class="
+        className="
         bg-white hover:bg-[#C96C86B0]
         text-black
         py-2 px-4 rounded-full"
@@ -72,7 +76,7 @@ export default function Providers() {
         
         <select 
         id="provider-mode" 
-        class="
+        className="
         bg-white hover:bg-[#C96C86B0]
         text-black
         py-2 px-4 rounded-full"
@@ -90,7 +94,7 @@ export default function Providers() {
       {/* next: filtering this */}
       <section 
       id="providers-display" 
-      class="pt-10 pb-10 pl-130 pr-130">
+      className="pt-10 pb-10 pl-130 pr-130">
         <p>--Tiles here--</p>
       </section>
 
@@ -101,7 +105,8 @@ export default function Providers() {
       bg-[#B36078] hover:bg-[#C96C86B0]
       text-white font-bold 
       py-2 px-4 rounded-full
-      m-6">
+      m-6"
+      onClick={handleLoadMore}>
         Load More</button>
     </main>
 
