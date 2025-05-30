@@ -1,4 +1,4 @@
-import { getRecords } from '../../services/airtable';
+import { getRecords } from '@/services/airtable';
 
 export async function GET() {
 	try {
