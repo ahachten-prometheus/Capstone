@@ -1,4 +1,4 @@
-import { getRecords } from "@/app/services/airtable";
+import { getRecords } from "@/services/airtable";
 
 // gets all active providers
 export async function GET(request) {
