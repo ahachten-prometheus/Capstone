@@ -9,17 +9,17 @@ export const getRecords = async ({
   pageSize = 10,
   offset = null,
 }) => {
-  const params = new URLSearchParams();
 
+  if (!API_KEY || !BASE_ID) {
+    const error = 'Missing required env variables: AIRTABLE_API_KEY or AIRTABLE_BASE_ID';
+    return [null, error];
+  }
+
+  const params = new URLSearchParams();
   params.append("pageSize", pageSize.toString());
 
-  if (offset) {
-    params.append("offset", offset);
-  }
-
-  if (filters) {
-    params.append("filterByFormula", filters);
-  }
+  if (offset) params.append("offset", offset);
+  if (filters) params.append("filterByFormula", filters);
 
   if (sortFields && Array.isArray(sortFields)) {
     sortFields.forEach((sort, index) => {
@@ -31,20 +31,28 @@ export const getRecords = async ({
   const url = `https://api.airtable.com/v0/${BASE_ID}/${encodeURIComponent(
     tableName
   )}?${params.toString()}`;
+  console.log(url);
 
-  const res = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${API_KEY}`,
-    },
-  });
+  try {
+    const res = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${API_KEY}`,
+      },
+    });
 
-  if (!res.ok) {
-    throw new Error(`Airtable request failed: ${res.statusText}`);
+    if (!res.ok) {
+      throw new Error(`Airtable request failed: ${res.status}, ${res.statusText}`);
+    }
+
+    const responseData = await res.json();
+    const data = {
+      records: responseData.records.map((r) => ({ id: r.id, ...r.fields })),
+      offset: responseData.offset || null, // this value can be passed in future requests when doing pagination
+    }
+
+    return [data, null];
+  } catch (error) {
+    console.error(error.message);
+    return [null, error];
   }
-
-  const data = await res.json();
-  return {
-    records: data.records.map((r) => ({ id: r.id, ...r.fields })),
-    offset: data.offset || null, // this value can be passed in future requests when doing pagination
-  };
 };
