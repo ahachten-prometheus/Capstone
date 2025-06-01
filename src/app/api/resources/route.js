@@ -1,22 +1,26 @@
 import { getRecords } from "@/services/airtable";
+import { jsonResponse } from '@/lib/responseUtils';
 
 export async function GET(req) {
-  const params = req.nextUrl.searchParams;
+  console.log('--getResources() INVOKED @api/resources/route.js'); //remove after debugging;
+  const { searchParams } = new URL(request.url);
 
-  const pageSize = params.get("pageSize");
-  const offset = params.get("offset");
+  const pageSize = searchParams.get('pageSize');
+  const offset = searchParams.get('offset');
 
   try {
-    const data = await getRecords({
-      tableName: "Resources",
-      filters: `{Status} = 'Active'`,
+    const [resources, error] = await getRecords({
+      tableName: 'Resources',
+      filters: `{Status} = "Active"`,
       pageSize: pageSize ?? 8,
-      offset: offset,
+      offset: offset ?? null,
     });
 
-    return Response.json(data);
+    if (error) return jsonResponse({ msg: 'Service unavailable: Unable to retrieve resources' }, 503);
+
+    return jsonResponse(resources);
   } catch (error) {
-    console.error(error);
-    return Response.json({ error: "Error!" });
+    console.error('Unexpected error fetching resources:', error);
+    return jsonResponse({ msg: 'Internal: Unexpected error occurred while fetching resources' }, 500);
   }
-}
+};
