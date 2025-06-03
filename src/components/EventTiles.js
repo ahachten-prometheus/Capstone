@@ -1,5 +1,5 @@
 export default function EventTiles({ event }) {
-    const { imgUrl, time, description, detailsurl } = event;
+    const { id, name, description, status, detailsurl, location, timeStart, timeEnd, imgUrl } = event;
   
     return (
       <div
@@ -25,8 +25,8 @@ export default function EventTiles({ event }) {
   
         {/* Text 150/577 ~26%, */}
         <div style={{ flex: '26', padding: '0.5rem', overflow: 'hidden', fontSize: '0.85rem' }}>
-          <p>{time}</p>
-          <p>{description}</p>
+          <p>{timeStart}</p>
+          <p>{name}</p>
         </div>
   
         {/* Button 82/577 ~14.2% */}
