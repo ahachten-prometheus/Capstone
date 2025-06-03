@@ -20,19 +20,19 @@ export default function Home() {
       </div>
 
       <div className="flex justify-center items-center gap-50 border-t-1 border-black p-10">
-        <div className="flex flex-col gap-5">
-          <div className="flex align-center justify-center ">
-            <Image src="/volumeIcon.png" alt="Volume-Icon" width={200} height={200} />
+        <div className="flex flex-col gap-10 items-center justify-center">
+          <div className="flex justify-center w-30 h-30 rounded-[50%] border-[#C96C86] border-3">
+            <Image src="/volumeIcon.png" alt="Volume-Icon" width={200} height={150} className="object-cover" />
           </div>
-          <div className="flex align-center justify-center">
+          <div className="flex items-center justify-center">
             <p className="w-75 text-center text-black text-2xl">
               You deserve a space where your voice, identity, and healing matter.
             </p>
           </div>
         </div>
-        <div className="flex flex-col gap-5">
-          <div className="flex align-center justify-center">
-            <Image src="/handShakeIcon.png" alt="Handshake-Icon" width={200} height={200} />
+        <div className="flex flex-col gap-17 flex flex-col items-center justify-center">
+          <div className="flex justify-center w-30 h-30 rounded-[50%] border-[#C96C86] border-3">
+            <Image src="/handShakeIcon.png" alt="Handshake-Icon" width={200} height={150} className="object-cover" />
           </div>
           <div className="flex align-center justify-center">
             <p className="w-75 text-center text-black text-2xl">
@@ -40,9 +40,9 @@ export default function Home() {
             </p>
           </div>
         </div>
-        <div className="flex flex-col">
-          <div className="flex align-center justify-center">
-            <Image src="/healingIcon.png" alt="Healing-Icon" width={200} height={200} />
+        <div className="flex flex-col items-center justify-center gap-10">
+          <div className="flex justify-center w-30 h-30 rounded-[50%] border-[#C96C86] border-3">
+            <Image src="/healingIcon.png" alt="Healing-Icon" width={200} height={200} className="object-cover" />
           </div>
           <div className="flex align-center justify-center">
             <p className="w-65 text-center text-black text-2xl">
