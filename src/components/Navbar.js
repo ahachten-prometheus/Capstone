@@ -4,6 +4,7 @@ import {
   DisclosurePanel,
 } from "@headlessui/react";
 import { HiBars3, HiXMark } from "react-icons/hi2";
+import Image from "next/image";
 
 const LINKS = [
   { href: "/", text: "Home" },
@@ -16,12 +17,10 @@ const LINKS = [
 
 export default function Navbar() {
   return (
-    <Disclosure as="nav" className="bg-white shadow-sm">
+    <Disclosure as="nav" className="bg-[#FFF5EA] shadow-sm">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          <div className="text-black font-semibold text-lg">
-            Black Girls Smile
-          </div>
+          <Image src="/BGS-Logo-nav.png" alt="Black-Girls-Smile-Logo" width={250} height={200} />
 
           {/* Desktop nav links */}
           <div className="hidden sm:flex space-x-6">
