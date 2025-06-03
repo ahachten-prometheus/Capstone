@@ -1,6 +1,7 @@
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { Bricolage_Grotesque } from 'next/font/google'
 
 export const metadata = {
   title: "Create Next App",
