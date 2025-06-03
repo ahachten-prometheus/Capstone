@@ -10,7 +10,7 @@ export const metadata = {
 
 const bricolage = Bricolage_Grotesque({
   weight: '200',
-  subset: ['latin'],
+  preload: false,
 })
 
 export default function RootLayout({ children }) {

@@ -2,9 +2,10 @@ import Image from "next/image";
 
 export default function Home() {
   return <div className="flex flex-col">
+    {/* first Section */}
     <section className="flex flex-col items-center justify-center gap-3 relative h-165">
-      <div className="bg-black w-screen h-screen z-1 opacity-50">
-        <Image src="/womenSitting.jpg" alt="Women Sitting" fill={true} className="object-none" priority={false} />
+      <div className="bg-black w-screen h-screen z-1 opacity-50 relative">
+        <Image src="/womenSitting.jpg" alt="Women Sitting" fill={true} className="object-none" priority={true} />
       </div>
 
       <div className="flex flex-col absolute z-2 items-center justify-center">
@@ -12,7 +13,7 @@ export default function Home() {
         <button type="button" className="bg-[#C96C86] text-xl py-3 px-26 rounded-3xl translate-y-8 cursor-pointer">Start My Search</button>
       </div>
     </section>
-
+    {/* second Section */}
     <section className="flex flex-col justify-center items-center h-180 bg-[#FFF5EA] gap-10">
       <div>
         <h1 className="text-black text-center font-bold text-4xl">Care rooted in our stories, made for us</h1>
@@ -34,7 +35,7 @@ export default function Home() {
             <Image src="/handShakeIcon.png" alt="Handshake-Icon" width={200} height={200} />
           </div>
           <div className="flex align-center justify-center">
-            <p className="w-73 text-center text-black text-2xl">
+            <p className="w-75 text-center text-black text-2xl">
               Connect with providers who understand your story
             </p>
           </div>
@@ -53,6 +54,7 @@ export default function Home() {
       </div>
     </section>
 
+    {/* third section */}
     <section className="flex flex-row justify-center h-180 bg-[#C96C86] items-center gap-40">
       <div>
         <div className="flex flex-col gap-10">
@@ -85,6 +87,7 @@ export default function Home() {
       </div>
     </section>
 
+    {/* fourth section */}
     <section className="flex flex-row justify-center items-center bg-[#DCAD27] h-180 gap-40">
       <div>
         <div className="flex flex-col gap-5">
