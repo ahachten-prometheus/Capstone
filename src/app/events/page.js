@@ -2,6 +2,10 @@
 
 export default function Events() {
 
+  const handleLoadMore = (event) => {
+    console.log("Load More was clicked on");
+  }
+  
   return <>
     {/* Header */}
     <section 
@@ -27,6 +31,14 @@ export default function Events() {
       className="pt-10 pb-10 pl-130 pr-130">
         <p>--Tiles here--</p>
       </section>
+
+      {/* Load More Button*/}
+      <button 
+      id="more-events"
+      className=" bg-[#B36078] hover:bg-[#C96C86B0], text-white font-bold, py-2 px-4 rounded-full, m-6"
+      onClick={handleLoadMore}>
+        Load More
+      </button>
 
       </main>
 
