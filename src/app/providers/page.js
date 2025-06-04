@@ -1,7 +1,23 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import ProvidersDisplayCard from "@/components/ProvidersDisplayCard";
 
 export default function Providers() {
+  const [providers, setProviders] = useState()
+  useEffect(() => {
+    const fetchProviders = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/api/providers")
+        const data = await response.json()
+        setProviders(data)
+        console.log(providers)
+      } catch (error) {
+        console.error("Error fetching providers", error)
+      }
+    }
+    fetchProviders()
+  }, [])
+
   const [selectedState, setState] = useState("");
   const [selectedMode, setMode] = useState("");
 
@@ -95,7 +111,9 @@ export default function Providers() {
       <section 
       id="providers-display" 
       className="pt-10 pb-10 pl-130 pr-130">
-        <p>--Tiles here--</p>
+        {/*providers.map(provider => {
+          
+        })*/}
       </section>
 
       {/* next: load more providers using this button */}
