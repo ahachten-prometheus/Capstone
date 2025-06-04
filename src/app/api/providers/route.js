@@ -1,10 +1,11 @@
-import { getRecords } from "@/app/services/airtable";
+import { getRecords } from "@/services/airtable";
 
-// An example API endpoint, showing how to call getRecords
+// gets all active providers
 export async function GET(request) {
   try {
     const data = await getRecords({
-      tableName: "Events",
+      tableName: "Providers",
+      filters: "FIND('Active', {Status})"
     });
 
     return Response.json(data);

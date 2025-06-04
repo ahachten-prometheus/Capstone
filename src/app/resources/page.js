@@ -1,3 +1,5 @@
+import ResourceTileGrid from "@/components/ResourceTileGrid"
+
 export default function resources() {
     return (
         <div>
@@ -13,7 +15,7 @@ export default function resources() {
             <h2>All Resources</h2> {/* Changes if there are filters present. Otherwise, shows "all filters" */}
             {/* Search bar component */}
             {/* filter drop downs */}
-            {/* Resource grid */}
+            <ResourceTileGrid />
             {/* Load more button */}
 
         </div>
