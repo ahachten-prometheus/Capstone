@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import ProvidersDisplayCard from "@/components/ProvidersDisplayCard";
 
 export default function Providers() {
   const [selectedState, setState] = useState("");
@@ -69,7 +70,7 @@ export default function Providers() {
         defaultValue="blank-state-opt" 
         onChange={handleStateChange} 
         aria-labelledby="filtering-state">
-          <option key="blank-state-opt" value="blank-state-opt" disabled>State?</option>
+          <option key="blank-state-opt" value="blank-state-opt" disabled>State</option>
           { usStates.map((state) => <option key={`${state}-option`} value={state}>{state}</option>) }
         </select>
         {/* <p id="test">You selected this state: {selectedState}</p> */}
@@ -94,8 +95,8 @@ export default function Providers() {
       {/* next: filtering this */}
       <section 
       id="providers-display" 
-      className="pt-10 pb-10 pl-130 pr-130">
-        <p>--Tiles here--</p>
+      className="pt-10 pb-10 px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <ProvidersDisplayCard />
       </section>
 
       {/* next: load more providers using this button */}
