@@ -20,7 +20,14 @@ export default function Events() {
       id="events-tiles-header" 
       className=" w-4/5 mx-auto, border-b-1 border-black, text-2xl font-bold text-black , flex justify-center pt-8">
       Upcoming Events & Webinar </h3>
-      
+
+      {/* Tiles*/}
+      <section 
+      id="events-display" 
+      className="pt-10 pb-10 pl-130 pr-130">
+        <p>--Tiles here--</p>
+      </section>
+
       </main>
 
   </>;
