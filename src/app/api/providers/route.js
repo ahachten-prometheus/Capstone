@@ -25,7 +25,7 @@ export async function GET(request) {
       const virtualOnly = record["Virtual Only"] ?? null;
       const practice = record["Provider Practice"] ?? null;
       const address = record["Address"] ?? null;
-      const locations = record["State"] ?? null;
+      const states = record["State"] ?? null;
       const email = record["Email"] ?? null;
       const phone = record["Phone"] ?? null;
 
@@ -36,7 +36,7 @@ export async function GET(request) {
         virtualOnly,
         practice,
         address,
-        locations,
+        states,
         email,
         phone
       };
