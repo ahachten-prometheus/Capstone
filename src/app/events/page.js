@@ -1,11 +1,24 @@
 "use client";
+import { useState, useEffect } from "react";
 
 export default function Events() {
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    async function fetchEvents() {
+      const res = await fetch('/api/events');
+      const data = await res.json();
+      console.log(data);
+      setEvents(data)
+    }
+  
+    fetchEvents();
+  }, []);
 
   const handleLoadMore = (event) => {
     console.log("Load More was clicked on");
   }
-  
+
   return <>
     {/* Header */}
     <section 
@@ -30,6 +43,13 @@ export default function Events() {
       id="events-display" 
       className="pt-10 pb-10 pl-130 pr-130">
         <p>--Tiles here--</p>
+
+      {/* Testing API*/}
+        <ul>
+      {events.map(event => (
+        <li key={event.id}>{event.Name} - {event.Description} </li>
+      ))}
+        </ul>
       </section>
 
       {/* Load More Button*/}
