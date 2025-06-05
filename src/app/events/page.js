@@ -2,13 +2,19 @@
 import { useState, useEffect } from "react";
 
 export default function Events() {
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState([]);  // holds all events
+  const [visibleEvents, setVisibleEvents] = useState([]); // holds only the events currently shown
+  const [visibleIndex, setVisibleIndex] = useState(0); // tracking # of events displayed
+  const PAGE_SIZE = 6; // # of events per load
 
   async function fetchEvents() {
     const res = await fetch('/api/events');
     const data = await res.json();
-    console.log(data);
+    // console.log(data); 
+
     setEvents(data);
+    setVisibleEvents(data.slice(0, PAGE_SIZE)); // show only first 6 events 
+    setVisibleIndex(PAGE_SIZE); // set the initial number of events shown to 6
   }
 
   useEffect(() => {
@@ -46,10 +52,11 @@ export default function Events() {
 
       {/* Testing API*/}
         <ul>
-      {events.map(event => (
+      {visibleEvents.map(event => (
         <li key={event.id}>{event.Name} - {event.Description} </li>
       ))}
         </ul>
+
       </section>
 
       {/* Load More Button*/}
