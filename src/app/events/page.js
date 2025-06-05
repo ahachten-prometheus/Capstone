@@ -65,12 +65,15 @@ export default function Events() {
       </section>
 
       {/* Load More Button*/}
-      <button 
-      id="more-events"
-      className=" bg-[#B36078] hover:bg-[#C96C86B0] text-white font-bold py-2 px-4 rounded-full m-6"
-      onClick={handleLoadMore}>
-        Load More
-      </button>
+      {visibleIndex < events.length && ( // button disappears after no more events available
+          <button
+            id="more-events"
+            className="bg-[#B36078] hover:bg-[#C96C86B0] text-white font-bold py-2 px-4 rounded-full m-6"
+            onClick={handleLoadMore} 
+          >
+            Load More
+          </button>
+        )}
 
       </main>
 
