@@ -20,10 +20,15 @@ export default function Events() {
   useEffect(() => {
     fetchEvents();
   }, []);
-
-  const handleLoadMore = (event) => {
-    console.log("Load More was clicked on");
-  }
+  
+  const handleLoadMore = () => {
+		const nextEvents = events.slice(visibleIndex, visibleIndex + PAGE_SIZE);
+		setVisibleEvents((prevEventsIndexAmount) => [
+			...prevEventsIndexAmount,
+			...nextEvents,
+		]);
+		setVisibleIndex((prevEventsIndexAmount) => prevEventsIndexAmount + PAGE_SIZE);
+	};
 
   return <>
     {/* Header */}
