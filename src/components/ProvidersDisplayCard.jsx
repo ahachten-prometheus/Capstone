@@ -3,7 +3,7 @@ import React from 'react'
 const ProvidersDisplayCard = () => {
   return (
     // Card
-    <div className='absolute top-[735px] left-[216px] w-[269px] h-[197px] bg-white rounded-xl shadow-md p-4 flex flex-col justify-between'>
+    <div className='w-[269px] h-[197px] bg-white rounded-xl shadow-md p-4 flex flex-col justify-between'>
         {/* Info inside the card, replace with what the api fetches */}
         <div className="space-y-1">
 
