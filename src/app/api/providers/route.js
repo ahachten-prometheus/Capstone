@@ -1,8 +1,7 @@
 import { getRecords } from "@/services/airtable";
-import { jsonResponse } from "@/lib/responseUtils";
 
 export async function GET(request) {
-  console.log('--getProviders() INVOKED @api/providers/route.js'); //remove after debugging;
+  console.info('[PROVIDERS/INFO] GET /api/providers invoked'); //remove after debugging;
   const { searchParams } = new URL(request.url);
 
   const pageSize = searchParams.get('pageSize');
@@ -16,7 +15,13 @@ export async function GET(request) {
       offset: offset ?? null,
     });
 
-    if (error) return jsonResponse({ msg: `Service unavailable: Unable to retrieve providers, ${error}` }, 503);
+    if (error) {
+      console.error('[PROVIDERS/ERROR] Failed to fetch providers from Airtable:', error); //helpful for debugging, containing error stack trace server-side
+      return Response.json(
+        { error: 'Service is temporarily unavailable. Please try again shortly.' }, //user-facing error text; we don't send the raw error object to the frontend as this can expose sensitive info. also noting that the error property is just a property name not an Error object
+        { status: 503 }
+      );
+    }
 
     const records = data.records.map((record) => {
       const id = record["id"] ?? null;
@@ -42,14 +47,18 @@ export async function GET(request) {
       };
     });
 
-    const providers = {
+    const providersPayload = {
       records,
-      nextToken: data.offset ?? null
+      nextToken: data.offset
     }
 
-    return jsonResponse(providers);
-  } catch (error) {
-    console.error('Unexpected error fetching providers:', error);
-    return jsonResponse({ msg: `Internal: Unexpected error occurred while fetching providers, ${error}` }, 500);
+    console.info(`[PROVIDERS/INFO] Successfully retrieved ${records.length} provider records`); //remove after debugging
+    return Response.json(providersPayload);
+  } catch (err) {
+    console.error('[PROVIDERS/UNEXPECTED_ERROR] An unexpected internal error occurred. Unhandled exception:', err); //note that namespacing logs as [RESOURCE/ERROR_TYPE] is common in robust codebases to make log searching + filtering easier in centralized logging systems like Datadog, Logstash or Cloudwatch
+    return Response.json(
+      { error: 'An unexpected error occurred. Please try again later.' },
+      { status: 500 }
+    );
   }
 };
