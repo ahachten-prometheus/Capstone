@@ -9,12 +9,12 @@ export class APIClient {
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data?.msg ?? `HTTP status ${res.status}`);
+        throw new Error(data?.error || `${res.statusText}`);
       }
 
       return [data, null];
     } catch (error) {
-      console.error('API Error:', error);
+      if (process.env.NODE_ENV === 'dev') console.error('API Error:', error); //only logged to the browser dev tools console if in active development
       return [null, error.message];
     }
   }
