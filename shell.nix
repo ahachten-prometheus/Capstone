@@ -12,9 +12,10 @@ For Nix users:
 4. Type `exit` when finished developing
 
 For non-Nix users:
-- If you'd like, install Nix with --> sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install)
-- Download: https://nixos.org/download/
-- Docs: https://nixos.org/
+- If you'd like to install Nix, here are the official docs: https://nixos.org/ | https://nixos.org/download/
+- Install with:
+      macOS        sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install)
+      WSL/Linux    sh <(curl -L https://nixos.org/nix/install) --daemon
 */
 
 { pkgs ? import <nixpkgs> {} }:
