@@ -10,11 +10,6 @@ export const getRecords = async ({
   offset = null,
 }) => {
 
-  if (!API_KEY || !BASE_ID) {
-    const error = 'Missing required env variables: AIRTABLE_API_KEY or AIRTABLE_BASE_ID';
-    return [null, error];
-  }
-
   const params = new URLSearchParams();
   params.append("pageSize", pageSize.toString());
 
@@ -34,6 +29,10 @@ export const getRecords = async ({
   console.log(url);
 
   try {
+    if (!API_KEY || !BASE_ID) {
+      throw new Error('Missing required env variables: AIRTABLE_API_KEY or AIRTABLE_BASE_ID');
+    }
+
     const res = await fetch(url, {
       headers: {
         Authorization: `Bearer ${API_KEY}`,
@@ -52,7 +51,6 @@ export const getRecords = async ({
 
     return [data, null];
   } catch (error) {
-    console.error(error.message);
-    return [null, error];
+    return [null, error]; //propagating Error obj to API layer for centralized handling and logging
   }
 };
