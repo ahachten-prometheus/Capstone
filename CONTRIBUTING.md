@@ -20,13 +20,13 @@ In your feature branch, run:
 
 ```sh
 git add -A
-git commit -m "short commit message" -m "detailed explanation of the changes made." -m "related issue #__"
+git commit -m "short commit message under 72 chars" -m "detailed explanation of the changes made." -m "related issue #__"
 ```
 ### Commit Message Guidelines
 
 A properly formed Git commit message should always be able to complete the following sentence: → If applied, this commit will _*your subject line here*_
 
-Use the following [semantic](https://www.conventionalcommits.org/en/v1.0.0/) prefixes for commit messages:
+Use the following [semantic](https://www.conventionalcommits.org/) prefixes for commit messages:
 
 - **Feat**: A new feature for the user
 - **Fix**: Resolution of any bug that restores expected functionality
@@ -37,6 +37,7 @@ Use the following [semantic](https://www.conventionalcommits.org/en/v1.0.0/) pre
 - **Perf**: Code changes that improve performance
 - **Style**: Formatting changes (no production code change)
 - **Docs**: Changes to the documentation
+- **Revert**: Undo or roll back previous changes
 
 #### Commit Examples
 
@@ -44,11 +45,11 @@ Use the following [semantic](https://www.conventionalcommits.org/en/v1.0.0/) pre
 feat: add user auth validation
 chore: fix typo in validation function
 build: improve webpack config
-refactor error handling in API call
+refactor: update error handling in API call
 chore: update npm packages
 test: add test for calculateTotal function
 perf: optimize image loading for homepage
 style: standardize formatting in CSS file
-docs: remove usage example to README
 docs: update API documentation for login
+revert: revert cross-team edits to routes.js
 ```
