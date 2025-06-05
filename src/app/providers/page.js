@@ -23,6 +23,8 @@ export default function Providers() {
     setMode(event.target.value);
   }
 
+  const query = {};
+
   return <>
     {/* hero header */}
     <section
@@ -91,7 +93,8 @@ export default function Providers() {
       {/* next: filtering this */}
       <ProvidersContainer
         id="providers-display"
-        className="pt-10 pb-10 pl-130 pr-130" />
+        className="pt-10 pb-10 pl-130 pr-130"
+        query={query} />
     </main>
 
   </>;

@@ -1,8 +1,8 @@
 import ProvidersDisplayCard from '@/components/ProvidersDisplayCard';
 import { useProviders } from '@/app/hooks/useProviders';
 
-export default function ProvidersContainer() {
-  const { providers, error, loading, fetchProviders, hasMore } = useProviders();
+export default function ProvidersContainer({ query }) {
+  const { providers, error, loading, hasMore, fetchProviders } = useProviders(query);
 
   return (
     <div className="w-full">
