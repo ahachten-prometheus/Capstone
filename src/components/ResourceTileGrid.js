@@ -7,8 +7,8 @@ export default function ResourceTileGrid({resources}) {
   <>
     <div className="grid grid-cols-4 gap-4">
       {resources.length > 0 ? (
-        resources.map((resource) => (
-        <ResourceTiles key={resource.name} prop={resource} />
+        resources.map((data) => (
+        <ResourceTiles key={data.id} resource={data} />
       ))
       ) : (
       <p>no resource ;-;</p>
