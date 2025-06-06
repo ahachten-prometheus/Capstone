@@ -79,34 +79,61 @@
   }    
 
     return (
-      <div className="grid grid-rows-[60%_25%_15%] w-full rounded-lg overflow-hidden bg-white shadow-md">
-        {/* Image (takes ~60% of height) */}
-        <div className="row-span-1">
-          <img
-            src={imgUrl}
-            alt={name}
-            className="w-full h-full object-cover"
-          />
-        </div>
+      // <div className="aspect-[360/575] grid grid-rows-[60%_25%_15%] w-full rounded-lg overflow-hidden bg-white shadow-md">
+      //   {/* Image (takes ~60% of height) */}
+      //   <div className="row-span-1">
+      //     <img
+      //       src={imgUrl}
+      //       alt={name}
+      //       className="w-full h-full object-cover"
+      //     />
+      //   </div>
   
-        {/* Text (takes ~25% of height) */}
-        <div className="row-span-1 p-2 overflow-hidden text-sm text-center">
-          <p className="font-semibold text-xs text-gray-600">
-          {dateTimeDisplay}
-          </p>
-          <p className="text-sm">{location}</p>
-          <p className="font-medium">{name}</p>
-        </div>
+      //   {/* Text (takes ~25% of height) */}
+      //   <div className="row-span-1 p-2 text-sm text-center">
+      //     <p className="font-semibold text-xs text-gray-600">
+      //     {dateTimeDisplay}
+      //     </p>
+      //     <p className="text-sm">{location}</p>
+      //     <p className="font-medium">{name}</p>
+      //   </div>
   
-        {/* Button (takes ~15% of height) */}
-        <div className="row-span-1 flex justify-center items-center">
-          <a href={detailsurl}>
-            <button className="w-1/2 h-2/3 bg-[#D96B91] text-white border-none rounded-md">
-              Details
-            </button>
-          </a>
-        </div>
-      </div>
+      //   {/* Button (takes ~15% of height) */}
+      //   <div className="row-span-1 flex justify-center items-center">
+      //     <a href={detailsurl}>
+      //       <button className="px-4 py-2 bg-[#D96B91] text-white rounded-md text-sm">
+      //         Details
+      //       </button>
+      //     </a>
+      //   </div>
+      // </div>
+    <div className="aspect-[360/575] flex flex-col w-full rounded-lg overflow-hidden bg-white shadow-md">
+    {/* Image takes 60% */}
+    <div className="h-[60%]">
+      <img
+        src={imgUrl}
+        alt={name}
+        className="w-full h-full object-cover"
+      />
+    </div>
+
+    {/* Text can expand and be centered */}
+    <div className="flex flex-1 flex-col justify-center items-center text-center p-2 text-sm">
+       <p className="font-semibold text-xs text-gray-600">{dateTimeDisplay}</p>
+       <p className="text-sm">{location}</p>
+       <p className="font-medium">{name}</p>
+    </div>
+
+    {/* Button has fixed/padded area */}
+    <div className="h-[15%] flex justify-center items-center">
+      <a href={detailsurl}>
+        <button className="px-4 py-2 bg-[#D96B91] text-white rounded-md text-sm">
+          Details
+        </button>
+      </a>
+    </div>
+    </div>
+
     );
   }
     
