@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { APIClient } from "@/lib/apiClient";
 
 const ProvidersAPI = new APIClient('providers'); //specific instance to fetch from /api/providers endpoint
@@ -11,7 +11,7 @@ export function useProviders(query = {}) {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const buildQueryParams = () => {
+  const buildQueryParams = (query, offset) => {
     const params = new URLSearchParams();
     if (query?.state) params.append('state', query.state);
     if (query?.virtualOnly) params.append('virtualOnly', query.virtualOnly);
@@ -21,11 +21,11 @@ export function useProviders(query = {}) {
     return params.toString();
   }
 
-  const fetchProviders = async () => {
+  const fetchProviders = async (query) => {
     if (!hasMore) return;
     setLoading(true), setError('');
 
-    const queryParams = `?${buildQueryParams()}`;
+    const queryParams = `?${buildQueryParams(query, offset)}`;
     console.info('[PROVIDERS/INFO] fetchProviders() called with params:', queryParams); //remove after debugging
 
     const [providersObj, error] = await ProvidersAPI.get(queryParams);
@@ -47,7 +47,7 @@ export function useProviders(query = {}) {
     setOffset(null);
     setHasMore(true);
 
-    fetchProviders();
+    fetchProviders(query);
   }, [query]); //refetch when query changes, resetting state of providers, offset, and hasMore to ensure records fetched are filtered based on the new query
 
   return {
