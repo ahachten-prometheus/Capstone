@@ -4,7 +4,7 @@ import { APIClient } from "@/lib/apiClient";
 
 const ProvidersAPI = new APIClient('providers');
 
-export function useProviders(query) {
+export function useProviders(query = {}) {
   const [providers, setProviders] = useState([]);
   const [offset, setOffset] = useState(null); //to track pagination offset
   const [hasMore, setHasMore] = useState(true); //if false, reached end of providers data
@@ -22,6 +22,9 @@ export function useProviders(query) {
     if (query) params.append('query', encodeURIComponent(query));
     if (offset) params.append('offset', offset);
     params.append('pageSize', 12);
+    if (query.state) params.append('state', `${query.state}`)
+    if (query.virtualOnly) params.append('virtualOnly', `${query.virtualOnly}`)
+    if (query.name) params.append('name', `${query.name}`)
 
     const [providersObj, error] = await ProvidersAPI.get(`?${params.toString()}`);
     if (error) return setError(error.msg), setLoading(false);
