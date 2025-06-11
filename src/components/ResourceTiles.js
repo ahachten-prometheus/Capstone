@@ -1,5 +1,5 @@
-export default function ResourceTiles({ prop }) {
-  const { Name, ["Resources Type"]: Resources_Type, Description, URL, imgURL } = prop
+export default function ResourceTiles({ resource }) {
+  const { Name, ["Resources Type"]: Resources_Type, Description, URL, imgURL } = resource
   return (
     <>
     <div className="flex-col bg-teal-500 w-[265px]">
