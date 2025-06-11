@@ -5,6 +5,7 @@ import ProvidersContainer from "@/components/ProvidersContainer";
 export default function Providers() {
   const [selectedState, setState] = useState("");
   const [selectedMode, setMode] = useState("");
+  const [name, setName] = useState("")
 
   const usStates = [
     "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
@@ -15,12 +16,16 @@ export default function Providers() {
   ];
 
   // for testing - making sure we can grab the selection value(s) from user
-  const handleStateChange = (event) => {
+  const handleUsStateChange = (event) => {
     setState(event.target.value);
   }
 
   const handleModeChange = (event) => {
     setMode(event.target.value);
+  }
+  const handleNameChange = (event) => {
+    setName(event.target.value)
+    console.log(name)
   }
 
   const query = {};
@@ -59,14 +64,26 @@ export default function Providers() {
       flex justify-between
       pt-2 pb-8
       space-x-4">
+        <input 
+          id="provider-name-input"
+          type="text"
+          className="
+          bg-white hover:bg-[#C96C86B0]
+          text-black
+          py-2 px-4 rounded-full"
+          onChange={handleNameChange}
+
+        >
+        </input>
+
         <select
           id="provider-state"
           className="
-        bg-white hover:bg-[#C96C86B0]
-        text-black
-        py-2 px-4 rounded-full"
+            bg-white hover:bg-[#C96C86B0]
+            text-black
+            py-2 px-4 rounded-full"
           defaultValue="blank-state-opt"
-          onChange={handleStateChange}
+          onChange={handleUsStateChange}
           aria-labelledby="filtering-state">
           <option key="blank-state-opt" value="blank-state-opt" disabled>State?</option>
           {usStates.map((state) => <option key={`${state}-option`} value={state}>{state}</option>)}
@@ -76,9 +93,9 @@ export default function Providers() {
         <select
           id="provider-mode"
           className="
-        bg-white hover:bg-[#C96C86B0]
-        text-black
-        py-2 px-4 rounded-full"
+            bg-white hover:bg-[#C96C86B0]
+            text-black
+            py-2 px-4 rounded-full"
           defaultValue="blank-mode-opt"
           onChange={handleModeChange}
           aria-labelledby="filtering-mode">
