@@ -6,11 +6,18 @@ export async function GET(request) {
 
   const pageSize = searchParams.get('pageSize');
   const offset = searchParams.get('offset');
-
+  const state = searchParams.get('state')
+  const virtualOnly = searchParams.get('virtualOnly')
+  const name = searchParams.get('name')
+  let filters = `AND({Status} = "Active"`
+  if (state) filters += `, {State} = "${state}"`
+  if (virtualOnly) filters += `, {Virtual Only} = "${virtualOnly}"`
+  if (name) filters += `, FIND(LOWER("${name}"), LOWER({Name})) > 0`
+  filters += ")"
   try {
     const [data, error] = await getRecords({
       tableName: 'Providers',
-      filters: `{Status} = "Active"`,
+      filters: filters,
       pageSize: pageSize ?? 12,
       offset: offset ?? null,
     });
