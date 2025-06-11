@@ -7,7 +7,7 @@ export async function GET(req) {
   const offset = params.get("offset");
 
   try {
-    const data = await getRecords({
+    const [data, error] = await getRecords({
       tableName: "Resources",
       filters: `{Status} = 'Active'`,
       pageSize: pageSize ?? 8,

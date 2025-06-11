@@ -1,5 +1,5 @@
 import { getRecords } from "@/services/airtable";
-//api/resources/highlighted
+
 export async function GET(req) {
   const params = req.nextUrl.searchParams;
 
@@ -7,7 +7,7 @@ export async function GET(req) {
   const offset = params.get("offset");
 
   try {
-    const data = await getRecords({
+    const [data, error] = await getRecords({
       tableName: "Resources",
       filters: `{Resource Highlight} = TRUE()`,
       pageSize: pageSize ?? 8,
