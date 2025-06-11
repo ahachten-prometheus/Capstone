@@ -1,5 +1,6 @@
 "use client";
 import ResourceTileGrid from "@/components/ResourceTileGrid"
+import ResourceFilters from "@/components/ResourceFilters";
 import { useState, useEffect } from "react"
 import React from "react";
 
@@ -61,6 +62,7 @@ export default function Resources() {
                 <h2>All Resources</h2> {/* Changes if there are filters present. Otherwise, shows "all filters" */}
                 {/* Search bar component */}
                 {/* filter drop downs */}
+                <ResourceFilters />
                 <ResourceTileGrid resources={resources} />
                 {/* Load more button */}
                 <button onClick={() => handleLoadMoreClick(offset)} className="bg-[#C96C86] hover:bg-[#8F5E72] cursor-pointer px-4 py-2 ">load more</button>
