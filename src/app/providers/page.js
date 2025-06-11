@@ -6,29 +6,94 @@ export default function Providers() {
   const [selectedState, setState] = useState("");
   const [selectedMode, setMode] = useState("");
   const [name, setName] = useState("")
+  const [query, setQuery] = useState({
+    name : null,
+    virtualOnly: null,
+    state: null,
+    isNew: true
+  })
 
-  const usStates = [
-    "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
-    "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
-    "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
-    "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
-    "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"
-  ];
+  const usStates = {
+    AL: "Alabama",
+    AK: "Alaska",
+    AZ: "Arizona",
+    AR: "Arkansas",
+    CA: "California",
+    CO: "Colorado",
+    CT: "Connecticut",
+    DE: "Delaware",
+    FL: "Florida",
+    GA: "Georgia",
+    HI: "Hawaii",
+    ID: "Idaho",
+    IL: "Illinois",
+    IN: "Indiana",
+    IA: "Iowa",
+    KS: "Kansas",
+    KY: "Kentucky",
+    LA: "Louisiana",
+    ME: "Maine",
+    MD: "Maryland",
+    MA: "Massachusetts",
+    MI: "Michigan",
+    MN: "Minnesota",
+    MS: "Mississippi",
+    MO: "Missouri",
+    MT: "Montana",
+    NE: "Nebraska",
+    NV: "Nevada",
+    NH: "New Hampshire",
+    NJ: "New Jersey",
+    NM: "New Mexico",
+    NY: "New York",
+    NC: "North Carolina",
+    ND: "North Dakota",
+    OH: "Ohio",
+    OK: "Oklahoma",
+    OR: "Oregon",
+    PA: "Pennsylvania",
+    RI: "Rhode Island",
+    SC: "South Carolina",
+    SD: "South Dakota",
+    TN: "Tennessee",
+    TX: "Texas",
+    UT: "Utah",
+    VT: "Vermont",
+    VA: "Virginia",
+    WA: "Washington",
+    WV: "West Virginia",
+    WI: "Wisconsin",
+    WY: "Wyoming"
+  };
+
 
   // for testing - making sure we can grab the selection value(s) from user
-  const handleUsStateChange = (event) => {
-    setState(event.target.value);
-  }
+const handleNameChange = (event) => {
+  const value = event.target.value;
+  setName(value);
+  setQuery((prev) => ({
+    ...prev,
+    name: value || null,
+  }));
+};
 
-  const handleModeChange = (event) => {
-    setMode(event.target.value);
-  }
-  const handleNameChange = (event) => {
-    setName(event.target.value)
-    console.log(name)
-  }
+const handleUsStateChange = (event) => {
+  const value = event.target.value;
+  setState(value);
+  setQuery((prev) => ({
+    ...prev,
+    state: value !== "blank-state-opt" ? value : null,
+  }));
+};
 
-  const query = {};
+const handleModeChange = (event) => {
+  const value = event.target.value;
+  setMode(value);
+  setQuery((prev) => ({
+    ...prev,
+    virtualOnly: value !== "blank-mode-opt" ? value : null,
+  }));
+};
 
   return <>
     {/* hero header */}
@@ -72,7 +137,7 @@ export default function Providers() {
           text-black
           py-2 px-4 rounded-full"
           onChange={handleNameChange}
-
+          placeholder="Name"
         >
         </input>
 
@@ -86,7 +151,7 @@ export default function Providers() {
           onChange={handleUsStateChange}
           aria-labelledby="filtering-state">
           <option key="blank-state-opt" value="blank-state-opt" disabled>State?</option>
-          {usStates.map((state) => <option key={`${state}-option`} value={state}>{state}</option>)}
+          {Object.keys(usStates).map((abbr) => <option key={`${abbr}-option`} value={usStates[abbr]}>{abbr}</option>)}
         </select>
         {/* <p id="test">You selected this state: {selectedState}</p> */}
 
