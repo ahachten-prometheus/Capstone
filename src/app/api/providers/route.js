@@ -9,16 +9,18 @@ export async function GET(request) {
   const state = searchParams.get('state')
   const virtualOnly = searchParams.get('virtualOnly')
   const name = searchParams.get('name')
-  let filters = `AND({Status} = "Active"`
-  if (state) filters += `, {State} = "${state}"`
-  if (virtualOnly) filters += `, {Virtual Only} = "${virtualOnly}"`
-  if (name) filters += `, FIND(LOWER("${name}"), LOWER({Name})) > 0`
-  filters += ")"
+
+  let filters = [`{Status} = "Active"`];
+  if (state) filters.push(`{State} = "${state}"`);
+  if (virtualOnly) filters.push(`{Virtual Only} ${virtualOnly === "No" ? "!=" : "="} "Yes"`);
+  if (name) filters.push(`FIND(LOWER("${name}"), LOWER({Name})) > 0`);
+  const filterFormula = `AND(${filters.join(", ")})`;
+
   console.log("route", searchParams)
   try {
     const [data, error] = await getRecords({
       tableName: 'Providers',
-      filters: filters,
+      filters: filterFormula,
       pageSize: pageSize ?? 12,
       offset: offset ?? null,
     });
