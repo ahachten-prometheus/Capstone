@@ -1,5 +1,5 @@
 'use client'
-import {useRouter} from 'next/router'
+import {useRouter} from 'next/compat/router'
 import { useEffect } from 'react'
 import React from "react";
 
