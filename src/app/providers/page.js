@@ -1,6 +1,7 @@
 'use client';
 import { useState } from "react";
 import ProvidersContainer from "@/components/ProvidersContainer";
+import debounce from "lodash.debounce";
 
 export default function Providers() {
   const [selectedState, setState] = useState("");
@@ -68,32 +69,34 @@ export default function Providers() {
 
 
   // for testing - making sure we can grab the selection value(s) from user
-const handleNameChange = (event) => {
-  const value = event.target.value;
-  setName(value);
-  setQuery((prev) => ({
-    ...prev,
-    name: value || null,
-  }));
-};
 
-const handleUsStateChange = (event) => {
-  const value = event.target.value;
-  setState(value);
-  setQuery((prev) => ({
-    ...prev,
-    state: value !== "blank-state-opt" ? value : null,
-  }));
-};
+  const handleChange = (event) => {
+    const id = event.target.id
+    const value = event.target.value;
+    if (id === "provider-name-input") {
+        setName(value);
+        setQuery((prev) => ({
+          ...prev,
+          name: value || null,
+      }));
+    } 
+    if (id === "provider-state") {
+        setState(value);
+        setQuery((prev) => ({
+          ...prev,
+          state: value || null,
+      }));
+    } 
+    if (id === "provider-mode") {
+        setMode(value);
+        setQuery((prev) => ({
+          ...prev,
+          virtualOnly: value || null,
+      }));
+    }
+  }
 
-const handleModeChange = (event) => {
-  const value = event.target.value;
-  setMode(value);
-  setQuery((prev) => ({
-    ...prev,
-    virtualOnly: value !== "blank-mode-opt" ? value : null,
-  }));
-};
+  const debounceChange = debounce(handleChange, 400)
 
   return <>
     {/* hero header */}
@@ -136,7 +139,7 @@ const handleModeChange = (event) => {
           bg-white hover:bg-[#C96C86B0]
           text-black
           py-2 px-4 rounded-full"
-          onChange={handleNameChange}
+          onChange={debounceChange}
           placeholder="Name"
         >
         </input>
@@ -148,7 +151,7 @@ const handleModeChange = (event) => {
             text-black
             py-2 px-4 rounded-full"
           defaultValue="blank-state-opt"
-          onChange={handleUsStateChange}
+          onChange={debounceChange}
           aria-labelledby="filtering-state">
           <option key="blank-state-opt" value="blank-state-opt" disabled>State?</option>
           {Object.keys(usStates).map((abbr) => <option key={`${abbr}-option`} value={usStates[abbr]}>{abbr}</option>)}
@@ -162,7 +165,7 @@ const handleModeChange = (event) => {
             text-black
             py-2 px-4 rounded-full"
           defaultValue="blank-mode-opt"
-          onChange={handleModeChange}
+          onChange={debounceChange}
           aria-labelledby="filtering-mode">
           <option key="blank-mode-opt" value="blank-mode-opt" disabled>Virtual Only?</option>
           <option key="yes-opt" value="Yes">Yes</option>

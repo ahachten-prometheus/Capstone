@@ -11,7 +11,8 @@ export async function GET(request) {
   const name = searchParams.get('name')
   let filters = `AND({Status} = "Active"`
   if (state) filters += `, {State} = "${state}"`
-  if (virtualOnly) filters += `, {Virtual Only} = "${virtualOnly}"`
+  if (virtualOnly === "Yes") filters += `, {Virtual Only} = "${virtualOnly}"`
+  if (virtualOnly === "No") filters += `, OR({Virtual Only} != "Yes", NOT({Virtual Only}))`
   if (name) filters += `, FIND(LOWER("${name}"), LOWER({Name})) > 0`
   filters += ")"
   console.log("route", searchParams)
