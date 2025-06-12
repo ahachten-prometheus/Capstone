@@ -18,7 +18,6 @@ export function useProviders(query = {}) {
     if (query?.name) params.append('name', query.name);
     if (offset) params.append('offset', offset);
     params.append('pageSize', 12);
-    console.log("hook", query)
     return params.toString();
   }
 

@@ -15,7 +15,6 @@ export async function GET(request) {
   if (virtualOnly === "No") filters += `, OR({Virtual Only} != "Yes", NOT({Virtual Only}))`
   if (name) filters += `, FIND(LOWER("${name}"), LOWER({Name})) > 0`
   filters += ")"
-  console.log("route", searchParams)
   try {
     const [data, error] = await getRecords({
       tableName: 'Providers',
