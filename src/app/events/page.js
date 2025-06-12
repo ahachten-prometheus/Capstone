@@ -1,66 +1,106 @@
-"use client";
-import { useState, useEffect } from "react";
+'use client';
+import { useState, useEffect } from 'react';
 
 export default function Events() {
-  const [events, setEvents] = useState([]);
+	const [visibleEvents, setVisibleEvents] = useState([]); // holds only the events currently shown
+	const [offset, setOffset] = useState(''); // tracking # of events displayed
+	const [hasMore, setHasMore] = useState(true);
+	const [isLoading, setIsLoading] = useState(false);
+	const PAGE_SIZE = 6;
 
-  async function fetchEvents() {
-    const res = await fetch('/api/events');
-    const data = await res.json();
-    console.log(data);
-    setEvents(data);
-  }
+	async function fetchEvents(nextOffset = '') {
+		if (isLoading || !hasMore) return;
+		setIsLoading(true);
 
-  useEffect(() => {
-    fetchEvents();
-  }, []);
+		//URlSearchParams auto converts values to string
+		try {
+			const params = new URLSearchParams({
+				pageSize: PAGE_SIZE,
+				...(nextOffset && { offset: nextOffset }),
+			});
 
-  const handleLoadMore = (event) => {
-    console.log("Load More was clicked on");
-  }
+			const res = await fetch(`/api/events?${params.toString()}`);
+			const data = await res.json();
+			console.log('API Response:', data);
+			// If the API returns an array directly
+			if (Array.isArray(data)) {
+				setVisibleEvents((prev) => [...prev, ...data]);
+				setHasMore(data.length === PAGE_SIZE);
+			}
+			// If the API returns an object with records
+			else if (Array.isArray(data?.records)) {
+				setVisibleEvents((prev) => [...prev, ...data.records]);
+				setOffset(data.offset || '');
+				setHasMore(Boolean(data.offset));
+			} else {
+				console.error('Unexpected API response structure:', data);
+			}
+		} catch (error) {
+			console.error('Error fetching events:', error);
+		} finally {
+			setIsLoading(false);
+		}
+	}
 
-  return <>
-    {/* Header */}
-    <section 
-      className="w-screen w-[1440px] h-[407px] flex items-center justify-center"
-      style={{ backgroundColor: '#C96C86B0' }}>
-      <h1 id="events-hero-header" className="text-[2.5rem] font-bold text-white"> Upcoming Events</h1> 
-    </section>
+	useEffect(() => {
+		fetchEvents();
+	}, []);
 
-    {/* Main Body */}
-    <main 
-      className=" text-black flex flex-col items-center justify-center" 
-      style={{ backgroundColor: '#FFF5EA' }}>
+	return (
+		<>
+			{/* Header */}
+			<section
+				className="w-screen w-[1440px] h-[407px] flex items-center justify-center"
+				style={{ backgroundColor: '#C96C86B0' }}
+			>
+				<h1
+					id="events-hero-header"
+					className="text-[2.5rem] font-bold text-white"
+				>
+					{' '}
+					Upcoming Events
+				</h1>
+			</section>
 
-      {/* Tiles Header */}
-      <h3 
-      id="events-tiles-header" 
-      className=" w-4/5 mx-auto border-b-1 border-black text-2xl font-bold text-black flex justify-center pt-8">
-      Upcoming Events & Webinar </h3>
+			{/* Main Body */}
+			<main
+				className=" text-black flex flex-col items-center justify-center"
+				style={{ backgroundColor: '#FFF5EA' }}
+			>
+				{/* Tiles Header */}
+				<h3
+					id="events-tiles-header"
+					className=" w-4/5 mx-auto border-b-1 border-black text-2xl font-bold text-black flex justify-center pt-8"
+				>
+					Upcoming Events & Webinar{' '}
+				</h3>
 
-      {/* Tiles*/}
-      <section 
-      id="events-display" 
-      className="py-10 px-[130px]">
-        <p>--Tiles here--</p>
+				{/* Tiles*/}
+				<section id="events-display" className="py-10 px-[130px]">
+					<p>--Tiles here--</p>
 
-      {/* Testing API*/}
-        <ul>
-      {events.map(event => (
-        <li key={event.id}>{event.Name} - {event.Description} </li>
-      ))}
-        </ul>
-      </section>
+					{/* Testing API*/}
+					<ul>
+						{visibleEvents.map((event) => (
+							<li key={event.id}>
+								{event.Name} - {event.Description}
+							</li>
+						))}
+					</ul>
+				</section>
 
-      {/* Load More Button*/}
-      <button 
-      id="more-events"
-      className=" bg-[#B36078] hover:bg-[#C96C86B0] text-white font-bold py-2 px-4 rounded-full m-6"
-      onClick={handleLoadMore}>
-        Load More
-      </button>
-
-      </main>
-
-  </>;
+				{/* Load More Button*/}
+				{/* hides button if hasMore is not true */}
+				{hasMore && (
+					<button
+						id="more-events"
+						className=" bg-[#B36078] hover:bg-[#C96C86B0] text-white font-bold py-2 px-4 rounded-full m-6"
+						onClick={() => fetchEvents(offset)}
+					>
+						{isLoading ? 'Loading more events..' : 'Load More'}
+					</button>
+				)}
+			</main>
+		</>
+	);
 }
