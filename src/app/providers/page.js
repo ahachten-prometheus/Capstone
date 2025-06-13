@@ -1,29 +1,102 @@
 'use client';
 import { useState } from "react";
 import ProvidersContainer from "@/components/ProvidersContainer";
+import debounce from "lodash.debounce";
 
 export default function Providers() {
   const [selectedState, setState] = useState("");
   const [selectedMode, setMode] = useState("");
+  const [name, setName] = useState("")
+  const [query, setQuery] = useState({
+    name : null,
+    virtualOnly: null,
+    state: null,
+    isNew: true
+  })
 
-  const usStates = [
-    "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
-    "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
-    "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
-    "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
-    "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"
-  ];
+  const usStates = {
+    AL: "Alabama",
+    AK: "Alaska",
+    AZ: "Arizona",
+    AR: "Arkansas",
+    CA: "California",
+    CO: "Colorado",
+    CT: "Connecticut",
+    DE: "Delaware",
+    FL: "Florida",
+    GA: "Georgia",
+    HI: "Hawaii",
+    ID: "Idaho",
+    IL: "Illinois",
+    IN: "Indiana",
+    IA: "Iowa",
+    KS: "Kansas",
+    KY: "Kentucky",
+    LA: "Louisiana",
+    ME: "Maine",
+    MD: "Maryland",
+    MA: "Massachusetts",
+    MI: "Michigan",
+    MN: "Minnesota",
+    MS: "Mississippi",
+    MO: "Missouri",
+    MT: "Montana",
+    NE: "Nebraska",
+    NV: "Nevada",
+    NH: "New Hampshire",
+    NJ: "New Jersey",
+    NM: "New Mexico",
+    NY: "New York",
+    NC: "North Carolina",
+    ND: "North Dakota",
+    OH: "Ohio",
+    OK: "Oklahoma",
+    OR: "Oregon",
+    PA: "Pennsylvania",
+    RI: "Rhode Island",
+    SC: "South Carolina",
+    SD: "South Dakota",
+    TN: "Tennessee",
+    TX: "Texas",
+    UT: "Utah",
+    VT: "Vermont",
+    VA: "Virginia",
+    WA: "Washington",
+    WV: "West Virginia",
+    WI: "Wisconsin",
+    WY: "Wyoming"
+  };
+
 
   // for testing - making sure we can grab the selection value(s) from user
-  const handleStateChange = (event) => {
-    setState(event.target.value);
+
+  const handleChange = (event) => {
+    const id = event.target.id
+    const value = event.target.value;
+    if (id === "provider-name-input") {
+        setName(value);
+        setQuery((prev) => ({
+          ...prev,
+          name: value || null,
+      }));
+    } 
+    if (id === "provider-state") {
+        setState(value);
+        setQuery((prev) => ({
+          ...prev,
+          state: value || null,
+      }));
+    } 
+    if (id === "provider-mode") {
+        setMode(value);
+        setQuery((prev) => ({
+          ...prev,
+          virtualOnly: value || null,
+      }));
+    }
   }
 
-  const handleModeChange = (event) => {
-    setMode(event.target.value);
-  }
-
-  const query = {};
+  const debounceChange = debounce(handleChange, 400)
 
   return <>
     {/* hero header */}
@@ -59,28 +132,40 @@ export default function Providers() {
       flex justify-between
       pt-2 pb-8
       space-x-4">
+        <input 
+          id="provider-name-input"
+          type="text"
+          className="
+          bg-white hover:bg-[#C96C86B0]
+          text-black
+          py-2 px-4 rounded-full"
+          onChange={debounceChange}
+          placeholder="Name"
+        >
+        </input>
+
         <select
           id="provider-state"
           className="
-        bg-white hover:bg-[#C96C86B0]
-        text-black
-        py-2 px-4 rounded-full"
+            bg-white hover:bg-[#C96C86B0]
+            text-black
+            py-2 px-4 rounded-full"
           defaultValue="blank-state-opt"
-          onChange={handleStateChange}
+          onChange={debounceChange}
           aria-labelledby="filtering-state">
           <option key="blank-state-opt" value="blank-state-opt" disabled>State?</option>
-          {usStates.map((state) => <option key={`${state}-option`} value={state}>{state}</option>)}
+          {Object.keys(usStates).map((abbr) => <option key={`${abbr}-option`} value={usStates[abbr]}>{abbr}</option>)}
         </select>
         {/* <p id="test">You selected this state: {selectedState}</p> */}
 
         <select
           id="provider-mode"
           className="
-        bg-white hover:bg-[#C96C86B0]
-        text-black
-        py-2 px-4 rounded-full"
+            bg-white hover:bg-[#C96C86B0]
+            text-black
+            py-2 px-4 rounded-full"
           defaultValue="blank-mode-opt"
-          onChange={handleModeChange}
+          onChange={debounceChange}
           aria-labelledby="filtering-mode">
           <option key="blank-mode-opt" value="blank-mode-opt" disabled>Virtual Only?</option>
           <option key="yes-opt" value="Yes">Yes</option>
