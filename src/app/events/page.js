@@ -1,5 +1,6 @@
-'use client';
-import { useState, useEffect } from 'react';
+"use client";
+import { useState, useEffect } from "react";
+import EventTilesGrid from "../../components/EventTilesGrid";
 
 export default function Events() {
 	const [visibleEvents, setVisibleEvents] = useState([]); // holds only the events currently shown
@@ -20,7 +21,7 @@ export default function Events() {
 			});
 
 			const res = await fetch(`/api/events?${params.toString()}`);
-			const data = await res.json();
+			const [data, error] = await res.json();
 			console.log('API Response:', data);
 			// If the API returns an array directly
 			if (Array.isArray(data)) {
@@ -75,9 +76,11 @@ export default function Events() {
 					Upcoming Events & Webinar{' '}
 				</h3>
 
-				{/* Tiles*/}
-				<section id="events-display" className="py-10 px-[130px]">
-					<p>--Tiles here--</p>
+      {/* Tiles*/}
+      <section 
+      id="events-display" 
+      className="py-10 px-6 sm:px-8 md:px-15[180px]">
+        <EventTilesGrid eventList={visibleEvents} />
 
 					{/* Testing API*/}
 					<ul>
