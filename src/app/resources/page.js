@@ -111,57 +111,10 @@ async function fetchHighlightedResources(
   }
 }
 
-class FilterObject {
-  #Name = "";
-  #Category = "";
-  #Resources_Type = "";
-  #Subject = new Set();
+class Filters {
+  Category = "";
+  Resources_Type = "";
+  Subject = new Set();
 
-  constructor() {}
-
-  updateNameFilter(value) {
-    if (typeof value === "string") this.#Name = value;
-
-    return this;
-  }
-
-  updateCategoryFilter(value) {
-    if (typeof value === "string") this.#Category = value;
-
-    return this;
-  }
-
-  updateResourceTypeFilter(value) {
-    if (typeof value === "string") this.#Resources_Type = value;
-
-    return this;
-  }
-
-  addSubjectFilter(value) {
-    this.#Subject.add(value);
-
-    return this;
-  }
-
-  deleteSubjectFilter(value) {
-    this.#Subject.delete(value);
-
-    return this;
-  }
-
-  getNameFilter() {
-    return this.#Name;
-  }
-
-  getCategoryFilter() {
-    return this.#Category;
-  }
-
-  getResourceTypeFilter() {
-    return this.#Resources_Type;
-  }
-
-  getSubjectFilter() {
-    return new Set(this.#Subject);
-  }
+  constructor(urlParams) {}
 }
