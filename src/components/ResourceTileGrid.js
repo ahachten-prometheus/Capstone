@@ -1,19 +1,20 @@
 import ResourceTiles from "./ResourceTiles";
 
-export default function ResourceTileGrid({resources}) {
-
-
+export default function ResourceTileGrid({ resources }) {
   return (
-  <>
-    <div className="grid grid-cols-4 gap-4">
+    <>
       {resources.length > 0 ? (
-        resources.map((data) => (
-        <ResourceTiles key={data.id} resource={data} />
-      ))
+        <div className='grid grid-cols-4 gap-4'>
+          {resources.map(data => (
+            <ResourceTiles
+              key={data.id}
+              resource={data}
+            />
+          ))}
+        </div>
       ) : (
-      <p>no resource ;-;</p>
+        <p>no resource ;-;</p>
       )}
-    </div>
-  </>
-)
+    </>
+  );
 }
