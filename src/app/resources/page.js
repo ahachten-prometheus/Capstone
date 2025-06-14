@@ -126,5 +126,16 @@ class Filters {
   Resources_Type = "";
   Subjects = new Set();
 
-  constructor(urlParams) {}
+  constructor(urlParams) {
+    const categoryFilter = urlParams.get("category");
+    const resourcesTypeFilter = urlParams.get("resourcesType");
+    const subjectFilters = urlParams.getAll("category");
+
+    if (categoryFilter) this.Category = categoryFilter;
+    if (resourcesTypeFilter) this.Resources_Type = resourcesTypeFilter;
+
+    subjectFilters.forEach(filter => {
+      this.Subjects.add(filter);
+    });
+  }
 }
