@@ -75,11 +75,11 @@ export default function Resources() {
 async function fetchResources({ pageSize = 8, offset } = { pageSize: 8 }) {
   console.log("fetching resources...");
 
-  try {
-    const params = new URLSearchParams();
-    params.append("pageSize", pageSize.toString());
-    if (offset) params.append("offset", offset.toString());
+  const params = new URLSearchParams();
+  params.append("pageSize", pageSize.toString());
+  if (offset) params.append("offset", offset.toString());
 
+  try {
     const response = await fetch(`/api/resources?${params.toString()}`);
 
     if (!response.ok)
@@ -99,11 +99,11 @@ async function fetchResources({ pageSize = 8, offset } = { pageSize: 8 }) {
 async function fetchHighlightedResources(
   { pageSize = 10, offset } = { pageSize: 10 }
 ) {
-  try {
-    const params = new URLSearchParams();
-    params.append("pageSize", pageSize.toString());
-    if (offset) params.append("offset", offset.toString());
+  const params = new URLSearchParams();
+  params.append("pageSize", pageSize.toString());
+  if (offset) params.append("offset", offset.toString());
 
+  try {
     const response = await fetch(
       `/api/resources/highlighted?${params.toString()}`
     );
@@ -124,7 +124,7 @@ async function fetchHighlightedResources(
 class Filters {
   Category = "";
   Resources_Type = "";
-  Subject = new Set();
+  Subjects = new Set();
 
   constructor(urlParams) {}
 }
