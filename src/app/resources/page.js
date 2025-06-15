@@ -31,7 +31,7 @@ export default function Resources() {
   //button function to render more resourceess
   const handleLoadMoreClick = async event => {
     try {
-      const [data, error] = await fetchResources({ offset });
+      const [data, error] = await fetchResources({ pageSize: 8, offset });
       if (data) {
         setResources([...resources, ...data.records]);
         setOffset(data.offset);
@@ -62,7 +62,7 @@ export default function Resources() {
         {/* pagination button (if there is an offset) */}
         {offset && (
           <button
-            onClick={() => handleLoadMoreClick(offset)}
+            onClick={handleLoadMoreClick}
             className='bg-[#C96C86] hover:bg-[#8F5E72] cursor-pointer px-4 py-2 '>
             load more
           </button>
