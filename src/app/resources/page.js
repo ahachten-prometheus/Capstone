@@ -15,7 +15,10 @@ export default function Resources() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const [data, error] = await fetchResources();
+        const [data, error] = await fetchResources({
+          pageSize: 8,
+          filters: new Filters(),
+        });
 
         if (data) {
           setResources(data.records);
@@ -32,7 +35,11 @@ export default function Resources() {
   //button function to render more resourceess
   const handleLoadMoreClick = async event => {
     try {
-      const [data, error] = await fetchResources({ pageSize: 8, offset });
+      const [data, error] = await fetchResources({
+        pageSize: 8,
+        offset,
+        filters: new Filters(),
+      });
       if (data) {
         setResources([...resources, ...data.records]);
         setOffset(data.offset);
@@ -42,7 +49,7 @@ export default function Resources() {
     }
   };
 
-//lines bc everything looks the same ////////////////////////////////////////////////////////////////////////////
+  //lines bc everything looks the same ////////////////////////////////////////////////////////////////////////////
 
   return (
     <div>
@@ -77,8 +84,8 @@ export default function Resources() {
 
 //lines bc everything looks the same ////////////////////////////////////////////////////////////////////////////
 
-async function fetchResources({ pageSize = 8, offset, filters } = { }) {
-  console.log("fetching resources...");
+async function fetchResources({ pageSize = 8, offset, filters } = {}) {
+  console.log(filters);
 
   const params = new URLSearchParams();
   params.append("pageSize", pageSize.toString());
