@@ -2,6 +2,7 @@
 import ResourceTileGrid from "@/components/ResourceTileGrid";
 import ResourceFilters from "@/components/ResourceFilters";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/compat/router";
 import React from "react";
 
 export default function Resources() {
@@ -41,6 +42,8 @@ export default function Resources() {
     }
   };
 
+//lines bc everything looks the same ////////////////////////////////////////////////////////////////////////////
+
   return (
     <div>
       <h2> Resources </h2>
@@ -72,12 +75,29 @@ export default function Resources() {
   );
 }
 
-async function fetchResources({ pageSize = 8, offset } = { pageSize: 8 }) {
+//lines bc everything looks the same ////////////////////////////////////////////////////////////////////////////
+
+async function fetchResources({ pageSize = 8, offset, filters } = { }) {
   console.log("fetching resources...");
 
   const params = new URLSearchParams();
   params.append("pageSize", pageSize.toString());
   if (offset) params.append("offset", offset.toString());
+
+  // Category Filter
+  if (filters.Category && filters.Category.length > 0) {
+    params.append("filters", ["Category", filters.Category]); // 'field,value'
+  }
+
+  // Resources Type Filter
+  if (filters.Resources_Type && filters.Resources_Type.length > 0) {
+    params.append("filters", ["Resources Type", filters.Resources_Type]);
+  }
+
+  // Subject Filters
+  filters.Subjects.forEach(subject => {
+    params.append("filters", ["Subject", subject]);
+  });
 
   try {
     const response = await fetch(`/api/resources?${params.toString()}`);
@@ -95,6 +115,8 @@ async function fetchResources({ pageSize = 8, offset } = { pageSize: 8 }) {
     return [null, error];
   }
 }
+
+//lines bc everything looks the same ////////////////////////////////////////////////////////////////////////////
 
 async function fetchHighlightedResources(
   { pageSize = 10, offset } = { pageSize: 10 }
@@ -120,6 +142,8 @@ async function fetchHighlightedResources(
     return [null, error];
   }
 }
+
+//lines bc everything looks the same ////////////////////////////////////////////////////////////////////////////
 
 class Filters {
   Category = "";
