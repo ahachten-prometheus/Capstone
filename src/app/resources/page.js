@@ -94,6 +94,11 @@ async function fetchResources({ pageSize = 8, offset, filters } = { }) {
     params.append("filters", ["Resources Type", filters.Resources_Type]);
   }
 
+  // Status Filter
+  if (filters.Status && filters.Status.length > 0) {
+    params.append("filters", ["Status", filters.Status]);
+  }
+
   // Subject Filters
   filters.Subjects.forEach(subject => {
     params.append("filters", ["Subject", subject]);
