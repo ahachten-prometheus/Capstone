@@ -25,6 +25,7 @@ export default function Resources() {
           setOffset(data.offset);
         }
       } catch (error) {
+        console.error(error);
         setError(error.message);
       }
     }
@@ -45,6 +46,7 @@ export default function Resources() {
         setOffset(data.offset);
       }
     } catch (error) {
+      console.error(error);
       setError(error.message);
     }
   };
@@ -164,6 +166,8 @@ class Filters {
   Subjects = new Set();
 
   constructor(urlParams) {
+    if (!urlParams) return;
+
     const categoryFilter = urlParams.get("category");
     const resourcesTypeFilter = urlParams.get("resourcesType");
     const subjectFilters = urlParams.getAll("category");
