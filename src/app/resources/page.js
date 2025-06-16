@@ -122,6 +122,7 @@ async function fetchHighlightedResources(
 }
 
 class Filters {
+  Status = "Active";
   Category = "";
   Resources_Type = "";
   Subjects = new Set();
