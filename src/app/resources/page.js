@@ -2,22 +2,28 @@
 import ResourceTileGrid from "@/components/ResourceTileGrid";
 import ResourceFilters from "@/components/ResourceFilters";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/compat/router";
+import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 
 export default function Resources() {
+  const params = useSearchParams()
+  const router = useRouter()
+
   const [resources, setResources] = useState([]);
+  const [filters, setFilters] = useState(new Filters(params));
   const [offset, setOffset] = useState(null);
   const [highlightedResources, setHighlighted] = useState([]);
   // const [highlightedOffset, setHighOffset] = useState(null);
   const [error, setError] = useState(null);
 
+  console.log(params)
+  
   useEffect(() => {
     async function fetchData() {
       try {
         const [data, error] = await fetchResources({
           pageSize: 8,
-          filters: new Filters(),
+          filters,
         });
 
         if (data) {
@@ -31,7 +37,7 @@ export default function Resources() {
     }
 
     fetchData();
-  }, []);
+  }, [filters]);
 
   //button function to render more resourceess
   const handleLoadMoreClick = async event => {
@@ -39,7 +45,7 @@ export default function Resources() {
       const [data, error] = await fetchResources({
         pageSize: 8,
         offset,
-        filters: new Filters(),
+        filters,
       });
       if (data) {
         setResources([...resources, ...data.records]);
@@ -170,7 +176,7 @@ class Filters {
 
     const categoryFilter = urlParams.get("category");
     const resourcesTypeFilter = urlParams.get("resourcesType");
-    const subjectFilters = urlParams.getAll("category");
+    const subjectFilters = urlParams.getAll("subject");
 
     if (categoryFilter) this.Category = categoryFilter;
     if (resourcesTypeFilter) this.Resources_Type = resourcesTypeFilter;
