@@ -96,30 +96,31 @@ export default function Resources() {
 //lines bc everything looks the same ////////////////////////////////////////////////////////////////////////////
 
 async function fetchResources({ pageSize = 8, offset, filters } = {}) {
-  // console.log(filters);
+  //   console.log(filters);
+  const { Status, Category, Resources_Type, Subjects } = filters;
 
   const params = new URLSearchParams();
   params.append("pageSize", pageSize.toString());
   if (offset) params.append("offset", offset.toString());
 
-  // Category Filter
-  if (filters.Category && filters.Category.length > 0) {
-    params.append("filters", ["Category", filters.Category]); // 'field,value'
+  // ///////
+  // Filters
+  // ///////
+
+  if (Status && Status.length > 0) {
+    params.append("status", Status);
   }
 
-  // Resources Type Filter
-  if (filters.Resources_Type && filters.Resources_Type.length > 0) {
-    params.append("filters", ["Resources Type", filters.Resources_Type]);
+  if (Category && Category.length > 0) {
+    params.append("category", Category);
   }
 
-  // Status Filter
-  if (filters.Status && filters.Status.length > 0) {
-    params.append("filters", ["Status", filters.Status]);
+  if (Resources_Type && Resources_Type.length > 0) {
+    params.append("resourcesType", Resources_Type);
   }
 
-  // Subject Filters
-  filters.Subjects.forEach(subject => {
-    params.append("filters", ["Subject", subject]);
+  Subjects.forEach(subject => {
+    params.append("subject", subject);
   });
 
   try {

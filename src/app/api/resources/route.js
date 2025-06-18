@@ -3,28 +3,40 @@ import { getRecords } from "@/services/airtable";
 export async function GET(req) {
   const params = req.nextUrl.searchParams;
 
-  // //////////////
-  // Filter Testing
-  // //////////////
-
-  // params.append("pageSize", 100);
-  // params.append("filters", ["Category", "Getting the Help You Need"]);
-  // params.append("filters", ["Resources Type", "Crisis Call Lines"]);
-  // params.append("filters", ["Subject", "Anxiety & Depression"]);
-  // params.append("filters", ["Subject", "Bipolar Disorder"]);
-  // params.append("filters", ["Subject", "Eating Disorder"]);
-
   const pageSize = params.get("pageSize");
   const offset = params.get("offset");
-  const filters = params.getAll("filters");
 
-  const filterFormulas = filters.map(filter => {
-    const idxToSplit = filter.indexOf(",");
+  // ///////
+  // Filters
+  // ///////
 
-    const field = filter.slice(0, idxToSplit);
-    const value = filter.slice(idxToSplit + 1);
+  const statusFilter = params.get("status");
+  const categoryFilter = params.get("category");
+  const resourcesTypeFilter = params.get("resourcesType");
+  const subjectFilters = params.getAll("subject");
 
-    if (field === "Subject") {
+  const filterFormulas = [];
+
+  if (statusFilter && statusFilter.length > 0) {
+    const statusFormula = `{Status}='${statusFilter}'`;
+
+    filterFormulas.push(statusFormula);
+  }
+
+  if (categoryFilter && categoryFilter.length > 0) {
+    const categoryFormula = `{Category}='${categoryFilter}'`;
+
+    filterFormulas.push(categoryFormula);
+  }
+
+  if (resourcesTypeFilter && resourcesTypeFilter.length > 0) {
+    const resourcesTypeFormula = `{Resources Type}='${resourcesTypeFilter}'`;
+
+    filterFormulas.push(resourcesTypeFormula);
+  }
+
+  if (subjectFilters.length > 0) {
+    const subjectFormulas = subjectFilters.map(filter => {
       /** RegEx Intentions:
        * Case-Insensitivity - Capitalization inconsistencies will match.
        * Partial Word Matching - If the term is inside the string, it will match.
@@ -35,14 +47,15 @@ export async function GET(req) {
 
       // Escape special RegEx characters in the input. Every character is treated literally.
       // Ex. "How. How??? How're you doing this?" --> "How\. How\?\?\? How're you doing this\?"
-      const regex = value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const regex = filter.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
       // Case-Insensitivity is implemented by using LOWER() on both strings
-      return `REGEX_MATCH(LOWER({${field}}),LOWER('${regex}'))`;
-    } else {
-      return `{${field}}='${value}'`;
-    }
-  });
+      return `REGEX_MATCH(LOWER({Subject}),LOWER('${regex}'))`;
+    });
+
+    filterFormulas.push(subjectFormulas.toString());
+    // filterFormulas.push(`OR(${subjectFormulas.toString()})`);
+  }
 
   try {
     const [data, error] = await getRecords({
