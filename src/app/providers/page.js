@@ -102,20 +102,20 @@ export default function Providers() {
     {/* hero header */}
     <section
       className="
-      w-screen
-      w-[1440px] h-[407px]
-      flex items-center justify-center"
+      w-screen min-h-screen
+      flex flex-col items-center justify-center"
       style={{ backgroundColor: '#C96C86B0' }}>
       <h1 id="providers-hero-header" className="text-4xl font-bold text-white">Providers</h1>
     </section>
 
+    {/* below header: tiles header, filters section, tiles section */}
     <main
       className="
       text-black
       flex flex-col items-center justify-center"
       style={{ backgroundColor: '#FFF5EA' }}>
 
-      {/* above the tiles section */}
+      {/* tiles header - above the tiles section */}
       {/* next: clear selections option */}
       <h3 id="providers-tiles-header"
         className="
@@ -126,12 +126,12 @@ export default function Providers() {
       pt-8">
         Find a Provider</h3>
 
+      {/* filters section */}
       <section
         id="providers-filters"
         className="
-      flex justify-between
-      pt-2 pb-8
-      space-x-4">
+        w-full max-w-screen-lg px-4 py-4 
+        flex flex-col sm:flex-row gap-4 justify-center items-center">
         <input 
           id="provider-name-input"
           type="text"
@@ -149,14 +149,14 @@ export default function Providers() {
           className="
             bg-white hover:bg-[#C96C86B0]
             text-black
-            py-2 px-4 rounded-full"
+            py-2 px-4
+            rounded-full"
           defaultValue="blank-state-opt"
           onChange={debounceChange}
           aria-labelledby="filtering-state">
           <option key="blank-state-opt" value="blank-state-opt" disabled>State?</option>
           {Object.keys(usStates).map((abbr) => <option key={`${abbr}-option`} value={usStates[abbr]}>{abbr}</option>)}
         </select>
-        {/* <p id="test">You selected this state: {selectedState}</p> */}
 
         <select
           id="provider-mode"
@@ -171,14 +171,11 @@ export default function Providers() {
           <option key="yes-opt" value="Yes">Yes</option>
           <option key="no-opt" value="No">No</option>
         </select>
-        {/* <p id="test">You selected this mode: {selectedMode}</p> */}
       </section>
 
       {/* tiles section */}
-      {/* next: filtering this */}
       <ProvidersContainer
         id="providers-display"
-        className="pt-10 pb-10 pl-130 pr-130"
         query={query} />
     </main>
 
