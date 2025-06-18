@@ -35,7 +35,23 @@ export default function Resources() {
         setError(error.message);
       }
     }
+    
+    function handleUpdateParams() {
+      const current = new URLSearchParams(Array.from(params.entries()))
+      
+      if(filters.Category) current.set('category', filters.Category)
+      else current.delete('category')
 
+      if(filters.Resources_Type) current.set('resourcesType', filters.Resources_Type)
+      else current.delete('resourcesType')
+
+      current.delete('subject')
+      Array.from(filters.Subjects).forEach(subject => current.append('subject',subject))
+      
+      router.replace(`?${current.toString()}`);
+  }
+
+    handleUpdateParams()
     fetchData();
   }, [filters]);
 
