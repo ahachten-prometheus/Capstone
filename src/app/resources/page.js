@@ -1,6 +1,7 @@
 "use client";
 import ResourceTileGrid from "@/components/ResourceTileGrid";
 import ResourceFilters from "@/components/ResourceFilters";
+import ResourceSearch from "@/components/ResourceSearch";
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
@@ -94,6 +95,7 @@ export default function Resources() {
           filters={filters}
           setFilters={setFilters}
         />
+        <ResourceSearch/>
         {/* resource tiles */}
         <ResourceTileGrid resources={resources} />
         {/* pagination button (if there is an offset) */}
