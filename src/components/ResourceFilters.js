@@ -1,81 +1,59 @@
 "use client";
-import { useRouter } from "next/compat/router";
-import { useEffect } from "react";
 import React from "react";
+import Select from "react-select";
 
-export default function ResourceFilters() {
-  const router = useRouter();
+export default function ResourceFilters({ filters, setFilters }) {
+  const { Category, Resources_Type, Subjects } = filters;
 
-  const handleUpdate = async () => {
-    try {
-      const [data, error] = await fetchResources({ offset });
-      if (data) {
-        setResources([...resources, ...data.records]);
-        setOffset(data.offset);
-      }
-    } catch (err) {
-      setError(err.message);
-    }
+  const handleCategoryUpdate = option => {
+    // handling clear
+    if (!option) option = { value: "" };
+
+    setFilters(prev => ({ ...prev, Category: option.value }));
+  };
+
+  const handleResourcesTypeUpdate = option => {
+    // handling clear
+    if (!option) option = { value: "" };
+
+    setFilters(prev => ({ ...prev, Resources_Type: option.value }));
+  };
+
+  const handleSubjectsUpdate = options => {
+    const values = options.map(({ value }) => value);
+
+    setFilters(prev => ({ ...prev, Subjects: new Set(values) }));
   };
 
   return (
     <>
-      <div className='filter-form-block'>
-        <select
-          id='category-filter'
-          name='Category'>
-          <option
-            value=''
-            selected
-            disabled>
-            {" "}
-            Categories
-          </option>
-          <option>Getting the Help You Need</option>
-          <option>Outreach & Advocacy Organizations</option>
-          <option>Professional, Black-Centered Organizations</option>
-          <option>Other Helpful Resources</option>
-        </select>
-
-        <select
-          id='type-filter'
-          name='Resource Type'>
-          <option
-            value=''
-            selected
-            disabled>
-            Types
-          </option>
-          <option>Crisis Call Lines</option>
-          <option>Find A Mental Health Professional</option>
-          <option>Specialized Disorder Support</option>
-          <option>Outreach & Activism Organizations</option>
-          <option>National Government & Advocacy Organizations</option>
-          <option>Black-Focused Mental Health Organizations</option>
-          <option>Professional Associations</option>
-          <option>For Black Girls</option>
-          <option>Staying Informed</option>
-          <option>Other</option>
-        </select>
-
-        <select
-          id='subject-filter'
-          name='Subject'>
-          <option
-            value=''
-            selected
-            disabled>
-            Subjects
-          </option>
-          <option>ADD & ADHD</option>
-          <option>Anxiety & Depression</option>
-          <option>Bipolar Disorder</option>
-          <option>Drugs & Addiction</option>
-          <option>Eating Disorder</option>
-          <option>OCD</option>
-          <option>Other</option>
-        </select>
-      </div>
+      <Select
+        options={categoryOptions}
+        isClearable
+        onChange={handleCategoryUpdate}
+        value={
+          Category.length > 0 ? { value: Category, label: Category } : null
+        }
+      />
+      <Select
+        options={resourcesTypeOptions}
+        isClearable
+        onChange={handleResourcesTypeUpdate}
+        value={
+          Resources_Type.length > 0
+            ? { value: Resources_Type, label: Resources_Type }
+            : null
+        }
+      />
+      <Select
+        options={subjectOptions}
+        isMulti
+        onChange={handleSubjectsUpdate}
+        value={Array.from(Subjects).map(filter => ({
+          value: filter,
+          label: filter,
+        }))}
+      />
     </>
   );
 }
@@ -116,3 +94,57 @@ async function fetchFilteredResources({ pageSize = 8, offset, filters }) {
     return [null, error];
   }
 }
+
+const categoryOptions = [
+  { label: "Getting the Help You Need", value: "Getting the Help You Need" },
+  {
+    label: "Outreach & Advocacy Organizations",
+    value: "Outreach & Advocacy Organizations",
+  },
+  {
+    label: "Professional and Black-Centered Organizations",
+    value: "Professional and Black-Centered Organizations",
+  },
+  { label: "Other Helpful Resources", value: "Other Helpful Resources" },
+];
+
+const resourcesTypeOptions = [
+  { label: "Crisis Call Lines", value: "Crisis Call Lines" },
+  {
+    label: "Find a Mental Health Professional",
+    value: "Find a Mental Health Professional",
+  },
+  {
+    label: "Specialized Disorder Support",
+    value: "Specialized Disorder Support",
+  },
+  {
+    label: "Outreach & Activism Organizations",
+    value: "Outreach & Activism Organizations",
+  },
+  {
+    label: "National Government and Advocacy Organizations",
+    value: "National Government and Advocacy Organizations",
+  },
+  {
+    label: "Black-Focused Mental Health Organizations",
+    value: "Black-Focused Mental Health Organizations",
+  },
+  { label: "Professional Associations", value: "Professional Associations" },
+  { label: "For Black Girls", value: "For Black Girls" },
+  { label: "Staying Informed", value: "Staying Informed" },
+  { label: "Other", value: "Other" },
+];
+
+const subjectOptions = [
+  { label: "ADD & ADHD", value: "ADD & ADHD" },
+  {
+    label: "Anxiety & Depression",
+    value: "Anxiety & Depression",
+  },
+  { label: "Bipolar Disorder", value: "Bipolar Disorder" },
+  { label: "Drug & Addiction", value: "Drug & Addiction" },
+  { label: "Eating Disorder", value: "Eating Disorder" },
+  { label: "OCD", value: "OCD" },
+  { label: "Other", value: "Other" },
+];

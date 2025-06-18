@@ -6,8 +6,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 
 export default function Resources() {
-  const params = useSearchParams()
-  const router = useRouter()
+  const params = useSearchParams();
+  const router = useRouter();
 
   const [resources, setResources] = useState([]);
   const [filters, setFilters] = useState(new Filters(params));
@@ -16,8 +16,8 @@ export default function Resources() {
   // const [highlightedOffset, setHighOffset] = useState(null);
   const [error, setError] = useState(null);
 
-  console.log(params)
-  
+  // console.log(params);
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -74,7 +74,10 @@ export default function Resources() {
         <h2>All Resources</h2>
         <hr />
         {/* search bar & filter drop downs*/}
-        <ResourceFilters />
+        <ResourceFilters
+          filters={filters}
+          setFilters={setFilters}
+        />
         {/* resource tiles */}
         <ResourceTileGrid resources={resources} />
         {/* pagination button (if there is an offset) */}
@@ -93,7 +96,7 @@ export default function Resources() {
 //lines bc everything looks the same ////////////////////////////////////////////////////////////////////////////
 
 async function fetchResources({ pageSize = 8, offset, filters } = {}) {
-  console.log(filters);
+  // console.log(filters);
 
   const params = new URLSearchParams();
   params.append("pageSize", pageSize.toString());
@@ -180,9 +183,6 @@ class Filters {
 
     if (categoryFilter) this.Category = categoryFilter;
     if (resourcesTypeFilter) this.Resources_Type = resourcesTypeFilter;
-
-    subjectFilters.forEach(filter => {
-      this.Subjects.add(filter);
-    });
+    this.Subjects = new Set(subjectFilters);
   }
 }
