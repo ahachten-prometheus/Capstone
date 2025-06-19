@@ -36,23 +36,26 @@ export default function Resources() {
         setError(error.message);
       }
     }
-    
+
     function handleUpdateParams() {
-      const current = new URLSearchParams(Array.from(params.entries()))
-      
-      if(filters.Category) current.set('category', filters.Category)
-      else current.delete('category')
+      const current = new URLSearchParams(Array.from(params.entries()));
 
-      if(filters.Resources_Type) current.set('resourcesType', filters.Resources_Type)
-      else current.delete('resourcesType')
+      if (filters.Category) current.set("category", filters.Category);
+      else current.delete("category");
 
-      current.delete('subject')
-      Array.from(filters.Subjects).forEach(subject => current.append('subject',subject))
-      
+      if (filters.Resources_Type)
+        current.set("resourcesType", filters.Resources_Type);
+      else current.delete("resourcesType");
+
+      current.delete("subject");
+      Array.from(filters.Subjects).forEach(subject =>
+        current.append("subject", subject)
+      );
+
       router.replace(`?${current.toString()}`);
-  }
+    }
 
-    handleUpdateParams()
+    handleUpdateParams();
     fetchData();
   }, [filters]);
 
@@ -95,7 +98,7 @@ export default function Resources() {
           filters={filters}
           setFilters={setFilters}
         />
-        <ResourceSearch/>
+        <ResourceSearch />
         {/* resource tiles */}
         <ResourceTileGrid resources={resources} />
         {/* pagination button (if there is an offset) */}
@@ -113,9 +116,9 @@ export default function Resources() {
 
 //lines bc everything looks the same ////////////////////////////////////////////////////////////////////////////
 
-async function fetchResources({ pageSize = 8, offset, filters } = {}) {
+async function fetchResources({ pageSize = 8, offset, filters }) {
   //   console.log(filters);
-  const { Status, Category, Resources_Type, Subjects } = filters;
+  const { Status, Name, Category, Resources_Type, Subjects } = filters;
 
   const params = new URLSearchParams();
   params.append("pageSize", pageSize.toString());
@@ -127,6 +130,10 @@ async function fetchResources({ pageSize = 8, offset, filters } = {}) {
 
   if (Status && Status.length > 0) {
     params.append("status", Status);
+  }
+
+  if (Name && Name.length > 0) {
+    params.append("name", Name);
   }
 
   if (Category && Category.length > 0) {
@@ -189,6 +196,7 @@ async function fetchHighlightedResources(
 
 class Filters {
   Status = "Active";
+  Name = "";
   Category = "";
   Resources_Type = "";
   Subjects = new Set();

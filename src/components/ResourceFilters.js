@@ -3,7 +3,7 @@ import React from "react";
 import Select from "react-select";
 
 export default function ResourceFilters({ filters, setFilters }) {
-  const { Category, Resources_Type, Subjects } = filters;
+  const { Name, Category, Resources_Type, Subjects } = filters;
 
   const handleCategoryUpdate = option => {
     // handling clear

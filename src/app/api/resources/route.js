@@ -11,6 +11,7 @@ export async function GET(req) {
   // ///////
 
   const statusFilter = params.get("status");
+  const nameFilter = params.get("name");
   const categoryFilter = params.get("category");
   const resourcesTypeFilter = params.get("resourcesType");
   const subjectFilters = params.getAll("subject");
@@ -21,6 +22,12 @@ export async function GET(req) {
     const statusFormula = `{Status}='${statusFilter}'`;
 
     filterFormulas.push(statusFormula);
+  }
+
+  if (nameFilter && nameFilter.length > 0) {
+    const nameFormula = `FIND(LOWER('${nameFilter}'),LOWER({Name}))`;
+
+    filterFormulas.push(nameFormula);
   }
 
   if (categoryFilter && categoryFilter.length > 0) {
