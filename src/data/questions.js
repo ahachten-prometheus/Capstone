@@ -25,6 +25,7 @@ export const surveyQuestions = {
     id: 2,
     text: "Are you looking for resources on a particular subject?",
     type: "multi-select",
+    field: "resources_subject",
     options: [
       { label: "Anxiety & Depression", value: "Anxiety_Depression" },
       { label: "ADD & ADHD", value: "ADD_ADHD" },
@@ -38,6 +39,7 @@ export const surveyQuestions = {
     id: 3,
     text: "What type of resources are you looking for?",
     type: "multi-select",
+    field: "resources_category",
     options: [
       { label: "I'm looking to get help", value: "Getting the Help You Need" },
       {
@@ -54,6 +56,7 @@ export const surveyQuestions = {
     id: 4,
     text: "Where are you looking for care?",
     type: "dropdown",
+    field: "provider_state",
     options: [
       { label: "Alabama", value: "Alabama" },
       { label: "Alaska", value: "Alaska" },
@@ -70,6 +73,6 @@ export const surveyQuestions = {
       { label: "Yes", value: "Yes" },
       { label: "No", value: "No" },
     ],
-    filterKey: "virtual_only",
+    field: "virtual_only",
   },
 };

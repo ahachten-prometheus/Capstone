@@ -15,17 +15,18 @@ export function useProviders(query = {}) {
     const params = new URLSearchParams();
     if (query?.state) params.append('state', query.state);
     if (query?.virtualOnly) params.append('virtualOnly', query.virtualOnly);
-    if (query?.name) params.append('search', query.name);
+    if (query?.name) params.append('name', query.name);
     if (offset) params.append('offset', offset);
     params.append('pageSize', 12);
     return params.toString();
   }
 
-  const fetchProviders = async (query) => {
-    if (!hasMore) return;
+  const fetchProviders = async (query, isNewSearch = false) => {
+    if (!hasMore && !isNewSearch) return;
     setLoading(true), setError('');
 
-    const queryParams = `?${buildQueryParams(query, offset)}`;
+    const queryOffset = isNewSearch ? null : offset;
+    const queryParams = `?${buildQueryParams(query, queryOffset)}`;
     console.info('[PROVIDERS/INFO] fetchProviders() called with params:', queryParams); //remove after debugging
 
     const [providersObj, error] = await ProvidersAPI.get(queryParams);
@@ -36,7 +37,7 @@ export function useProviders(query = {}) {
 
     console.info(`[PROVIDERS/INFO] Retrieved ${providerRecords.length} records`, providerRecords); //remove after debugging
 
-    setProviders(prev => [...prev, ...providerRecords]); //appends any new fetches to existing providers list state
+    setProviders(prev => isNewSearch ? providerRecords : [...prev, ...providerRecords]); //appends any new fetches to existing providers list state
     setOffset(nextToken); //update offset for next fetch
     setHasMore(!!nextToken); //if null, no more data to fetch
     setLoading(false);
@@ -47,7 +48,7 @@ export function useProviders(query = {}) {
     setOffset(null);
     setHasMore(true);
 
-    fetchProviders(query);
+    fetchProviders(query, true); // tells fetchProviders to start fresh
   }, [query]); //refetch when query changes, resetting state of providers, offset, and hasMore to ensure records fetched are filtered based on the new query
 
   return {
