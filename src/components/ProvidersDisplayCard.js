@@ -15,7 +15,7 @@ export default function ProvidersDisplayCard({ provider }) {
 
 
         <p className="font-bricolage text-[15px] font-normal leading-[100%] text-black h-[20px]">
-          {virtualOnly ? 'Virtual Only' : 'In-Person Available'}
+          {(virtualOnly === "Yes") ? 'Virtual Only' : 'In-Person Available'}
         </p>
 
         <p className="font-bricolage text-[15px] font-normal leading-[100%] text-black h-[20px]">
