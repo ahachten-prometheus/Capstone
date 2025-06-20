@@ -1,11 +1,11 @@
 "use client";
 import ResourceTileGrid from "@/components/ResourceTileGrid";
 import ResourceFilters from "@/components/ResourceFilters";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 
-export default function Resources() {
+const Test = () => {
   const params = useSearchParams();
   const router = useRouter();
 
@@ -107,6 +107,10 @@ export default function Resources() {
       </div>
     </div>
   );
+};
+
+export default function Resources() {
+  return <Suspense fallback={<></>}><Test /></Suspense>
 }
 
 //lines bc everything looks the same ////////////////////////////////////////////////////////////////////////////

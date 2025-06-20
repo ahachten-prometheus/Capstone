@@ -30,6 +30,7 @@ export default function ResourceFilters({ filters, setFilters }) {
       <Select
         options={categoryOptions}
         isClearable
+        instanceId={`000`}
         onChange={handleCategoryUpdate}
         value={
           Category.length > 0 ? { value: Category, label: Category } : null
@@ -38,6 +39,7 @@ export default function ResourceFilters({ filters, setFilters }) {
       <Select
         options={resourcesTypeOptions}
         isClearable
+        instanceId={`111`}
         onChange={handleResourcesTypeUpdate}
         value={
           Resources_Type.length > 0
@@ -48,6 +50,7 @@ export default function ResourceFilters({ filters, setFilters }) {
       <Select
         options={subjectOptions}
         isMulti
+        instanceId={`222`}
         onChange={handleSubjectsUpdate}
         value={Array.from(Subjects).map(filter => ({
           value: filter,
