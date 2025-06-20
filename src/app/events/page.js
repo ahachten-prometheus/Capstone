@@ -1,6 +1,6 @@
-"use client";
-import { useState, useEffect } from "react";
-import EventTilesGrid from "../../components/EventTilesGrid";
+'use client';
+import { useState, useEffect } from 'react';
+import EventTilesGrid from '../../components/EventTilesGrid';
 
 export default function Events() {
 	const [visibleEvents, setVisibleEvents] = useState([]); // holds only the events currently shown
@@ -76,11 +76,12 @@ export default function Events() {
 					Upcoming Events & Webinar{' '}
 				</h3>
 
-      {/* Tiles*/}
-      <section 
-      id="events-display" 
-      className="py-10 px-6 sm:px-8 md:px-15[180px]">
-        <EventTilesGrid eventList={visibleEvents} />
+				{/* Tiles*/}
+				<section
+					id="events-display"
+					className="py-10 px-6 sm:px-8 md:px-15[180px]"
+				>
+					<EventTilesGrid eventList={visibleEvents} />
 
 					{/* Testing API*/}
 					<ul>
@@ -97,7 +98,7 @@ export default function Events() {
 				{hasMore && (
 					<button
 						id="more-events"
-						className=" bg-[#B36078] hover:bg-[#C96C86B0] text-white font-bold py-2 px-4 rounded-full m-6"
+						className=" bg-[#B36078] hover:bg-[#C96C86B0] text-white  text-lg font-bold py-2 px-10 rounded-full m-6"
 						onClick={() => fetchEvents(offset)}
 					>
 						{isLoading ? 'Loading more events..' : 'Load More'}
