@@ -27,6 +27,14 @@ export default function ResourceFilters({ filters, setFilters }) {
 
   return (
     <>
+      <input
+        type='text'
+        className='
+          bg-white hover:bg-[#C96C86B0]
+          text-black
+          py-2 px-4 rounded-full'
+        placeholder='Search...'
+      />
       <Select
         options={categoryOptions}
         isClearable

@@ -106,7 +106,7 @@ function PageContents() {
           filters={filters}
           setFilters={setFilters}
         />
-        <ResourceSearch />
+        {/* <ResourceSearch /> */}
         {/* resource tiles */}
         <ResourceTileGrid resources={resources} />
         {/* pagination button (if there is an offset) */}
