@@ -1,11 +1,11 @@
 "use client";
 import ResourceTileGrid from "@/components/ResourceTileGrid";
 import ResourceFilters from "@/components/ResourceFilters";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 
-export default function Resources() {
+function PageContents() {
   const params = useSearchParams();
   const router = useRouter();
 
@@ -35,23 +35,26 @@ export default function Resources() {
         setError(error.message);
       }
     }
-    
+
     function handleUpdateParams() {
-      const current = new URLSearchParams(Array.from(params.entries()))
-      
-      if(filters.Category) current.set('category', filters.Category)
-      else current.delete('category')
+      const current = new URLSearchParams(Array.from(params.entries()));
 
-      if(filters.Resources_Type) current.set('resourcesType', filters.Resources_Type)
-      else current.delete('resourcesType')
+      if (filters.Category) current.set("category", filters.Category);
+      else current.delete("category");
 
-      current.delete('subject')
-      Array.from(filters.Subjects).forEach(subject => current.append('subject',subject))
-      
+      if (filters.Resources_Type)
+        current.set("resourcesType", filters.Resources_Type);
+      else current.delete("resourcesType");
+
+      current.delete("subject");
+      Array.from(filters.Subjects).forEach(subject =>
+        current.append("subject", subject)
+      );
+
       router.replace(`?${current.toString()}`);
-  }
+    }
 
-    handleUpdateParams()
+    handleUpdateParams();
     fetchData();
   }, [filters]);
 
@@ -106,6 +109,14 @@ export default function Resources() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function Resources() {
+  return (
+    <Suspense>
+      <PageContents />
+    </Suspense>
   );
 }
 
