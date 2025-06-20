@@ -5,7 +5,7 @@ import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 
-const Test = () => {
+export default function Resources() {
   const params = useSearchParams();
   const router = useRouter();
 
@@ -35,23 +35,26 @@ const Test = () => {
         setError(error.message);
       }
     }
-    
+
     function handleUpdateParams() {
-      const current = new URLSearchParams(Array.from(params.entries()))
-      
-      if(filters.Category) current.set('category', filters.Category)
-      else current.delete('category')
+      const current = new URLSearchParams(Array.from(params.entries()));
 
-      if(filters.Resources_Type) current.set('resourcesType', filters.Resources_Type)
-      else current.delete('resourcesType')
+      if (filters.Category) current.set("category", filters.Category);
+      else current.delete("category");
 
-      current.delete('subject')
-      Array.from(filters.Subjects).forEach(subject => current.append('subject',subject))
-      
+      if (filters.Resources_Type)
+        current.set("resourcesType", filters.Resources_Type);
+      else current.delete("resourcesType");
+
+      current.delete("subject");
+      Array.from(filters.Subjects).forEach(subject =>
+        current.append("subject", subject)
+      );
+
       router.replace(`?${current.toString()}`);
-  }
+    }
 
-    handleUpdateParams()
+    handleUpdateParams();
     fetchData();
   }, [filters]);
 
@@ -90,27 +93,25 @@ const Test = () => {
         <h2>All Resources</h2>
         <hr />
         {/* search bar & filter drop downs*/}
-        <ResourceFilters
-          filters={filters}
-          setFilters={setFilters}
-        />
-        {/* resource tiles */}
-        <ResourceTileGrid resources={resources} />
-        {/* pagination button (if there is an offset) */}
-        {offset && (
-          <button
-            onClick={handleLoadMoreClick}
-            className='bg-[#C96C86] hover:bg-[#8F5E72] cursor-pointer px-4 py-2 '>
-            load more
-          </button>
-        )}
+        <Suspense>
+          <ResourceFilters
+            filters={filters}
+            setFilters={setFilters}
+          />
+          {/* resource tiles */}
+          <ResourceTileGrid resources={resources} />
+          {/* pagination button (if there is an offset) */}
+          {offset && (
+            <button
+              onClick={handleLoadMoreClick}
+              className='bg-[#C96C86] hover:bg-[#8F5E72] cursor-pointer px-4 py-2 '>
+              load more
+            </button>
+          )}
+        </Suspense>
       </div>
     </div>
   );
-};
-
-export default function Resources() {
-  return <Suspense fallback={<></>}><Test /></Suspense>
 }
 
 //lines bc everything looks the same ////////////////////////////////////////////////////////////////////////////
