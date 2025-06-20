@@ -1,11 +1,11 @@
 "use client";
 import ResourceTileGrid from "@/components/ResourceTileGrid";
 import ResourceFilters from "@/components/ResourceFilters";
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 
-function PageContents() {
+export default function Resources() {
   const params = useSearchParams();
   const router = useRouter();
 
@@ -109,14 +109,6 @@ function PageContents() {
         )}
       </div>
     </div>
-  );
-}
-
-export default function Resources() {
-  return (
-    <Suspense>
-      <PageContents />
-    </Suspense>
   );
 }
 
