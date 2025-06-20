@@ -1,113 +1,216 @@
 "use client";
-import ResourceTileGrid from "@/components/ResourceTileGrid"
-import { useState, useEffect } from "react"
+import ResourceTileGrid from "@/components/ResourceTileGrid";
+import ResourceFilters from "@/components/ResourceFilters";
+import { useState, useEffect, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 
 export default function Resources() {
-    const [resources, setResources] = useState([])
-    const [offset, setOffset] = useState(null)
-    const [highlightedResources, setHighlighted] = useState([])
-    const [highlightedOffset, setHighOffset] = useState(null)
-    const [error, setError] = useState(null)
+  return (
+    <Suspense>
+      <PageContents />
+    </Suspense>
+  );
+}
 
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const [data, error] = await fetchResources()
+function PageContents() {
+  const params = useSearchParams();
+  const router = useRouter();
 
-                if (data) {
-                    setResources(data.records);
-                    setOffset(data.offset)
-                    console.log(offset)
-                }
+  const [resources, setResources] = useState([]);
+  const [filters, setFilters] = useState(new Filters(params));
+  const [offset, setOffset] = useState(null);
+  const [highlightedResources, setHighlighted] = useState([]);
+  // const [highlightedOffset, setHighOffset] = useState(null);
+  const [error, setError] = useState(null);
 
-            } catch (err) {
-                setError(err.message)
-            }
+  // console.log(params);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [data, error] = await fetchResources({
+          pageSize: 8,
+          filters,
+        });
+
+        if (data) {
+          setResources(data.records);
+          setOffset(data.offset);
         }
-
-        fetchData()
-    }, [])
-
-    //button function to render more resourceess
-    const handleLoadMoreClick = async (event) => {
-        // event.preventDefault() //don't refresh the page pls 
-        try {
-            const [data, error] = await fetchResources({ offset })
-            if (data) {
-                setResources([...resources, ...data.records]);
-                setOffset(data.offset)
-                console.log(offset)
-            }
-        } catch (err) {
-            setError(err.message)
-        }
-
+      } catch (error) {
+        console.error(error);
+        setError(error.message);
+      }
     }
 
-    return (
-        <div>
+    function handleUpdateParams() {
+      const current = new URLSearchParams(Array.from(params.entries()));
 
-            <h2> Resources </h2>
-            <div className="highlighted-resource-block">
-                {/* resource page recommendation block component */}
-            </div>
+      if (filters.Category) current.set("category", filters.Category);
+      else current.delete("category");
 
-            <div className="resource-image">
-                {/* Picture-slideshow component */}
-            </div>
+      if (filters.Resources_Type)
+        current.set("resourcesType", filters.Resources_Type);
+      else current.delete("resourcesType");
 
-            <div className="all-resources">
-                <h2>All Resources</h2> {/* Changes if there are filters present. Otherwise, shows "all filters" */}
-                {/* Search bar component */}
-                {/* filter drop downs */}
-                <ResourceTileGrid resources={resources} />
-                {/* Load more button */}
-                <button onClick={() => handleLoadMoreClick(offset)} className="bg-[#C96C86] hover:bg-[#8F5E72] cursor-pointer px-4 py-2 ">load more</button>
+      current.delete("subject");
+      Array.from(filters.Subjects).forEach(subject =>
+        current.append("subject", subject)
+      );
 
-            </div>
+      router.replace(`?${current.toString()}`);
+    }
 
+    handleUpdateParams();
+    fetchData();
+  }, [filters]);
+
+  //button function to render more resourceess
+  const handleLoadMoreClick = async event => {
+    try {
+      const [data, error] = await fetchResources({
+        pageSize: 8,
+        offset,
+        filters,
+      });
+      if (data) {
+        setResources([...resources, ...data.records]);
+        setOffset(data.offset);
+      }
+    } catch (error) {
+      console.error(error);
+      setError(error.message);
+    }
+  };
+
+  //lines bc everything looks the same ////////////////////////////////////////////////////////////////////////////
+
+  return (
+    <div>
+      <h2> Resources </h2>
+
+      {/* resource page recommendation block component */}
+      {highlightedResources.length > 0 && (
+        <div className='highlighted-resource-block'>
+          {/* highlightedResources[Math.floor(Math.random() * highlightedResources.length)] */}
         </div>
-    )
+      )}
+
+      <div className='all-resources'>
+        <h2>All Resources</h2>
+        <hr />
+        {/* search bar & filter drop downs*/}
+        <ResourceFilters
+          filters={filters}
+          setFilters={setFilters}
+        />
+        {/* resource tiles */}
+        <ResourceTileGrid resources={resources} />
+        {/* pagination button (if there is an offset) */}
+        {offset && (
+          <button
+            onClick={handleLoadMoreClick}
+            className='bg-[#C96C86] hover:bg-[#8F5E72] cursor-pointer px-4 py-2 '>
+            load more
+          </button>
+        )}
+      </div>
+    </div>
+  );
 }
 
-async function fetchResources({ pageSize = 8, offset } = { pageSize: 8 }) {
+//lines bc everything looks the same ////////////////////////////////////////////////////////////////////////////
 
-    console.log("fetching resources...")
+async function fetchResources({ pageSize = 8, offset, filters } = {}) {
+  //   console.log(filters);
+  const { Status, Category, Resources_Type, Subjects } = filters;
 
-    try {
-        const params = new URLSearchParams()
-        params.append('pageSize', pageSize.toString())
-        if (offset) params.append('offset', offset.toString())
+  const params = new URLSearchParams();
+  params.append("pageSize", pageSize.toString());
+  if (offset) params.append("offset", offset.toString());
 
-        const response = await fetch(`/api/resources?${params.toString()}`);
-        const data = await response.json();
+  // ///////
+  // Filters
+  // ///////
 
-        if (!response.ok) return data.err
-        return [data, null]
+  if (Status && Status.length > 0) {
+    params.append("status", Status);
+  }
 
-    } catch (err) {
-        console.error("unable to fetch resources", err)
-        return [null, err]
-    }
+  if (Category && Category.length > 0) {
+    params.append("category", Category);
+  }
+
+  if (Resources_Type && Resources_Type.length > 0) {
+    params.append("resourcesType", Resources_Type);
+  }
+
+  Subjects.forEach(subject => {
+    params.append("subject", subject);
+  });
+
+  try {
+    const response = await fetch(`/api/resources?${params.toString()}`);
+
+    if (!response.ok)
+      throw new Error(
+        `Fetch failed: ${response.status} - ${response.statusText}`
+      );
+
+    const data = await response.json();
+
+    return [data, null];
+  } catch (error) {
+    console.error("unable to fetch resources", error);
+    return [null, error];
+  }
 }
 
-async function fetchHighlightedResources({ pageSize = 1, offset } = { pageSize: 1 }) {
+//lines bc everything looks the same ////////////////////////////////////////////////////////////////////////////
 
-    try {
-        const params = new URLSearchParams()
-        params.append('pageSize', pageSize.toString())
-        if (offset) params.append('offset', offset.toString())
+async function fetchHighlightedResources(
+  { pageSize = 10, offset } = { pageSize: 10 }
+) {
+  const params = new URLSearchParams();
+  params.append("pageSize", pageSize.toString());
+  if (offset) params.append("offset", offset.toString());
 
-        const response = await fetch(`/api/resources/highlighted?${params.toString()}`);
-        const data = await response.json();
+  try {
+    const response = await fetch(
+      `/api/resources/highlighted?${params.toString()}`
+    );
 
-        if (!response.ok) return data.err
-        return [data, null]
+    if (!response.ok)
+      throw new Error(
+        `Fetch failed: ${response.status} - ${response.statusText}`
+      );
 
-    } catch (err) {
-        console.error("unable to fetch highlighted resources", err)
-        return [null, err]
-    }
+    const data = await response.json();
+    return [data, null];
+  } catch (error) {
+    console.error("unable to fetch highlighted resources", error);
+    return [null, error];
+  }
 }
 
+//lines bc everything looks the same ////////////////////////////////////////////////////////////////////////////
+
+class Filters {
+  Status = "Active";
+  Category = "";
+  Resources_Type = "";
+  Subjects = new Set();
+
+  constructor(urlParams) {
+    if (!urlParams) return;
+
+    const categoryFilter = urlParams.get("category");
+    const resourcesTypeFilter = urlParams.get("resourcesType");
+    const subjectFilters = urlParams.getAll("subject");
+
+    if (categoryFilter) this.Category = categoryFilter;
+    if (resourcesTypeFilter) this.Resources_Type = resourcesTypeFilter;
+    this.Subjects = new Set(subjectFilters);
+  }
+}
