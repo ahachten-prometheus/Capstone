@@ -102,7 +102,7 @@ export default function Providers() {
     {/* hero header */}
     <section
       className="
-      w-screen min-h-screen
+      w-screen h-[407px]
       flex flex-col items-center justify-center"
       style={{ backgroundColor: '#C96C86B0' }}>
       <h1 id="providers-hero-header" className="text-4xl font-bold text-white">Providers</h1>
@@ -112,7 +112,7 @@ export default function Providers() {
     <main
       className="
       text-black
-      flex flex-col items-center justify-center"
+      flex flex-col items-center justify-center pb-12"
       style={{ backgroundColor: '#FFF5EA' }}>
 
       {/* tiles header - above the tiles section */}
@@ -130,13 +130,13 @@ export default function Providers() {
       <section
         id="providers-filters"
         className="
-        w-full max-w-screen-lg px-4 py-4 
-        flex flex-col sm:flex-row gap-4 justify-center items-center">
+        w-full max-w-screen-lg px-4 py-6 
+        flex flex-col sm:flex-row gap-4 pb-10 justify-center items-center">
         <input 
           id="provider-name-input"
           type="text"
           className="
-          bg-white hover:bg-[#C96C86B0]
+          bg-white hover:bg-[#DCAD27]
           text-black
           py-2 px-4 rounded-full"
           onChange={debounceChange}
@@ -147,7 +147,7 @@ export default function Providers() {
         <select
           id="provider-state"
           className="
-            bg-white hover:bg-[#C96C86B0]
+            bg-white hover:bg-[#DCAD27]
             text-black
             py-2 px-4
             rounded-full"
@@ -161,7 +161,7 @@ export default function Providers() {
         <select
           id="provider-mode"
           className="
-            bg-white hover:bg-[#C96C86B0]
+            bg-white hover:bg-[#DCAD27]
             text-black
             py-2 px-4 rounded-full"
           defaultValue="blank-mode-opt"

@@ -23,11 +23,11 @@ export default function ProvidersDisplayCard({ provider }) {
       </div>
 
       <div className="flex justify-center">
-        <button className="w-[134px] h-[35px] bg-[#C96C86] text-white rounded-[33px] border border-black text-sm">
-          <a href='https://www.blackgirlssmile.org/'>
-            Details
-          </a>
-        </button>
+        <a href="https://www.blackgirlssmile.org/">
+          <button className="w-[134px] h-[35px] bg-[#B36078] hover:ring-4 hover:ring-[#DCAD27] text-white rounded-[33px] text-sm">
+              Details
+          </button>
+        </a>
       </div>
 
     </div>
