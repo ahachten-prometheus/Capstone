@@ -1,6 +1,7 @@
 "use client";
 import ResourceTileGrid from "@/components/ResourceTileGrid";
 import ResourceFilters from "@/components/ResourceFilters";
+import ResourceHighlightedTiles from "@/components/ResourceHighlightedTiles";
 import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -109,10 +110,14 @@ function PageContents() {
       <h2> Resources </h2>
 
       {/* resource page recommendation block component */}
-      {highlightedResources.length > 0 && (
-        <div className='highlighted-resource-block'>
-          {/* highlightedResources[Math.floor(Math.random() * highlightedResources.length)] */}
-        </div>
+      {resources.length > 0 && (
+        <ResourceHighlightedTiles
+          resource={
+            highlightedResources[
+              Math.floor(Math.random() * highlightedResources.length)
+            ] ?? resources[0] // remove the resources[0] in production
+          }
+        />
       )}
 
       <div className='all-resources'>
