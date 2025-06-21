@@ -1,9 +1,36 @@
 "use client";
-import React from "react";
+import { useEffect, useRef } from "react";
+import debounce from "lodash.debounce";
 import Select from "react-select";
 
 export default function ResourceFilters({ filters, setFilters }) {
   const { Category, Resources_Type, Subjects } = filters;
+
+  // ///////////////////////////
+  // Searching (aka Name Filter)
+  // ///////////////////////////
+
+  const handleNameUpdate = event => {
+    const value = event.target.value;
+
+    setFilters(prev => ({ ...prev, Name: value }));
+  };
+
+  // /////////////////
+  // Debouncing Search
+  // /////////////////
+
+  const debouncedHandleNameUpdate = useRef(
+    debounce(handleNameUpdate, 400)
+  ).current;
+
+  useEffect(() => {
+    return () => debouncedHandleNameUpdate.cancel();
+  }, [debouncedHandleNameUpdate]);
+
+  // /////////////
+  // Other Filters
+  // /////////////
 
   const handleCategoryUpdate = option => {
     // handling clear
@@ -27,6 +54,15 @@ export default function ResourceFilters({ filters, setFilters }) {
 
   return (
     <>
+      <input
+        type='text'
+        className='
+          bg-white hover:bg-[#C96C86B0]
+          text-black
+          py-2 px-4 rounded-full'
+        placeholder='Search...'
+        onChange={debouncedHandleNameUpdate}
+      />
       <Select
         options={categoryOptions}
         isClearable
