@@ -13,7 +13,7 @@ export default function ResourceTileGrid({ resources }) {
           ))}
         </div>
       ) : (
-        <p>no resource ;-;</p>
+        <p>No Resources Available</p>
       )}
     </>
   );
