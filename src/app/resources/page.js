@@ -1,10 +1,8 @@
 "use client";
 import ResourceTileGrid from "@/components/ResourceTileGrid";
 import ResourceFilters from "@/components/ResourceFilters";
-import ResourceSearch from "@/components/ResourceSearch";
 import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import React from "react";
 
 export default function Resources() {
   return (
@@ -15,17 +13,15 @@ export default function Resources() {
 }
 
 function PageContents() {
-  const params = useSearchParams();
+  const urlParams = useSearchParams();
   const router = useRouter();
 
   const [resources, setResources] = useState([]);
-  const [filters, setFilters] = useState(new Filters(params));
+  const [filters, setFilters] = useState(new Filters(urlParams));
   const [offset, setOffset] = useState(null);
   const [highlightedResources, setHighlighted] = useState([]);
   // const [highlightedOffset, setHighOffset] = useState(null);
   const [error, setError] = useState(null);
-
-  // console.log(params);
 
   useEffect(() => {
     async function fetchData() {
@@ -46,21 +42,26 @@ function PageContents() {
     }
 
     function handleUpdateParams() {
-      const current = new URLSearchParams(Array.from(params.entries()));
+      const { Status, Category, Resources_Type, Subjects } = filters;
+      const params = new URLSearchParams();
 
-      if (filters.Category) current.set("category", filters.Category);
-      else current.delete("category");
+      if (Status && Status.length > 0) {
+        params.append("status", Status);
+      }
 
-      if (filters.Resources_Type)
-        current.set("resourcesType", filters.Resources_Type);
-      else current.delete("resourcesType");
+      if (Category && Category.length > 0) {
+        params.append("category", Category);
+      }
 
-      current.delete("subject");
-      Array.from(filters.Subjects).forEach(subject =>
-        current.append("subject", subject)
-      );
+      if (Resources_Type && Resources_Type.length > 0) {
+        params.append("resourcesType", Resources_Type);
+      }
 
-      router.replace(`?${current.toString()}`);
+      Subjects.forEach(subject => {
+        params.append("subject", subject);
+      });
+
+      router.replace(`?${params.toString()}`);
     }
 
     handleUpdateParams();
@@ -85,8 +86,6 @@ function PageContents() {
     }
   };
 
-  //lines bc everything looks the same ////////////////////////////////////////////////////////////////////////////
-
   return (
     <div>
       <h2> Resources </h2>
@@ -106,7 +105,6 @@ function PageContents() {
           filters={filters}
           setFilters={setFilters}
         />
-        {/* <ResourceSearch /> */}
         {/* resource tiles */}
         <ResourceTileGrid resources={resources} />
         {/* pagination button (if there is an offset) */}
@@ -122,10 +120,7 @@ function PageContents() {
   );
 }
 
-//lines bc everything looks the same ////////////////////////////////////////////////////////////////////////////
-
 async function fetchResources({ pageSize = 8, offset, filters }) {
-  //   console.log(filters);
   const { Status, Name, Category, Resources_Type, Subjects } = filters;
 
   const params = new URLSearchParams();
@@ -173,8 +168,6 @@ async function fetchResources({ pageSize = 8, offset, filters }) {
   }
 }
 
-//lines bc everything looks the same ////////////////////////////////////////////////////////////////////////////
-
 async function fetchHighlightedResources(
   { pageSize = 10, offset } = { pageSize: 10 }
 ) {
@@ -199,8 +192,6 @@ async function fetchHighlightedResources(
     return [null, error];
   }
 }
-
-//lines bc everything looks the same ////////////////////////////////////////////////////////////////////////////
 
 class Filters {
   Status = "Active";
