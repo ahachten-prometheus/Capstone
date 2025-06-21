@@ -20,7 +20,7 @@ function PageContents() {
   const [filters, setFilters] = useState(new Filters(urlParams));
   const [offset, setOffset] = useState(null);
   const [highlightedResources, setHighlighted] = useState([]);
-  // const [highlightedOffset, setHighOffset] = useState(null);
+  const [highlightedOffset, setHighOffset] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -67,6 +67,24 @@ function PageContents() {
     handleUpdateParams();
     fetchData();
   }, [filters]);
+
+  useEffect(() => {
+    async function fetchHighlightedData() {
+      try {
+        const [data, error] = await fetchHighlightedResources();
+
+        if (data) {
+          setHighlighted(data.records);
+          setHighOffset(data.offset);
+        }
+      } catch (error) {
+        console.error(error);
+        setError(error.message);
+      }
+    }
+
+    fetchHighlightedData();
+  }, []);
 
   //button function to render more resourceess
   const handleLoadMoreClick = async event => {
