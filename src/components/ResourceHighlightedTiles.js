@@ -1,7 +1,6 @@
 export default function ResourceHighlightedTiles({ resource }) {
   const {
     Name,
-    Status,
     ["Resources Type"]: Resources_Type,
     Description,
     URL,

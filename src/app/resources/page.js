@@ -24,11 +24,10 @@ function PageContents() {
   const [highlightedOffset, setHighOffset] = useState(null);
   const [error, setError] = useState(null);
 
-
   useEffect(() => {
-  // ///////////////////////////
-  // Fetching resources on filter change
-  // ///////////////////////////
+    // ///////////////////////////
+    // Fetching resources on filter change
+    // ///////////////////////////
     async function fetchData() {
       try {
         const [data, error] = await fetchResources({
@@ -46,9 +45,9 @@ function PageContents() {
       }
     }
 
-  // ///////////////////////////
-  // Updating Params on filter change
-  // ///////////////////////////
+    // ///////////////////////////
+    // Updating Params on filter change
+    // ///////////////////////////
     function handleUpdateParams() {
       const { Status, Category, Resources_Type, Subjects } = filters;
       const params = new URLSearchParams();
@@ -117,7 +116,7 @@ function PageContents() {
       <h2> Resources </h2>
 
       {/* resource page recommendation block component */}
-      {resources.length > 0 && (
+      {(highlightedResources.length > 0 || resources.length > 0) && (
         <ResourceHighlightedTiles
           resource={
             highlightedResources[
