@@ -127,12 +127,14 @@ export default function Providers() {
         Find a Provider</h3>
 
       {/* filters section */}
-      <section
+      <form
         id="providers-filters"
         className="
         w-full max-w-screen-lg px-4 py-6 
         flex flex-col sm:flex-row gap-4 pb-10 justify-center items-center">
-        <input 
+        <div id="provider-name-field">
+          <label htmlFor="provider-name-input" className="sr-only">Search Provider</label>
+          <input 
           id="provider-name-input"
           type="text"
           className="
@@ -141,37 +143,41 @@ export default function Providers() {
           py-2 px-4 rounded-full"
           onChange={debounceChange}
           placeholder="Name"
-        >
-        </input>
+          />
+        </div>
 
-        <select
-          id="provider-state"
-          className="
+        <div id="provider-state-mode-fields">
+          <label htmlFor="provider-state" className="sr-only">Provider State</label>
+          <select
+            id="provider-state"
+            className="
             bg-white hover:bg-[#DCAD27]
             text-black
-            py-2 px-4
+            py-2 px-4 mr-4
             rounded-full"
-          defaultValue="blank-state-opt"
-          onChange={debounceChange}
-          aria-labelledby="filtering-state">
-          <option key="blank-state-opt" value="blank-state-opt" disabled>State?</option>
-          {Object.keys(usStates).map((abbr) => <option key={`${abbr}-option`} value={usStates[abbr]}>{abbr}</option>)}
-        </select>
+            defaultValue="blank-state-opt"
+            onChange={debounceChange}
+            aria-labelledby="filtering-state">
+            <option key="blank-state-opt" value="blank-state-opt" disabled>State?</option>
+            {Object.keys(usStates).map((abbr) => <option key={`${abbr}-option`} value={usStates[abbr]}>{abbr}</option>)}
+          </select>
 
-        <select
-          id="provider-mode"
-          className="
+          <label htmlFor="provider-mode" className="sr-only">Provider Mode</label>
+          <select
+            id="provider-mode"
+            className="
             bg-white hover:bg-[#DCAD27]
             text-black
             py-2 px-4 rounded-full"
-          defaultValue="blank-mode-opt"
-          onChange={debounceChange}
-          aria-labelledby="filtering-mode">
-          <option key="blank-mode-opt" value="blank-mode-opt" disabled>Virtual Only?</option>
-          <option key="yes-opt" value="Yes">Yes</option>
-          <option key="no-opt" value="No">No</option>
-        </select>
-      </section>
+            defaultValue="blank-mode-opt"
+            onChange={debounceChange}
+            aria-labelledby="filtering-mode">
+            <option key="blank-mode-opt" value="blank-mode-opt" disabled>Virtual Only?</option>
+            <option key="yes-opt" value="Yes">Yes</option>
+            <option key="no-opt" value="No">No</option>
+          </select>
+        </div>
+      </form>
 
       {/* tiles section */}
       <ProvidersContainer
