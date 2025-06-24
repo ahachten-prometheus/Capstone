@@ -4,11 +4,11 @@ import { HiMagnifyingGlass } from 'react-icons/hi2';
 
 export default function Events() {
 	const [visibleEvents, setVisibleEvents] = useState([]); // holds only the events currently shown
-	const [search, setSearch] = useState('')
-	const [offset, setOffset] = useState(''); // tracking # of events displayed
 	const [hasMore, setHasMore] = useState(true);
 	const [isLoading, setIsLoading] = useState(false);
 	const PAGE_SIZE = 6;
+	const [offset, setOffset] = useState(''); // tracking # of events displayed
+	const [search, setSearch] = useState('')
 	
 	// this is the filtered search events based on the users input
 	const filteredEvents = visibleEvents.filter(event =>
@@ -26,6 +26,7 @@ export default function Events() {
 			const params = new URLSearchParams({
 				pageSize: PAGE_SIZE,
 				...(nextOffset && { offset: nextOffset }),
+				...(search && { search }) //adds the searched term to the parameteres if it exists
 			});
 
 			const res = await fetch(`/api/events?${params.toString()}`);
@@ -57,7 +58,7 @@ export default function Events() {
 
 	useEffect(() => {
 		console.log(search, filteredEvents)
-	})
+	}, [search])
 
 	return (
 		<>
