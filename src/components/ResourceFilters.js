@@ -27,6 +27,7 @@ export default function ResourceFilters({ filters, setFilters }) {
 
   return (
     <>
+    <div>
       <Select
         options={categoryOptions}
         isClearable
@@ -54,6 +55,7 @@ export default function ResourceFilters({ filters, setFilters }) {
           label: filter,
         }))}
       />
+    </div>
     </>
   );
 }

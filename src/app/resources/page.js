@@ -87,8 +87,8 @@ function PageContents() {
   //lines bc everything looks the same ////////////////////////////////////////////////////////////////////////////
 
   return (
-    <div>
-      <h2> Resources </h2>
+    <div className="bg-[#FFF5EA]">
+      <h2 className="custom-header-font text-[35px] text-center text-black"> Resources </h2>
 
       {/* resource page recommendation block component */}
       {highlightedResources.length > 0 && (
@@ -97,8 +97,8 @@ function PageContents() {
         </div>
       )}
 
-      <div className='all-resources'>
-        <h2>All Resources</h2>
+      <div className='flex-col content-center'>
+        <h2 className="custom-header-font text-[25px] text-center text-black">All Resources</h2>
         <hr />
         {/* search bar & filter drop downs*/}
         <ResourceFilters
@@ -111,8 +111,8 @@ function PageContents() {
         {offset && (
           <button
             onClick={handleLoadMoreClick}
-            className='bg-[#C96C86] hover:bg-[#8F5E72] cursor-pointer px-4 py-2 '>
-            load more
+            className='flex justify-self-center justify-center mt-[3px] mx-[3px] rounded-[47.5px] bg-[#C96C86] color-[#FFF5EA] text-4xl border-[10px] border-[#C96C86] rounded-2xl w-[350px]  px-[8px] py-[16px]'>
+            Load More
           </button>
         )}
       </div>

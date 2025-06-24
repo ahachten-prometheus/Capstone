@@ -15,14 +15,14 @@ export default function ResourceTiles({ resource }) {
 
   return (
     <>
-      <div className='flex-col bg-teal-500 w-[265px]'>
+      <div className='flex-col w-[265px] px-[8px] py-[16px] m-px'>
         <img
-          className='w-[265px] h-[187px]'
+          className='w-[265px] h-[187px]  border-[#C1DF1F] border-[5px]'
           src={Image_URL ?? "/womenWithClipboard.jpg"}
         />
-        <h3 className='font-bold mt-[15px] mx-[3px]'>{Name}</h3>
-        <p className='font-thin mx-[3px]'>{Resources_Type}</p>
-        <p className='mt-[5px] mx-[3px]'>{Description}</p>
+        <h3 className='font-extrabold mt-[15px] mx-[3px] text-black'>{Name}</h3>
+        <p className='font-thin mx-[3px] text-black'>{Resources_Type}</p>
+        <p className='mt-[5px] mx-[3px] text-black'>{Description}</p>
 
         {/* Contact Info Section */}
         <div id="Contact-Section">
@@ -33,7 +33,7 @@ export default function ResourceTiles({ resource }) {
         {Contact_Email && (
           <a 
           href={`mailto:${Contact_Email}`}
-          className="hover:text-blue-600 transition-colors"
+          className="hover:text-blue-600 transition-colors text-black"
           aria-label={`Email ${Contact_Name || Name}`}
           title={`Email: ${Contact_Email}`}
           ><FaEnvelope className="mr-2" ></FaEnvelope>
@@ -43,7 +43,7 @@ export default function ResourceTiles({ resource }) {
        {Contact_Phone && (
           <a 
             href={`tel:${Contact_Phone}`}
-            className="hover:text-green-600 transition-colors"
+            className="hover:text-green-600 transition-colors text-black"
             aria-label={`Call ${Contact_Name || Name}`}
             title={`Call: ${Contact_Phone}`}
           >
@@ -54,7 +54,7 @@ export default function ResourceTiles({ resource }) {
         
         {Contact_Name && (
           <span 
-            className="hover:text-purple-600 transition-colors cursor-default"
+            className="hover:text-purple-600 transition-colors cursor-default text-black"
             title={`Contact: ${Contact_Name}`}
           >
             <FaUser size={20} />
@@ -65,7 +65,7 @@ export default function ResourceTiles({ resource }) {
 
         {URL && (
           <a href={URL.startsWith("https://") ? URL : "https://".concat(URL)}>
-            <button className='mt-[3px] mx-[3px] bg-[#C96C86] border-[2px] border-[#C96C86] rounded-2xl w-[134px]'>
+            <button className='mt-[3px] mx-[3px] border-[#C96C86] text-extrabold rounded-2xl w-[134px] bg-[#C96C86] before:color-[#FFF5EA] hover:bg-[#B55772] hover:cursor-pointer border-[2px] hover:color-[#FFFCFD]'>
               Learn More
             </button>
           </a>

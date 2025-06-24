@@ -19,6 +19,14 @@
   }
 }
 
+@layer components {
+  .custom-header-font {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-weight: 900;
+    font-display: swap;
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
