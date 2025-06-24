@@ -12,11 +12,13 @@ export default function ResourceHighlightedTiles({ resource }) {
   } = resource;
 
   return (
-    <>
+    <div className="grid grid-flow-col justify-center relative" id="parent-div">
+    
       <img
-        className='w-[265px] h-[187px]'
+        className='w-[530px] h-[374px] border-[#C1DF1F] border-[8px] z-0 bg-local my-[50px]'
         src={Image_URL ?? "/womenSitting.jpg"}
       />
+      <div id="contact-info-flag" className="absolute top-[250px] left-[450px]">
       <ContactInfo
         Name={Name}
         Resources_Type={Resources_Type}
@@ -25,7 +27,8 @@ export default function ResourceHighlightedTiles({ resource }) {
         Contact_Phone={Contact_Phone}
         Contact_Name={Contact_Name}
       />
-    </>
+      </div>
+    </div>
   );
 }
 
@@ -38,8 +41,9 @@ function ContactInfo({
   Contact_Name,
 }) {
   return (
-    <div>
-      <p>{Resources_Type}</p>
+    
+    <div className="text-black bg-[#FEFEFE] w-[495px] h-[107px] p-[10px] border rounded-lg shadow-lg z-1" id="highlighted-resource-box">
+      <p className="font-extrabold">{Resources_Type}</p>
       <p>{Name}</p>
 
       {/** Intended hyperlink logic below:
@@ -54,8 +58,9 @@ function ContactInfo({
           <a
             href={URL.startsWith("https://") ? URL : "https://".concat(URL)}
             aria-label={`Visit ${Name} website`}
-            title={`Visit ${URL}`}>
-            <div>Learn More {">"}</div>
+            title={`Visit ${URL}`}
+            className="flex self-end justify-self-end-safe mb-[4px] mr-[2px] ">
+            <div className="hover:underline">Learn More {">"}</div>
           </a>
         )) ||
           // Contact Phone Section
