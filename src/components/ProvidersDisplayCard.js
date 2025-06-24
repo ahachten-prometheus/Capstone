@@ -4,7 +4,6 @@ export default function ProvidersDisplayCard({ provider }) {
   return (
     <div className="w-[269px] h-fit bg-white rounded-xl shadow-md p-4 flex flex-col justify-between">
       <div className="space-y-1 pb-5">
-
         <h1 className="font-inter font-bold text-[20px] leading-[100%] text-black w-[233px]">
           {name ?? "Name Not Available"}
         </h1>

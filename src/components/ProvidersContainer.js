@@ -8,9 +8,9 @@ export default function ProvidersContainer({ query }) {
     <div className="w-full">
       <div className="providers-container">
         {error && <p className="error-text">{error}</p>}
-        {loading && <p>Loading providers...</p>}
+        {loading && <p className="flex justify-center">Loading providers...</p>}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-10 gap-x-1 justify-items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-10 justify-items-center ml-20 mr-20">
           {providers.length > 0 ? (
             providers.map((provider, idx) => (
               <div key={provider.id ?? idx}>
@@ -18,7 +18,7 @@ export default function ProvidersContainer({ query }) {
               </div>
             ))
           ) : (
-            !loading && <p>No providers found.</p>
+            !loading && <div className="flex justify-center"><p>No providers found.</p></div>
           )}
         </div>
 
