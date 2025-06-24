@@ -101,19 +101,22 @@ export default function Providers() {
       className="w-screen h-[407px] flex flex-col items-center justify-center"
       style={{ backgroundColor: '#C96C86B0' }}
     >
-      <h1 id="providers-hero-header" className="text-4xl font-bold text-white">Providers</h1>
+      <h1 id="providers-hero-header" className="text-white text-4xl font-bold">Providers</h1>
     </section>
 
     {/* below hero header: h3 header, filters section, tiles section */}
     <main 
-      className="text-black pb-12 flex flex-col items-center justify-center"
+      className="text-black flex flex-col items-center justify-center pb-12"
       style={{ backgroundColor: '#FFF5EA' }}
     >
       {/* header - above the tiles section */}
       {/* next: add an option to clear selections */}
       <h3 
         id="providers-tiles-header"
-        className="text-2xl font-bold text-black w-4/5 mx-auto pt-8 border-b-1 border-black flex justify-center"
+        className="
+        w-4/5 text-black font-bold text-2xl 
+        border-b-1 border-black 
+        flex justify-center mx-auto pt-8"
       >
         Find a Provider
       </h3>
@@ -121,14 +124,17 @@ export default function Providers() {
       {/* filters section */}
       <form
         id="providers-filters"
-        className="w-full max-w-screen-lg px-4 py-6 flex flex-col sm:flex-row gap-4 pb-10 justify-center items-center"
+        className="
+        w-full max-w-screen-lg 
+        flex flex-col sm:flex-row justify-center items-center 
+        gap-4 pb-10 px-4 py-6"
       >
         <div id="provider-name-field">
           <label htmlFor="provider-name-input" className="sr-only">Search Provider</label>
           <input 
             id="provider-name-input"
             type="text"
-            className="bg-white hover:bg-[#DCAD27] text-black py-2 px-4 rounded-full"
+            className="text-black bg-white hover:bg-[#DCAD27] rounded-full py-2 px-4"
             onChange={debounceChange}
             placeholder="Name"
           />
@@ -138,7 +144,7 @@ export default function Providers() {
           <label htmlFor="provider-state" className="sr-only">Provider State</label>
           <select
             id="provider-state"
-            className="bg-white hover:bg-[#DCAD27] text-black py-2 px-4 mr-4 rounded-full"
+            className="text-black bg-white hover:bg-[#DCAD27] rounded-full py-2 px-4 mr-4"
             defaultValue="blank-state-opt"
             onChange={debounceChange}
             aria-labelledby="filtering-state"
@@ -150,7 +156,7 @@ export default function Providers() {
           <label htmlFor="provider-mode" className="sr-only">Provider Mode</label>
           <select
             id="provider-mode"
-            className="bg-white hover:bg-[#DCAD27] text-black py-2 px-4 rounded-full"
+            className="text-black bg-white hover:bg-[#DCAD27] rounded-full py-2 px-4"
             defaultValue="blank-mode-opt"
             onChange={debounceChange}
             aria-labelledby="filtering-mode"
