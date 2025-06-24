@@ -1,10 +1,12 @@
 'use client';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { surveyQuestions } from '@/data/questions';
+import { useSurvey } from '@/services/survey';
 
 
 export default function QuestionPage() {
+  const { storeAnswer } = useSurvey()
   const { id } = useParams();
   const router = useRouter();
   const questionId = Number(id);
