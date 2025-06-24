@@ -96,43 +96,9 @@ export default function ResourceFilters({ filters, setFilters }) {
   );
 }
 
-async function fetchFilteredResources({ pageSize = 8, offset, filters }) {
-  const params = new URLSearchParams();
-
-  params.append("pageSize", pageSize.toString());
-  if (offset) params.append("offset", offset.toString());
-
-  // Category Filter
-  if (filters.Category && filters.Category.length > 0) {
-    params.append("filters", ["Category", filters.Category]); // 'field,value'
-  }
-
-  // Resources Type Filter
-  if (filters.Resources_Type && filters.Resources_Type.length > 0) {
-    params.append("filters", ["Resources Type", filters.Resources_Type]);
-  }
-
-  // Subject Filters
-  filters.Subjects.forEach(subject => {
-    params.append("filters", ["Subject", subject]);
-  });
-
-  try {
-    const response = await fetch(`/api/resources/filter?${params.toString()}`);
-
-    if (!response.ok)
-      throw new Error(
-        `Fetch failed: ${response.status} - ${response.statusText}`
-      );
-
-    const data = await response.json();
-    return [data, null];
-  } catch (error) {
-    console.error("unable to fetch filtered resources", error);
-    return [null, error];
-  }
-}
-
+  // ///////////////////////////
+  // Options
+  // ///////////////////////////
 const categoryOptions = [
   { label: "Getting the Help You Need", value: "Getting the Help You Need" },
   {

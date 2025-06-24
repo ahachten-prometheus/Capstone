@@ -1,9 +1,8 @@
-import { FaEnvelope, FaPhone, FaUser } from 'react-icons/fa';
+import { FaEnvelope, FaPhone, FaUser } from "react-icons/fa";
 
 export default function ResourceTiles({ resource }) {
   const {
     Name,
-    Status,
     ["Resources Type"]: Resources_Type,
     Description,
     URL,
@@ -24,47 +23,70 @@ export default function ResourceTiles({ resource }) {
         <p className='font-thin mx-[3px] text-black'>{Resources_Type}</p>
         <p className='mt-[5px] mx-[3px] text-black'>{Description}</p>
 
-        {/* Contact Info Section */}
-        <div id="Contact-Section">
+        {/* Contact Section */}
+        <ContactContent
+          Name={Name}
+          URL={URL}
+          Contact_Email={Contact_Email}
+          Contact_Phone={Contact_Phone}
+          Contact_Name={Contact_Name}
+        />
+      </div>
+    </>
+  );
+}
 
+function ContactContent({
+  Name,
+  URL,
+  Contact_Email,
+  Contact_Phone,
+  Contact_Name,
+}) {
+  return (
+    <>
+      {/* Contact Info Section */}
+      <div id='Contact-Section'>
         {/* check if there's contact information at all */}
         {/* If there's an email address present */}
-        
-        {Contact_Email && (
-          <a 
-          href={`mailto:${Contact_Email}`}
-          className="hover:text-blue-600 transition-colors text-black"
-          aria-label={`Email ${Contact_Name || Name}`}
-          title={`Email: ${Contact_Email}`}
-          ><FaEnvelope className="mr-2" ></FaEnvelope>
-          </a>
-        )}
-        
-       {Contact_Phone && (
-          <a 
-            href={`tel:${Contact_Phone}`}
-            className="hover:text-green-600 transition-colors text-black"
-            aria-label={`Call ${Contact_Name || Name}`}
-            title={`Call: ${Contact_Phone}`}
-          >
-            <p>Call: </p>
-            <FaPhone size={20} />
-          </a>
-        )}
-        
+
         {Contact_Name && (
-          <span 
-            className="hover:text-purple-600 transition-colors cursor-default text-black"
-            title={`Contact: ${Contact_Name}`}
-          >
+          <span className='hover:text-purple-600 transition-colors cursor-default'>
             <FaUser size={20} />
+            <p>{Contact_Name}</p>
           </span>
         )}
 
-        </div>
+        {Contact_Phone && (
+          <a
+            href={`tel:${Contact_Phone}`}
+            className="hover:text-green-600 transition-colors text-black"
+            aria-label={`Call ${Contact_Name || Name}`}
+            title={`Call: ${Contact_Phone}`}>
+            <FaPhone size={20} />
+            <p>Call - {Contact_Phone}</p>
+          </a>
+        )}
+
+        {Contact_Email && (
+          <a
+            href={`mailto:${Contact_Email}`}
+            className='hover:text-blue-600 transition-colors'
+            aria-label={`Email ${Contact_Name || Name}`}
+            title={`Email: ${Contact_Email}`}>
+            <FaEnvelope
+              size={20}
+              className='mr-2'
+            />
+            <p>Email - {Contact_Email}</p>
+          </a>
+        )}
 
         {URL && (
-          <a href={URL.startsWith("https://") ? URL : "https://".concat(URL)}>
+          <a
+            href={URL.startsWith("https://") ? URL : "https://".concat(URL)}
+            aria-label={`Visit ${Name} website`}
+            title={`Visit ${URL}`}>
             <button className='mt-[3px] mx-[3px] border-[#C96C86] text-extrabold rounded-2xl w-[134px] bg-[#C96C86] before:color-[#FFF5EA] hover:bg-[#B55772] hover:cursor-pointer border-[2px] hover:color-[#FFFCFD]'>
               Learn More
             </button>
