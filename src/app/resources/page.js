@@ -1,6 +1,7 @@
 "use client";
 import ResourceTileGrid from "@/components/ResourceTileGrid";
 import ResourceFilters from "@/components/ResourceFilters";
+import ResourceSearch from "@/components/ResourceSearch";
 import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
@@ -105,6 +106,7 @@ function PageContents() {
           filters={filters}
           setFilters={setFilters}
         />
+        {/* <ResourceSearch /> */}
         {/* resource tiles */}
         <ResourceTileGrid resources={resources} />
         {/* pagination button (if there is an offset) */}
@@ -122,9 +124,9 @@ function PageContents() {
 
 //lines bc everything looks the same ////////////////////////////////////////////////////////////////////////////
 
-async function fetchResources({ pageSize = 8, offset, filters } = {}) {
+async function fetchResources({ pageSize = 8, offset, filters }) {
   //   console.log(filters);
-  const { Status, Category, Resources_Type, Subjects } = filters;
+  const { Status, Name, Category, Resources_Type, Subjects } = filters;
 
   const params = new URLSearchParams();
   params.append("pageSize", pageSize.toString());
@@ -136,6 +138,10 @@ async function fetchResources({ pageSize = 8, offset, filters } = {}) {
 
   if (Status && Status.length > 0) {
     params.append("status", Status);
+  }
+
+  if (Name && Name.length > 0) {
+    params.append("name", Name);
   }
 
   if (Category && Category.length > 0) {
@@ -198,6 +204,7 @@ async function fetchHighlightedResources(
 
 class Filters {
   Status = "Active";
+  Name = "";
   Category = "";
   Resources_Type = "";
   Subjects = new Set();
