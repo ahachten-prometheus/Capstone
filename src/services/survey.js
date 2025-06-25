@@ -1,8 +1,9 @@
+'use client'
 import { createContext, useState, useContext } from "react";
 
 export const SurveyContext = createContext();
 
-const useSurvey = () => useContext(SurveyContext);
+export const useSurvey = () => useContext(SurveyContext);
 
 export const SurveyProvider = ({ children }) => {
   const [answers, setAnswers] = useState({});
