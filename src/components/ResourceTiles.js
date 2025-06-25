@@ -1,6 +1,6 @@
 import { FaEnvelope, FaPhone, FaUser } from "react-icons/fa";
 
-export default function ResourceTiles({ resource }) {
+export default function ResourceTiles({ resource, tileIdx }) {
   const {
     Name,
     ["Resources Type"]: Resources_Type,
@@ -17,7 +17,7 @@ export default function ResourceTiles({ resource }) {
       <div className='flex-col bg-teal-500 w-[265px]'>
         <img
           className='w-[265px] h-[187px]'
-          src={Image_URL ?? "/womenWithClipboard.jpg"}
+          src={Image_URL ?? defaultImages[tileIdx % defaultImages.length]}
         />
         <h3 className='font-bold mt-[15px] mx-[3px]'>{Name}</h3>
         <p className='font-thin mx-[3px]'>{Resources_Type}</p>
@@ -98,3 +98,5 @@ function ContactContent({
     </>
   );
 }
+
+var defaultImages = ["/womenWithClipboard.jpg", "/womenSitting.jpg"];
