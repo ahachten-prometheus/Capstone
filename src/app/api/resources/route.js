@@ -47,8 +47,8 @@ export async function GET(req) {
       filter => `FIND('${filter}',{Subject})`
     );
 
-    filterFormulas.push(subjectFormulas.toString());
-    // filterFormulas.push(`OR(${subjectFormulas.toString()})`);
+    // filterFormulas.push(subjectFormulas.toString());
+    filterFormulas.push(`OR(${subjectFormulas.toString()})`);
   }
 
   try {
