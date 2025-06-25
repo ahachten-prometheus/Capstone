@@ -53,6 +53,8 @@ function ContactInfo({
         (URL && (
           <a
             href={URL.startsWith("https://") ? URL : "https://".concat(URL)}
+            target='_blank'
+            rel='noopener noreferrer'
             aria-label={`Visit ${Name} website`}
             title={`Visit ${URL}`}>
             <div>Learn More {">"}</div>

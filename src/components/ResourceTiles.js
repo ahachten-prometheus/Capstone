@@ -85,6 +85,8 @@ function ContactContent({
         {URL && (
           <a
             href={URL.startsWith("https://") ? URL : "https://".concat(URL)}
+            target='_blank'
+            rel='noopener noreferrer'
             aria-label={`Visit ${Name} website`}
             title={`Visit ${URL}`}>
             <button className='mt-[3px] mx-[3px] bg-[#C96C86] border-[2px] border-[#C96C86] rounded-2xl w-[134px]'>
