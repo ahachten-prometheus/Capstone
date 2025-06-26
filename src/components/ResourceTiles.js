@@ -1,8 +1,15 @@
 import { FaEnvelope, FaPhone, FaUser } from "react-icons/fa";
 
+/** defaultImages
+ * An array of file path strings to files in `/public`
+ * Resources that do not have a value in the Image_URL field in the Airtable will take a file from this list instead
+ */
+var defaultImages = ["/womenWithClipboard.jpg", "/womenSitting.jpg"];
+
 export default function ResourceTiles({ resource, tileIdx }) {
   const {
     Name,
+    Status,
     ["Resources Type"]: Resources_Type,
     Description,
     URL,
@@ -19,6 +26,11 @@ export default function ResourceTiles({ resource, tileIdx }) {
         src={Image_URL ?? defaultImages[tileIdx % defaultImages.length]}
       />
       <h3 className='font-extrabold mt-[15px] mx-[3px] text-black'>{Name}</h3>
+      {Status !== "Active" && (
+        <div className='font-bold bg-red-300 text-red-500'>
+          <p>{Status}</p>
+        </div>
+      )}
       <p className='font-thin mx-[3px] text-black'>{Resources_Type}</p>
       <p className='mt-[5px] mx-[3px] text-black'>{Description}</p>
 
@@ -105,5 +117,3 @@ function ContactContent({
     </div>
   );
 }
-
-var defaultImages = ["/womenWithClipboard.jpg", "/womenSitting.jpg"];
