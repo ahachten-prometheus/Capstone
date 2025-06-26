@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { HiMagnifyingGlass } from 'react-icons/hi2';
 
 export default function Events() {
-	const [visibleEvents, setVisibleEvents] = useState([]); // holds only the events currently shown
+	const [events, setEvents] = useState([]); // holds only the events currently shown
 	const [hasMore, setHasMore] = useState(true);
 	const [isLoading, setIsLoading] = useState(false);
 	const PAGE_SIZE = 6;
@@ -11,7 +11,7 @@ export default function Events() {
 	const [search, setSearch] = useState('')
 	
 	// this is the filtered search events based on the users input
-	const filteredEvents = visibleEvents.filter(event =>
+	const filteredEvents = events.filter(event =>
 		event.Description.toLowerCase().includes(search.toLowerCase()) || 
 		event.Name.toLowerCase().includes(search.toLowerCase())
 	)
@@ -32,14 +32,10 @@ export default function Events() {
 			const res = await fetch(`/api/events?${params.toString()}`);
 			const [data, error]  = await res.json();
 			console.log('API Response:', data);
-			// If the API returns an array directly
-			if (Array.isArray(data)) {
-				setVisibleEvents((prev) => [...prev, ...data]);
-				setHasMore(data.length === PAGE_SIZE);
-			}
+			
 			// If the API returns an object with records
-			else if (Array.isArray(data?.records)) {
-				setVisibleEvents((prev) => [...prev, ...data.records]);
+			if (Array.isArray(data?.records)) {
+				setEvents((prev) => [...prev, ...data.records]);
 				setOffset(data.offset || '');
 				setHasMore(Boolean(data.offset));
 			} else {
