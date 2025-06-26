@@ -4,7 +4,7 @@ import debounce from "lodash.debounce";
 import Select from "react-select";
 
 export default function ResourceFilters({ filters, setFilters }) {
-  const { Category, Resources_Type, Subjects } = filters;
+  const { Status, Category, Resources_Type, Subjects } = filters;
 
   // ///////////////////////////
   // Searching (aka Name Filter)
@@ -52,11 +52,17 @@ export default function ResourceFilters({ filters, setFilters }) {
     setFilters(prev => ({ ...prev, Subjects: new Set(values) }));
   };
 
+  const handleStatusUpdate = option => {
+    // handling clear
+    if (!option) option = { value: "" };
+
+    setFilters(prev => ({ ...prev, Status: option.value }));
+  };
+
   ////////Select box styles function will go here /////////////
 
   return (
-
-    <div className="flex flex-box flex-col md:flex-row gap-4 justify-center my-[4px] text-black">
+    <div className='flex flex-box flex-col md:flex-row gap-4 justify-center my-[4px] text-black'>
       <input
         type='text'
         className='
@@ -133,14 +139,20 @@ export default function ResourceFilters({ filters, setFilters }) {
           label: filter,
         }))}
       />
+      <Select
+        options={statusOptions}
+        isClearable
+        onChange={handleStatusUpdate}
+        value={Status.length > 0 ? { value: Status, label: Status } : null}
+      />
     </div>
-    
   );
 }
 
-  // ///////////////////////////
-  // Options
-  // ///////////////////////////
+// ///////
+// Options
+// ///////
+
 const categoryOptions = [
   { label: "Getting the Help You Need", value: "Getting the Help You Need" },
   {
@@ -193,4 +205,9 @@ const subjectOptions = [
   { label: "Eating Disorder", value: "Eating Disorder" },
   { label: "OCD", value: "OCD" },
   { label: "Other", value: "Other" },
+];
+
+const statusOptions = [
+  { label: "Active", value: "Active" },
+  { label: "In-Active", value: "In-Active" },
 ];

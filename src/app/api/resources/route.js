@@ -24,6 +24,14 @@ export async function GET(req) {
     filterFormulas.push(statusFormula);
   }
 
+  // ALWAYS EXCLUDE "Pending" and "Hidden" Status resources
+
+  const excludePending = `{Status}!='Pending'`;
+  const excludeHidden = `{Status}!='Hidden'`;
+
+  filterFormulas.push(excludePending);
+  filterFormulas.push(excludeHidden);
+
   if (nameFilter && nameFilter.length > 0) {
     const nameFormula = `FIND(LOWER('${nameFilter}'),LOWER({Name}))`;
 
