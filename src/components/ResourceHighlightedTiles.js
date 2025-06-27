@@ -12,7 +12,7 @@ export default function ResourceHighlightedTiles({ resource }) {
   } = resource;
 
   return (
-    <>
+    <div>
       <img
         className='w-[265px] h-[187px]'
         src={Image_URL ?? "/womenSitting.jpg"}
@@ -25,7 +25,7 @@ export default function ResourceHighlightedTiles({ resource }) {
         Contact_Phone={Contact_Phone}
         Contact_Name={Contact_Name}
       />
-    </>
+    </div>
   );
 }
 
@@ -53,6 +53,8 @@ function ContactInfo({
         (URL && (
           <a
             href={URL.startsWith("https://") ? URL : "https://".concat(URL)}
+            target='_blank'
+            rel='noopener noreferrer'
             aria-label={`Visit ${Name} website`}
             title={`Visit ${URL}`}>
             <div>Learn More {">"}</div>

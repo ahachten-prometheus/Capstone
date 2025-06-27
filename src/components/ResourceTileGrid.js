@@ -5,10 +5,11 @@ export default function ResourceTileGrid({ resources }) {
     <>
       {resources.length > 0 ? (
         <div className='grid grid-cols-4 gap-4'>
-          {resources.map(data => (
+          {resources.map((data, idx) => (
             <ResourceTiles
               key={data.id}
               resource={data}
+              tileIdx={idx}
             />
           ))}
         </div>
