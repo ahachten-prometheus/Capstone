@@ -89,9 +89,14 @@ function ContactContent({
               title={`Email: ${Contact_Email}`}>
               <div className='flex gap-1 justify-center-safe content-center'>
                 <FaEnvelope size={20} />
-                <p>
+                <p className='hidden md:flex'>
                   {Contact_Email.length > 10
                     ? Contact_Email.slice(0, 8).concat("...")
+                    : Contact_Email}
+                </p>
+                <p className='md:hidden'>
+                  {Contact_Email.length > 20
+                    ? Contact_Email.slice(0, 15).concat("...")
                     : Contact_Email}
                 </p>
               </div>
