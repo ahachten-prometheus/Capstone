@@ -3,6 +3,7 @@ export const surveyQuestions = {
     id: 1,
     text: "Why are you visiting our site today?",
     type: "single-select",
+    field: "visit_reason",
     options: [
       {
         label: "To access resources",
