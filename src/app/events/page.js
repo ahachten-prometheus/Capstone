@@ -1,13 +1,15 @@
 'use client';
 import { useState, useEffect } from 'react';
-import EventTilesGrid from '../../components/EventTilesGrid';
+import { HiMagnifyingGlass } from 'react-icons/hi2';
 
 export default function Events() {
-	const [visibleEvents, setVisibleEvents] = useState([]); // holds only the events currently shown
-	const [offset, setOffset] = useState(''); // tracking # of events displayed
+	const [events, setEvents] = useState([]); // holds only the events currently shown
 	const [hasMore, setHasMore] = useState(true);
 	const [isLoading, setIsLoading] = useState(false);
 	const PAGE_SIZE = 6;
+	const [offset, setOffset] = useState(''); // tracking # of events displayed
+	const [search, setSearch] = useState('')
+	
 
 	async function fetchEvents(nextOffset = '') {
 		if (isLoading || !hasMore) return;
@@ -18,19 +20,16 @@ export default function Events() {
 			const params = new URLSearchParams({
 				pageSize: PAGE_SIZE,
 				...(nextOffset && { offset: nextOffset }),
+				...(search && { search }) //adds the searched term to the parameteres if it exists
 			});
 
 			const res = await fetch(`/api/events?${params.toString()}`);
-			const [data, error] = await res.json();
+			const [data, error]  = await res.json();
 			console.log('API Response:', data);
-			// If the API returns an array directly
-			if (Array.isArray(data)) {
-				setVisibleEvents((prev) => [...prev, ...data]);
-				setHasMore(data.length === PAGE_SIZE);
-			}
+			
 			// If the API returns an object with records
-			else if (Array.isArray(data?.records)) {
-				setVisibleEvents((prev) => [...prev, ...data.records]);
+			if (Array.isArray(data?.records)) {
+				setEvents((prev) => [...prev, ...data.records]);
 				setOffset(data.offset || '');
 				setHasMore(Boolean(data.offset));
 			} else {
@@ -46,6 +45,10 @@ export default function Events() {
 	useEffect(() => {
 		fetchEvents();
 	}, []);
+
+	useEffect(() => {
+		console.log(search, events)
+	}, [search])
 
 	return (
 		<>
@@ -76,20 +79,37 @@ export default function Events() {
 					Upcoming Events & Webinar{' '}
 				</h3>
 
+				 {/* Search Box */}
+            <div className="max-w-[360px] mt-4 mb-6 px-6 self-start">
+                <div className="relative">
+                    <span className="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none ">
+                        <HiMagnifyingGlass className="h-4 w-4 text-black" />
+                        </span>
+                        
+                        <input
+                        type="text"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        className="block w-full pl-8 pr-2 py-1.5 text-sm bg-white border focus:outline-none focus:ring-1 focus:ring-pink-500"
+                        />
+                </div>
+            </div>
+
 				{/* Tiles*/}
-				<section
-					id="events-display"
-					className="py-10 px-6 sm:px-8 md:px-15[180px]"
-				>
-					<EventTilesGrid eventList={visibleEvents} />
+				<section id="events-display" className="py-10 px-[130px]">
+					<p>--Tiles here--</p>
 
 					{/* Testing API*/}
 					<ul>
-						{visibleEvents.map((event) => (
+					{events.length === 0 ? ( // if the filtered events function has nothing
+						<li>No events found</li> // return "No events found'
+					) : (
+						events.map((event) => ( // else display the name and description
 							<li key={event.id}>
 								{event.Name} - {event.Description}
 							</li>
-						))}
+						))
+					)}
 					</ul>
 				</section>
 
@@ -98,7 +118,7 @@ export default function Events() {
 				{hasMore && (
 					<button
 						id="more-events"
-						className=" bg-[#B36078] hover:bg-[#C96C86B0] text-white  text-lg font-bold py-2 px-10 rounded-full m-6"
+						className=" bg-[#B36078] hover:bg-[#C96C86B0] text-white font-bold py-2 px-4 rounded-full m-6"
 						onClick={() => fetchEvents(offset)}
 					>
 						{isLoading ? 'Loading more events..' : 'Load More'}
