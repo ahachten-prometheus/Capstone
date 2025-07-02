@@ -10,11 +10,6 @@ export default function Events() {
 	const [offset, setOffset] = useState(''); // tracking # of events displayed
 	const [search, setSearch] = useState('')
 	
-	// this is the filtered search events based on the users input
-	const filteredEvents = events.filter(event =>
-		event.Description.toLowerCase().includes(search.toLowerCase()) || 
-		event.Name.toLowerCase().includes(search.toLowerCase())
-	)
 
 	async function fetchEvents(nextOffset = '') {
 		if (isLoading || !hasMore) return;
@@ -53,7 +48,7 @@ export default function Events() {
 	}, []);
 
 	useEffect(() => {
-		console.log(search, filteredEvents)
+		console.log(search, events)
 	}, [search])
 
 	return (
@@ -106,10 +101,10 @@ export default function Events() {
 					<p>--Tiles here--</p>
 
 					<ul>
-					{filteredEvents.length === 0 ? ( // if the filtered events function has nothing
+					{events.length === 0 ? ( // if the filtered events function has nothing
 						<li>No events found</li> // return "No events found'
 					) : (
-						filteredEvents.map((event) => ( // else display the name and description
+						events.map((event) => ( // else display the name and description
 							<li key={event.id}>
 								{event.Name} - {event.Description}
 							</li>
