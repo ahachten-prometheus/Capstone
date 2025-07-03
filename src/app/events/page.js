@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { HiMagnifyingGlass } from 'react-icons/hi2';
+import EventTilesGrid from '../../components/EventTilesGrid';
 
 export default function Events() {
 	const [events, setEvents] = useState([]); // holds only the events currently shown
@@ -8,8 +9,7 @@ export default function Events() {
 	const [isLoading, setIsLoading] = useState(false);
 	const PAGE_SIZE = 6;
 	const [offset, setOffset] = useState(''); // tracking # of events displayed
-	const [search, setSearch] = useState('')
-	
+	const [search, setSearch] = useState('');
 
 	async function fetchEvents(nextOffset = '') {
 		if (isLoading || !hasMore) return;
@@ -20,13 +20,13 @@ export default function Events() {
 			const params = new URLSearchParams({
 				pageSize: PAGE_SIZE,
 				...(nextOffset && { offset: nextOffset }),
-				...(search && { search }) //adds the searched term to the parameteres if it exists
+				...(search && { search }), //adds the searched term to the parameteres if it exists
 			});
 
 			const res = await fetch(`/api/events?${params.toString()}`);
-			const [data, error]  = await res.json();
+			const [data, error] = await res.json();
 			console.log('API Response:', data);
-			
+
 			// If the API returns an object with records
 			if (Array.isArray(data?.records)) {
 				setEvents((prev) => [...prev, ...data.records]);
@@ -47,14 +47,14 @@ export default function Events() {
 	}, []);
 
 	useEffect(() => {
-		console.log(search, events)
-	}, [search])
+		console.log(search, events);
+	}, [search]);
 
 	return (
 		<>
 			{/* Header */}
 			<section
-				className="w-screen w-[1440px] h-[407px] flex items-center justify-center"
+				className="w-screen  h-[407px] flex items-center justify-center"
 				style={{ backgroundColor: '#C96C86B0' }}
 			>
 				<h1
@@ -79,38 +79,46 @@ export default function Events() {
 					Upcoming Events & Webinar{' '}
 				</h3>
 
-				 {/* Search Box */}
-            <div className="max-w-[360px] mt-4 mb-6 px-6 self-start">
-                <div className="relative">
-                    <span className="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none ">
-                        <HiMagnifyingGlass className="h-4 w-4 text-black" />
-                        </span>
-                        
-                        <input
-                        type="text"
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        className="block w-full pl-8 pr-2 py-1.5 text-sm bg-white border focus:outline-none focus:ring-1 focus:ring-pink-500"
-                        />
-                </div>
-            </div>
+				{/* Search Box */}
+				<div className="max-w-[360px] mt-4 mb-6 px-6 self-start">
+					<div className="relative">
+						<span className="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none ">
+							<HiMagnifyingGlass className="h-4 w-4 text-black" />
+						</span>
+
+						<input
+							type="text"
+							value={search}
+							onChange={(e) => setSearch(e.target.value)}
+							className="block w-full pl-8 pr-2 py-1.5 text-sm bg-white border focus:outline-none focus:ring-1 focus:ring-pink-500"
+							aria-label="Search for events"
+						/>
+					</div>
+				</div>
 
 				{/* Tiles*/}
-				<section id="events-display" className="py-10 px-[130px]">
-					<p>--Tiles here--</p>
-
+				<section
+					id="events-display"
+					className="py-10 px-[130px]"
+					aria-labelledby="events-tiles-header"
+				>
+					<EventTilesGrid eventList={events} />
 					{/* Testing API*/}
-					<ul>
-					{events.length === 0 ? ( // if the filtered events function has nothing
-						<li>No events found</li> // return "No events found'
-					) : (
-						events.map((event) => ( // else display the name and description
-							<li key={event.id}>
-								{event.Name} - {event.Description}
-							</li>
-						))
-					)}
-					</ul>
+					{/* <ul>
+						{events.length === 0 ? ( // if the filtered events function has nothing
+							<li>No events found</li> // return "No events found'
+						) : (
+							events.map(
+								(
+									event // else display the name and description
+								) => (
+									<li key={event.id}>
+										{event.Name} - {event.Description}
+									</li>
+								)
+							)
+						)}
+					</ul> */}
 				</section>
 
 				{/* Load More Button*/}
@@ -120,6 +128,7 @@ export default function Events() {
 						id="more-events"
 						className=" bg-[#B36078] hover:bg-[#C96C86B0] text-white font-bold py-2 px-4 rounded-full m-6"
 						onClick={() => fetchEvents(offset)}
+						aria-label="Load more events"
 					>
 						{isLoading ? 'Loading more events..' : 'Load More'}
 					</button>
