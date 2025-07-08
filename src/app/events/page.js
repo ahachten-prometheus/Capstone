@@ -79,31 +79,36 @@ export default function Events() {
 					Upcoming Events & Webinar{' '}
 				</h3>
 
+				{/* Shared Wrapper - Both your search bar and your cards will start at the same left edge */}
+			<section className="w-full px-[130px]">
 				{/* Search Box */}
-				<div className="max-w-[360px] mt-4 mb-6 px-6 self-start">
-					<div className="relative">
-						<span className="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none ">
-							<HiMagnifyingGlass className="h-4 w-4 text-black" />
-						</span>
+				<div className="mt-4 mb-6">
+						<div className="relative max-w-sm">
+							<span className="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
+									<HiMagnifyingGlass className="h-4 w-4 text-black" />
+							</span>
 
-						<input
-							type="text"
-							value={search}
-							onChange={(e) => setSearch(e.target.value)}
-							className="block w-full pl-8 pr-2 py-1.5 text-sm bg-white border focus:outline-none focus:ring-1 focus:ring-pink-500"
-							aria-label="Search for events"
-						/>
-					</div>
+							<input
+									type="text"
+									value={search}
+									onChange={(e) => setSearch(e.target.value)}
+									className="block w-full pl-8 pr-2 py-1.5 text-sm bg-white border focus:outline-none focus:ring-1 focus:ring-pink-500"
+									aria-label="Search for events"
+							/>
+						</div>
 				</div>
 
-				{/* Tiles*/}
+				{/* Tiles */}
 				<section
-					id="events-display"
-					className="py-10 px-[130px]"
-					aria-labelledby="events-tiles-header"
+						id="events-display"
+						className="py-10"
+						aria-labelledby="events-tiles-header"
 				>
-					<EventTilesGrid eventList={events} />
-					{/* Testing API*/}
+						<EventTilesGrid eventList={events} />
+				</section>
+			</section>
+
+				{/* Testing API*/}
 					{/* <ul>
 						{events.length === 0 ? ( // if the filtered events function has nothing
 							<li>No events found</li> // return "No events found'
@@ -119,7 +124,6 @@ export default function Events() {
 							)
 						)}
 					</ul> */}
-				</section>
 
 				{/* Load More Button*/}
 				{/* hides button if hasMore is not true */}
