@@ -80,7 +80,7 @@ export default function Events() {
 				</h3>
 
 				{/* Shared Wrapper - Both your search bar and your cards will start at the same left edge */}
-			<section className="w-full px-[130px]">
+				<section className="w-full px-4 sm:px-8 md:px-16 lg:px-24 xl:px-[130px]">
 				{/* Search Box */}
 				<div className="mt-4 mb-6">
 						<div className="relative max-w-sm">
