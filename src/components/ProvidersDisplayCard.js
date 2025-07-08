@@ -28,7 +28,8 @@ export default function ProvidersDisplayCard({ provider }) {
           w-[134px] h-[35px] 
           text-white text-sm
           bg-[#B36078] hover:ring-4 hover:ring-yellow-400 transition duration-300 ease-in-out 
-          rounded-[33px]">
+          rounded-[33px]
+          cursor-pointer">
               Details
           </button>
         </a>
