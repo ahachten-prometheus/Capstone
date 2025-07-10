@@ -22,7 +22,7 @@ export default function ResourceTiles({ resource, tileIdx}) {
   } = resource;
 
   return (
-    <div className='flex-col w-[265px] px-[8px] py-[16px] m-px'>
+    <div className='flex flex-col justify-between w-[265px] px-[8px] py-[16px] m-px '>
     {clicked ? (
       <>
       <img
