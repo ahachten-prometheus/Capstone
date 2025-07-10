@@ -103,18 +103,23 @@ export default function QuestionPage() {
         <button
           onClick={handleBack}
           className="#000000 w-[60px] h-[55px] rounded-[8px] text-4xl flex items-center justify-center mb-6 text-black cursor-pointer"
+          aria-label="Go back to previous question"
         >
-          {" "}
           ←
         </button>
       </div>
 
       <div className="flex flex-col justify-center items-center pt-5 gap-10">
-        <h1 className="text-2xl font-bold mb-4 text-black w-90 text-center">
+        <h1
+          className="text-2xl font-bold mb-4 text-black w-90 text-center"
+          id={`question-${question.id}-label`}
+        >
           {question.text}
         </h1>
-        {(question.type === "single-select" ||
-          question.type === "multi-select") && (
+
+        {(question.type === "single-select" || question.type === "multi-select") && (
+          <fieldset aria-labelledby={`question-${question.id}-label`}>
+            <legend className="sr-only">{question.text}</legend>
             <ul className="space-y-6 mb-6">
               {question.options.map((option, idx) => (
                 <li key={idx}>
@@ -130,17 +135,19 @@ export default function QuestionPage() {
                           : localAnswer === option.value
                       }
                       onChange={(e) => {
-                        const value = e.target.value
-                        setSelectedValue(value)
-                        setIsDisabled(false)
-                        // console.log(value)
-                        const selectedOption = question.options.find(option => option.value === value)
+                        const value = e.target.value;
+                        setSelectedValue(value);
+                        setIsDisabled(false);
+
+                        const selectedOption = question.options.find(
+                          (option) => option.value === value
+                        );
 
                         if (selectedOption) {
                           if (Array.isArray(selectedOption.next)) {
-                            setNextPath([...selectedOption.next])
-                          } else if (typeof selectedOption.next === 'string') {
-                            setNextPath([selectedOption.next])
+                            setNextPath([...selectedOption.next]);
+                          } else if (typeof selectedOption.next === "string") {
+                            setNextPath([selectedOption.next]);
                           } else {
                             setNextPath([]);
                           }
@@ -159,13 +166,15 @@ export default function QuestionPage() {
                           setLocalAnswer(option.value);
                         }
                       }}
+                      aria-required="true"
                     />
                     {option.label}
                   </label>
                 </li>
               ))}
             </ul>
-          )}
+          </fieldset>
+        )}
 
         {question.type === "dropdown" && (
           <select
@@ -173,10 +182,10 @@ export default function QuestionPage() {
             className="mt-2 p-2 border rounded mb-6 border-black text-black cursor-pointer"
             value={localAnswer}
             onChange={handleChange}
+            aria-labelledby={`question-${question.id}-label`}
+            aria-required="true"
           >
-            <option value="" disabled>
-              State
-            </option>
+            <option value="" disabled>State</option>
             {question.options.map((option, idx) => (
               <option key={idx} value={option.value}>
                 {option.label}
@@ -189,15 +198,16 @@ export default function QuestionPage() {
           disabled={isDisabled}
           onClick={handleContinue}
           className="w-full max-w-md h-[55px] bg-[#C96C86] rounded-[8px] text-white font-semibold mt-30 cursor-pointer"
+          aria-disabled={isDisabled}
+          aria-label="Continue to next question"
         >
           Continue
         </button>
       </div>
 
-
-      {/* <pre className="mt-4 bg-gray-100 p-2 rounded">
-        {JSON.stringify(answers, null, 2)}
-      </pre> */}
-    </div>
+  {/* <pre className="mt-4 bg-gray-100 p-2 rounded">
+    {JSON.stringify(answers, null, 2)}
+  </pre> */}
+</div>
   );
 }
