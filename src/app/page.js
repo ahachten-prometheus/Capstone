@@ -10,7 +10,7 @@ export default function Home() {
 
       <div className="flex flex-col absolute z-2 items-center justify-center">
         <h1 className="text-wrap font-bold text-4xl w-150 text-center tracking-wide">Find the right support, from providers who understand you</h1>
-        <button type="button" className="bg-[#C96C86] text-xl py-3 px-26 rounded-3xl translate-y-8 cursor-pointer">Start My Search</button>
+        <a href="/question/1" className="bg-[#C96C86] text-xl py-3 px-26 rounded-3xl translate-y-8 cursor-pointer">Start My Search</a>
       </div>
     </section>
     {/* second Section */}

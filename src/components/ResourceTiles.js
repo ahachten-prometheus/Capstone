@@ -1,4 +1,5 @@
 import { FaEnvelope, FaPhone, FaUser } from "react-icons/fa";
+import { useState } from "react";
 
 /** defaultImages
  * An array of file path strings to files in `/public`
@@ -6,7 +7,8 @@ import { FaEnvelope, FaPhone, FaUser } from "react-icons/fa";
  */
 var defaultImages = ["/womenWithClipboard.jpg", "/womenSitting.jpg"];
 
-export default function ResourceTiles({ resource, tileIdx }) {
+export default function ResourceTiles({ resource, tileIdx}) {
+  const [clicked,setClicked] = useState(true)
   const {
     Name,
     Status,
@@ -21,6 +23,8 @@ export default function ResourceTiles({ resource, tileIdx }) {
 
   return (
     <div className='flex-col w-[265px] px-[8px] py-[16px] m-px'>
+    {clicked ? (
+      <>
       <img
         className='w-[265px] h-[187px] border-[#C1DF1F] border-[5px]'
         src={Image_URL ?? defaultImages[tileIdx % defaultImages.length]}
@@ -32,16 +36,29 @@ export default function ResourceTiles({ resource, tileIdx }) {
         </div>
       )}
       <p className='font-thin mx-[3px] text-black'>{Resources_Type}</p>
+      <p className='mt-[5px] mx-[3px] text-black'>{Description.length > 150 ? Description.slice(0,147).concat('...') : Description}</p>
+      </>
+    ) : (
+      <>
+      <h3 className='font-bold mt-[15px] mx-[3px] text-black'>{Name}</h3>
+      {Status !== "Active" && (
+        <div className='font-bold bg-red-300 text-red-500'>
+          <p>{Status}</p>
+        </div>
+      )}
+      <p className='font-thin mx-[3px] text-black'>{Resources_Type}</p>
       <p className='mt-[5px] mx-[3px] text-black'>{Description}</p>
-
-      {/* Contact Section */}
+    {/* Contact Section */}
       <ContactContent
         Name={Name}
         URL={URL}
         Contact_Email={Contact_Email}
         Contact_Phone={Contact_Phone}
         Contact_Name={Contact_Name}
-      />
+        />
+    </>
+    )}
+    <button className='mt-[3px] mx-[3px] bg-[#C96C86] border-[2px] border-[#C96C86] rounded-2xl w-[134px]' onClick={()=>setClicked(prev => !prev)}>Read {clicked ? "More" : "Less"}</button>
     </div>
   );
 }
@@ -89,9 +106,14 @@ function ContactContent({
               title={`Email: ${Contact_Email}`}>
               <div className='flex gap-1 justify-center-safe content-center'>
                 <FaEnvelope size={20} />
-                <p>
+                <p className='hidden md:flex'>
                   {Contact_Email.length > 10
                     ? Contact_Email.slice(0, 8).concat("...")
+                    : Contact_Email}
+                </p>
+                <p className='md:hidden'>
+                  {Contact_Email.length > 20
+                    ? Contact_Email.slice(0, 15).concat("...")
                     : Contact_Email}
                 </p>
               </div>
@@ -109,7 +131,7 @@ function ContactContent({
             aria-label={`Visit ${Name} website`}
             title={`Visit ${URL}`}>
             <button className='mt-[3px] mx-[3px] border-[#C96C86] text-extrabold rounded-2xl w-[134px] bg-[#C96C86] before:color-[#FFF5EA] hover:bg-[#B55772] hover:cursor-pointer border-[2px] hover:color-[#FFFCFD]'>
-              Learn More
+              Visit Site
             </button>
           </a>
         </div>
@@ -117,3 +139,4 @@ function ContactContent({
     </div>
   );
 }
+
