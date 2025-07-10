@@ -100,6 +100,8 @@ export default function Providers() {
     <section 
       className="w-screen h-[407px] flex flex-col items-center justify-center"
       style={{ backgroundColor: '#C96C86B0' }}
+      role="region"
+      aria-labelledby="providers-tiles-header"
     >
       <h1 id="providers-hero-header" className="text-white text-4xl font-bold">Providers</h1>
     </section>
@@ -128,6 +130,8 @@ export default function Providers() {
         w-full max-w-screen-lg 
         flex flex-col sm:flex-row justify-center items-center 
         gap-4 pb-10 px-4 py-6"
+        role="search"
+        aria-labelledby="providers-tiles-header"
       >
         <div id="provider-name-field">
           <label htmlFor="provider-name-input" className="sr-only">Search Provider</label>
@@ -136,7 +140,8 @@ export default function Providers() {
             type="text"
             className="text-black bg-white hover:bg-[#DCAD27] rounded-full py-2 px-4"
             onChange={debounceChange}
-            placeholder="Name"
+            placeholder="Search by Name"
+            aria-label="Provider Name"
           />
         </div>
 
@@ -147,7 +152,7 @@ export default function Providers() {
             className="text-black bg-white hover:bg-[#DCAD27] rounded-full py-2 px-4 mr-4"
             defaultValue="blank-state-opt"
             onChange={debounceChange}
-            aria-labelledby="filtering-state"
+            aria-label="Filter by State"
           >
             <option key="blank-state-opt" value="blank-state-opt" disabled>State?</option>
             {Object.keys(usStates).map((abbr) => <option key={`${abbr}-option`} value={usStates[abbr]}>{abbr}</option>)}
@@ -159,7 +164,7 @@ export default function Providers() {
             className="text-black bg-white hover:bg-[#DCAD27] rounded-full py-2 px-4"
             defaultValue="blank-mode-opt"
             onChange={debounceChange}
-            aria-labelledby="filtering-mode"
+            aria-label="Filter For Virtual Only"
           >
             <option key="blank-mode-opt" value="blank-mode-opt" disabled>Virtual Only?</option>
             <option key="yes-opt" value="Yes">Yes</option>
