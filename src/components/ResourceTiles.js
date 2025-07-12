@@ -5,7 +5,7 @@ import { useState } from "react";
  * An array of file path strings to files in `/public`
  * Resources that do not have a value in the Image_URL field in the Airtable will take a file from this list instead
  */
-var defaultImages = ["/womenWithClipboard.jpg", "/womenSitting.jpg"];
+var defaultImages = ["/womenWithClipboard.jpg", "/womenSitting.jpg","/resource-banner-3.jpg","/resource-banner-1.jpg","/resource-banner-4.jpg"];
 
 export default function ResourceTiles({ resource, tileIdx}) {
   const [clicked,setClicked] = useState(true)
