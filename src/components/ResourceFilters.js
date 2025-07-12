@@ -59,17 +59,21 @@ export default function ResourceFilters({ filters, setFilters }) {
     setFilters(prev => ({ ...prev, Status: option.value }));
   };
 
+  ////////Select box styles function will go here /////////////
+
   return (
-    <div>
+    <div className='flex flex-box flex-col md:flex-row gap-4 justify-center my-[4px] text-black'>
       <input
         type='text'
         className='
-          bg-white hover:bg-[#C96C86B0]
+          bg-white
+          border
           text-black
-          py-2 px-4 rounded-full'
+          py-2 px-4'
         placeholder='Search...'
         onChange={debouncedHandleNameUpdate}
       />
+
       <Select
         options={categoryOptions}
         isClearable
