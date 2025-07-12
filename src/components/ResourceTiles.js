@@ -1,12 +1,14 @@
 import { FaEnvelope, FaPhone, FaUser } from "react-icons/fa";
+import { useState } from "react";
 
 /** defaultImages
  * An array of file path strings to files in `/public`
  * Resources that do not have a value in the Image_URL field in the Airtable will take a file from this list instead
  */
-var defaultImages = ["/womenWithClipboard.jpg", "/womenSitting.jpg"];
+var defaultImages = ["/womenWithClipboard.webp", "/womenSitting.webp","/resource-banner-3.webp","/resource-banner-1.webp","/resource-banner-4.webp"];
 
-export default function ResourceTiles({ resource, tileIdx }) {
+export default function ResourceTiles({ resource, tileIdx}) {
+  const [clicked,setClicked] = useState(true)
   const {
     Name,
     Status,
@@ -20,28 +22,45 @@ export default function ResourceTiles({ resource, tileIdx }) {
   } = resource;
 
   return (
-    <div className='flex-col bg-teal-500 w-[265px]'>
+    <div className='flex flex-col justify-between w-[265px] px-[8px] py-[16px] m-px '>
+    {clicked ? (
+      <>
       <img
-        className='w-[265px] h-[187px]'
+        className='w-[265px] h-[187px] border-[#C1DF1F] border-[5px]'
         src={Image_URL ?? defaultImages[tileIdx % defaultImages.length]}
       />
-      <h3 className='font-bold mt-[15px] mx-[3px]'>{Name}</h3>
+      <h3 className='font-extrabold mt-[15px] mx-[3px] text-black'>{Name}</h3>
       {Status !== "Active" && (
         <div className='font-bold bg-red-300 text-red-500'>
           <p>{Status}</p>
         </div>
       )}
-      <p className='font-thin mx-[3px]'>{Resources_Type}</p>
-      <p className='mt-[5px] mx-[3px]'>{Description}</p>
-
-      {/* Contact Section */}
+      <p className='font-thin mx-[3px] text-black'>{Resources_Type}</p>
+      <p className='mt-[5px] mx-[3px] text-black'>{Description.length > 150 ? Description.slice(0,147).concat('...') : Description}</p>
+      </>
+    ) : (
+      <>
+      <h3 className='font-bold mt-[15px] mx-[3px] text-black'>{Name}</h3>
+      {Status !== "Active" && (
+        <div className='font-bold bg-red-300 text-red-500'>
+          <p>{Status}</p>
+        </div>
+      )}
+      <p className='font-thin mx-[3px] text-black'>{Resources_Type}</p>
+      <p className='mt-[5px] mx-[3px] text-black'>{Description}</p>
+    {/* Contact Section */}
       <ContactContent
         Name={Name}
         URL={URL}
         Contact_Email={Contact_Email}
         Contact_Phone={Contact_Phone}
         Contact_Name={Contact_Name}
-      />
+        />
+    </>
+    )}
+    <div className="flex justify-self-center justify-center">
+      <button className='mt-[3px] mx-[3px] bg-[#C96C86] border-[2px] border-[#C96C86] rounded-2xl w-[134px]' onClick={()=>setClicked(prev => !prev)}>Read {clicked ? "More" : "Less"}</button>
+    </div>
     </div>
   );
 }
@@ -58,7 +77,7 @@ function ContactContent({
       id='Contact-Section'
       className='flex flex-col gap-2'>
       {Contact_Name && (
-        <span className='hover:text-purple-600 transition-colors cursor-default'>
+        <span className='hover:text-purple-600 transition-colors cursor-default text-[#C96C86]'>
           <div className='flex gap-1 justify-center-safe content-center'>
             <FaUser size={20} />
             <p>{Contact_Name}</p>
@@ -71,7 +90,7 @@ function ContactContent({
           {Contact_Phone && (
             <a
               href={`tel:${Contact_Phone}`}
-              className='hover:text-green-600 transition-colors'
+              className='hover:text-green-600 transition-colors text-[#C96C86]'
               aria-label={`Call ${Contact_Name || Name}`}
               title={`Call: ${Contact_Phone}`}>
               <div className='flex gap-1 justify-center-safe content-center'>
@@ -84,7 +103,7 @@ function ContactContent({
           {Contact_Email && (
             <a
               href={`mailto:${Contact_Email}`}
-              className='hover:text-blue-600 transition-colors'
+              className='hover:text-blue-600 transition-colors text-[#C96C86]'
               aria-label={`Email ${Contact_Name || Name}`}
               title={`Email: ${Contact_Email}`}>
               <div className='flex gap-1 justify-center-safe content-center'>
@@ -113,8 +132,8 @@ function ContactContent({
             rel='noopener noreferrer'
             aria-label={`Visit ${Name} website`}
             title={`Visit ${URL}`}>
-            <button className='mt-[3px] mx-[3px] bg-[#C96C86] border-[2px] border-[#C96C86] rounded-2xl w-[134px]'>
-              Learn More
+            <button className='mt-[3px] mx-[3px] border-[#C96C86] text-extrabold rounded-2xl w-[134px] bg-[#C96C86] before:color-[#FFF5EA] hover:bg-[#B55772] hover:cursor-pointer border-[2px] hover:color-[#FFFCFD]'>
+              Visit Site
             </button>
           </a>
         </div>
@@ -122,3 +141,4 @@ function ContactContent({
     </div>
   );
 }
+
