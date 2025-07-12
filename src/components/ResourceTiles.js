@@ -5,7 +5,7 @@ import { useState } from "react";
  * An array of file path strings to files in `/public`
  * Resources that do not have a value in the Image_URL field in the Airtable will take a file from this list instead
  */
-var defaultImages = ["/womenWithClipboard.jpg", "/womenSitting.jpg","/resource-banner-3.webp","/resource-banner-1.webp","/resource-banner-4.webp"];
+var defaultImages = ["/womenWithClipboard.webp", "/womenSitting.webp","/resource-banner-3.webp","/resource-banner-1.webp","/resource-banner-4.webp"];
 
 export default function ResourceTiles({ resource, tileIdx}) {
   const [clicked,setClicked] = useState(true)
@@ -58,7 +58,9 @@ export default function ResourceTiles({ resource, tileIdx}) {
         />
     </>
     )}
-    <button className='mt-[3px] mx-[3px] bg-[#C96C86] border-[2px] border-[#C96C86] rounded-2xl w-[134px]' onClick={()=>setClicked(prev => !prev)}>Read {clicked ? "More" : "Less"}</button>
+    <div className="flex justify-self-center justify-center">
+      <button className='mt-[3px] mx-[3px] bg-[#C96C86] border-[2px] border-[#C96C86] rounded-2xl w-[134px]' onClick={()=>setClicked(prev => !prev)}>Read {clicked ? "More" : "Less"}</button>
+    </div>
     </div>
   );
 }
