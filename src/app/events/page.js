@@ -11,7 +11,7 @@ export default function Events() {
 	const [offset, setOffset] = useState(''); // tracking # of events displayed
 	const [search, setSearch] = useState('');
 
-	async function fetchEvents(nextOffset = '') {
+	async function fetchEvents(nextOffset = '', searchParam = search) {
 		if (isLoading || !hasMore) return;
 		setIsLoading(true);
 
@@ -20,7 +20,8 @@ export default function Events() {
 			const params = new URLSearchParams({
 				pageSize: PAGE_SIZE,
 				...(nextOffset && { offset: nextOffset }),
-				...(search && { search }), //adds the searched term to the parameteres if it exists
+				// ...(search && { search }), //adds the searched term to the parameteres if it exists
+				...(searchParam && { search: searchParam})
 			});
 
 			const res = await fetch(`/api/events?${params.toString()}`);
@@ -29,7 +30,7 @@ export default function Events() {
 
 			// If the API returns an object with records
 			if (Array.isArray(data?.records)) {
-				setEvents((prev) => [...prev, ...data.records]);
+				setEvents((prev) => nextOffset ?[...prev, ...data.records] : data.records);
 				setOffset(data.offset || '');
 				setHasMore(Boolean(data.offset));
 			} else {
@@ -43,12 +44,12 @@ export default function Events() {
 	}
 
 	useEffect(() => {
-		fetchEvents();
-	}, []);
-
-	useEffect(() => {
-		console.log(search, events);
+		setEvents([]);
+		setOffset('')
+		setHasMore(true)
+		fetchEvents("", search)
 	}, [search]);
+
 
 	return (
 		<>
@@ -104,7 +105,9 @@ export default function Events() {
 						className="py-10"
 						aria-labelledby="events-tiles-header"
 				>
-						<EventTilesGrid eventList={events} />
+				{events.length === 0 && !isLoading ? (
+					<div className = 'text-center text-gray-500 py-8'>No events found</div>
+				) : ( <EventTilesGrid eventList={events} />)}
 				</section>
 			</section>
 
@@ -131,7 +134,7 @@ export default function Events() {
 					<button
 						id="more-events"
 						className=" bg-[#B36078] hover:bg-[#C96C86B0] text-white font-bold py-2 px-4 rounded-full m-6"
-						onClick={() => fetchEvents(offset)}
+						onClick={() => fetchEvents(offset, search)}
 						aria-label="Load more events"
 					>
 						{isLoading ? 'Loading more events..' : 'Load More'}
