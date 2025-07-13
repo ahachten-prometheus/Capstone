@@ -69,12 +69,25 @@ export default function ResourceFilters({ filters, setFilters }) {
           bg-white
           border
           text-black
-          py-2 px-4'
+          py-1 px-4'
         placeholder='Search...'
         onChange={debouncedHandleNameUpdate}
       />
 
       <Select
+        styles={{
+            control: (baseStyles, state) => ({
+                ...baseStyles,
+                borderColor: state.isFocused ? 'blue' : 'black',
+                borderRadius: 0,
+                maxWidth: 1000,
+                minWidth: 90,
+                height: 33
+                }),
+
+            }}
+        name="Category"
+        placeholder="Category"
         options={categoryOptions}
         isClearable
         onChange={handleCategoryUpdate}
@@ -84,9 +97,22 @@ export default function ResourceFilters({ filters, setFilters }) {
         instanceId={1}
       />
       <Select
+        styles={{
+            control: (baseStyles, state) => ({
+                ...baseStyles,
+                borderColor: state.isFocused ? 'blue' : 'black',
+                borderRadius: 0,
+                width: 150,
+                maxWidth: 1000,
+                minWidth: 90,
+                height: 33
+                }),
+
+            }}
         options={resourcesTypeOptions}
         isClearable
         onChange={handleResourcesTypeUpdate}
+        placeholder="Resource Type"
         value={
           Resources_Type.length > 0
             ? { value: Resources_Type, label: Resources_Type }
@@ -95,9 +121,21 @@ export default function ResourceFilters({ filters, setFilters }) {
         instanceId={2}
       />
       <Select
+        styles={{
+            control: (baseStyles, state) => ({
+                ...baseStyles,
+                borderColor: state.isFocused ? 'blue' : 'black',
+                borderRadius: 0,
+                maxWidth: 1000,
+                minWidth: 90,
+                height: 33
+                }),
+
+            }}
         options={subjectOptions}
         isMulti
         onChange={handleSubjectsUpdate}
+        placeholder="Subject"
         value={Array.from(Subjects).map(filter => ({
           value: filter,
           label: filter,
