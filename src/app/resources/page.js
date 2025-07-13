@@ -116,12 +116,12 @@ function PageContents() {
       <h2 className="custom-header-font text-[35px] text-center text-black"> Resources </h2>
 
       {/* resource page recommendation block component */}
-      {(highlightedResources.length > 0 || resources.length > 0) && (
+      {(highlightedResources.length > 0 ) && (
         <ResourceHighlightedTiles
           resource={
             highlightedResources[
               Math.floor(Math.random() * highlightedResources.length)
-            ] ?? resources[0] // remove the resources[0] in production
+            ] 
           }
         />
       )}

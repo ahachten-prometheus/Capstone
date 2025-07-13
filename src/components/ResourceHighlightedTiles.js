@@ -17,7 +17,7 @@ export default function ResourceHighlightedTiles({ resource }) {
       id='parent-div'>
       <img
         className='w-[530px] h-[374px] border-[#C1DF1F] border-[8px] z-0 bg-local my-[50px]'
-        src={Image_URL ?? "/womenSitting.jpg"}
+        src={Image_URL ?? "/resource-banner-2.webp"}
       />
       <div
         id='contact-info-flag'

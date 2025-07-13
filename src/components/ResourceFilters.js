@@ -94,6 +94,7 @@ export default function ResourceFilters({ filters, setFilters }) {
         value={
           Category.length > 0 ? { value: Category, label: Category } : null
         }
+        instanceId={1}
       />
       <Select
         styles={{
@@ -117,6 +118,7 @@ export default function ResourceFilters({ filters, setFilters }) {
             ? { value: Resources_Type, label: Resources_Type }
             : null
         }
+        instanceId={2}
       />
       <Select
         styles={{
@@ -138,12 +140,14 @@ export default function ResourceFilters({ filters, setFilters }) {
           value: filter,
           label: filter,
         }))}
+        instanceId={3}
       />
       <Select
         options={statusOptions}
         isClearable
         onChange={handleStatusUpdate}
         value={Status.length > 0 ? { value: Status, label: Status } : null}
+        instanceId={4}
       />
     </div>
   );
