@@ -64,6 +64,7 @@ export default function ResourceFilters({ filters, setFilters }) {
   return (
     <div className='flex flex-box flex-col md:flex-row gap-4 justify-center my-[4px] text-black'>
       <input
+        aria-label="Search by resource name "
         type='text'
         className='
           bg-white
@@ -75,6 +76,7 @@ export default function ResourceFilters({ filters, setFilters }) {
       />
 
       <Select
+      aria-label='Filter: Category '
         styles={{
             control: (baseStyles, state) => ({
                 ...baseStyles,
@@ -97,6 +99,7 @@ export default function ResourceFilters({ filters, setFilters }) {
         instanceId={1}
       />
       <Select
+      aria-label='Filter: Resources Type '
         styles={{
             control: (baseStyles, state) => ({
                 ...baseStyles,
@@ -121,6 +124,7 @@ export default function ResourceFilters({ filters, setFilters }) {
         instanceId={2}
       />
       <Select
+      aria-label='Filter: Subjects '
         styles={{
             control: (baseStyles, state) => ({
                 ...baseStyles,
@@ -143,6 +147,7 @@ export default function ResourceFilters({ filters, setFilters }) {
         instanceId={3}
       />
       <Select
+      aria-label='Filter: Status '
         options={statusOptions}
         isClearable
         onChange={handleStatusUpdate}

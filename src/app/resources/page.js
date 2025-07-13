@@ -113,7 +113,7 @@ function PageContents() {
 
   return (
     <div className="bg-[#FFF5EA] overscroll-y-none">
-      <h2 className="custom-header-font text-[35px] text-center text-black"> Resources </h2>
+      <h1 className="custom-header-font text-[35px] text-center text-black"> Resources </h1>
 
       {/* resource page recommendation block component */}
       {(highlightedResources.length > 0 || resources.length > 0) && (
