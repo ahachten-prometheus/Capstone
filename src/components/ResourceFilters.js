@@ -74,6 +74,7 @@ export default function ResourceFilters({ filters, setFilters }) {
           rounded-full
           m-[10px]
           max-w-500
+          min-w-90
           '
         placeholder='Search...'
         onChange={debouncedHandleNameUpdate}
