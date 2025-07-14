@@ -70,7 +70,11 @@ export default function ResourceFilters({ filters, setFilters }) {
           bg-white
           border
           text-black
-          py-1 px-4'
+          py-1 px-4
+          rounded-full
+          m-[10px]
+          max-w-500
+          '
         placeholder='Search...'
         onChange={debouncedHandleNameUpdate}
       />
@@ -81,10 +85,11 @@ export default function ResourceFilters({ filters, setFilters }) {
             control: (baseStyles, state) => ({
                 ...baseStyles,
                 borderColor: state.isFocused ? 'blue' : 'black',
-                borderRadius: 0,
-                maxWidth: 1000,
+                borderRadius: 100,
+                maxWidth: 500,
                 minWidth: 90,
-                height: 33
+                height: 33,
+                margin: 10
                 }),
 
             }}
@@ -104,11 +109,11 @@ export default function ResourceFilters({ filters, setFilters }) {
             control: (baseStyles, state) => ({
                 ...baseStyles,
                 borderColor: state.isFocused ? 'blue' : 'black',
-                borderRadius: 0,
-                width: 150,
-                maxWidth: 1000,
-                minWidth: 90,
-                height: 33
+                borderRadius: 100,
+                maxWidth: 500,
+                minWidth: 150,
+                height: 33,
+                margin: 10
                 }),
 
             }}
@@ -129,10 +134,11 @@ export default function ResourceFilters({ filters, setFilters }) {
             control: (baseStyles, state) => ({
                 ...baseStyles,
                 borderColor: state.isFocused ? 'blue' : 'black',
-                borderRadius: 0,
-                maxWidth: 1000,
+                borderRadius: 100,
+                maxWidth: 500,
                 minWidth: 90,
-                height: 33
+                height: 33,
+                margin: 10
                 }),
 
             }}
@@ -146,8 +152,21 @@ export default function ResourceFilters({ filters, setFilters }) {
         }))}
         instanceId={3}
       />
+
       <Select
       aria-label='Filter: Status '
+       styles={{
+            control: (baseStyles, state) => ({
+                ...baseStyles,
+                borderColor: state.isFocused ? 'blue' : 'black',
+                borderRadius: 100,
+                maxWidth: 500,
+                minWidth: 90,
+                height: 33,
+                margin: 10
+                }),
+
+            }}
         options={statusOptions}
         isClearable
         onChange={handleStatusUpdate}

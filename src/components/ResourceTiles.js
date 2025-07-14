@@ -64,7 +64,7 @@ export default function ResourceTiles({ resource, tileIdx}) {
     </div>
     )}
     <div className="flex justify-self-center justify-center">
-      <button className='mt-[3px] mx-[3px] bg-[#C96C86] before:color-[#FFF5EA] hover:bg-[#B55772] hover:cursor-pointer border-[2px] border-[#C96C86] rounded-2xl w-[134px]' onClick={()=>setClicked(prev => !prev)}>Read {clicked ? "More" : "Less"}</button>
+      <button className='mt-[3px] mx-[3px] bg-[#C96C86] hover:bg-[#B55772] rounded-2xl w-[134px] hover:cursor-pointer' onClick={()=>setClicked(prev => !prev)}>Read {clicked ? "More" : "Less"}</button>
     </div>
     </div>
   );

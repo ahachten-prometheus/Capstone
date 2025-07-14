@@ -140,7 +140,7 @@ function PageContents() {
         {offset && (
           <button
             onClick={handleLoadMoreClick}
-            className='flex justify-self-center justify-center mt-[3px] mx-[3px] rounded-[47.5px] bg-[#C96C86] hover:bg-[#B55772] color-[#FFF5EA] text-4xl border-[10px] border-[#C96C86] rounded-2xl w-[350px] px-[8px] py-[16px] hover:cursor-pointer'>
+            className='flex justify-self-center justify-center mt-[10px] mx-[3px] rounded-[47.5px] bg-[#C96C86] hover:bg-[#B55772] color-[#FFF5EA] text-2xl rounded-2xl max-w-[350px] px-[30px] py-[15px] hover:cursor-pointer'>
             Load More
           </button>
         )}
