@@ -113,9 +113,10 @@ function PageContents() {
 
   return (
     <div className="bg-[#FFF5EA] overscroll-y-none">
-      <h1 className="custom-header-font text-[35px] text-center text-black"> Resources </h1>
-
+      {/* Header, conditional render. If there is a highlighted resource, then the highlighted resource shows as a banner. 
+      If not, it defaults to a pink banner header. */}
       {/* resource page recommendation block component */}
+
       {(highlightedResources.length > 0 || resources.length > 0) && (
         <ResourceHighlightedTiles
           resource={

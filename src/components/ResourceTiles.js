@@ -25,11 +25,13 @@ export default function ResourceTiles({ resource, tileIdx}) {
     <div className='flex flex-col justify-between w-[265px] px-[8px] py-[16px] m-px '>
     {clicked ? (
       <div>
-      <img
-        className='w-[265px] h-[187px] border-[#C1DF1F] border-[5px]'
-        src={Image_URL ?? defaultImages[tileIdx % defaultImages.length]}
-        alt=''
-      />
+        <div id="image-div" className="w-[265px] h-[187px] overflow-hidden">
+          <img
+            className='object-fit object-top border-[#C1DF1F] border-[3px]'
+            src={Image_URL ?? defaultImages[tileIdx % defaultImages.length]}
+            alt=''
+          />
+        </div>
       <h3 tabIndex="0" aria-label={"Resource Name: " + Name} className='font-extrabold mt-[15px] mx-[3px] text-black'>{Name}</h3>
       {Status !== "Active" && (
         <div className='font-bold bg-red-300 text-red-500'>
@@ -137,7 +139,7 @@ function ContactContent({
             rel='noopener noreferrer'
             aria-label={`Visit ${Name} website`}
             title={`Visit ${URL}`}
-            className="flex justify-self-center justify-center mt-[3px] mx-[3px] border-[#C96C86] text-extrabold rounded-2xl w-[134px] bg-[#C96C86] before:color-[#FFF5EA] hover:bg-[#B55772] hover:cursor-pointer border-[2px] hover:color-[#FFFCFD]"
+            className="flex justify-self-center justify-center text-extrabold rounded-2xl w-[134px] bg-[#C96C86] before:color-[#FFF5EA] hover:bg-[#B55772] hover:cursor-pointer hover:color-[#FFFCFD] m-[50px]"
             > 
             Visit Site
           </a>
