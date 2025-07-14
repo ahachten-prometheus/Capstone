@@ -34,8 +34,8 @@ export default function ResourceTiles({ resource, tileIdx}) {
         </div>
       <h3 tabIndex="0" aria-label={"Resource Name: " + Name} className='font-extrabold mt-[15px] mx-[3px] text-black'>{Name}</h3>
       {Status !== "Active" && (
-        <div className='font-bold bg-red-300 text-red-500'>
-          <p>{Status}</p>
+        <div className='mx-[3px] font-bold text-red-500'>
+          <p aria-label={"This resource is "+ Status} tabIndex="0">{Status+'‼️'}</p>
         </div>
       )}
       <p className='font-thin mx-[3px] text-black'>{Resources_Type}</p>
@@ -47,8 +47,8 @@ export default function ResourceTiles({ resource, tileIdx}) {
       <div>
       <h3 tabIndex="0" aria-label={"Resource Name: " + Name} className='font-bold mt-[15px] mx-[3px] text-black'>{Name}</h3>
       {Status !== "Active" && (
-        <div className='font-bold bg-red-300 text-red-500'>
-          <p>{Status}</p>
+        <div className='font-bold mx-[3px] text-red-500'>
+          <p aria-label={"This resource is "+ Status} tabIndex="0">{Status+'‼️'}</p>
         </div>
       )}
       <p className='font-thin mx-[3px] text-black'>{Resources_Type}</p>

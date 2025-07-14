@@ -117,15 +117,30 @@ function PageContents() {
       If not, it defaults to a pink banner header. */}
       {/* resource page recommendation block component */}
 
-      {(highlightedResources.length > 0 || resources.length > 0) && (
+      {(highlightedResources.length > 0 ? (
         <ResourceHighlightedTiles
           resource={
             highlightedResources[
               Math.floor(Math.random() * highlightedResources.length)
-            ] ?? resources[0] // remove the resources[0] in production
+            ] // highlighted resource will show up when theres a resource 
           }
         />
-      )}
+      ):(
+        <div className="grid grid-flow-col justify-center relative w-screen h-[407px] overflow-hidden mb-[20px]">
+          {/* image  */}
+        <div id="image-div" className="relative w-screen h-[207px] sm:h-[307px] md:h-[407px] after:absolute after:inset-0 after:bg-[#C96C86] after:opacity-30">
+          <img
+            className='w-full h-full object-cover object-center z-0 bg-local'
+            src={"/resource-banner-2.webp"}
+            alt='Three young beautiful black girls leaning against a pink wall, posing together and smiling.'
+          />
+        </div>
+      
+      {/* header title */}
+      <h1 className="w-full flex items-center justify-center text-center my-[200px] text-center text-white text-4xl absolute z-1"> Resources </h1>
+      
+        </div>
+      ))}
 
       <div className='flex-col content-center'>
         <h2 className="custom-header-font text-[25px] text-center text-black">All Resources</h2>

@@ -12,25 +12,25 @@ export default function ResourceHighlightedTiles({ resource }) {
   } = resource;
 
   return (
-    <>
     <div
       className='grid grid-flow-col justify-center relative w-screen h-[407px] overflow-hidden mb-[20px]'
       id='parent-div'>
 
       {/* image  */}
-      <div id="image-div" className="relative after:absolute after:inset-0 after:bg-[#C96C86] after:opacity-30">
+      <div id="image-div" className="relative w-screen h-[207px] sm:h-[307px] md:h-[407px] after:absolute after:inset-0 after:bg-[#C96C86] after:opacity-30">
         <img
-          className='object-fit object-bottom z-0 bg-local'
+          className='w-full h-full object-cover object-center z-0 bg-local'
           src={Image_URL ?? "/resource-banner-2.webp"}
           alt='Three young beautiful black girls leaning against a pink wall, posing together and smiling.'
         />
         </div>
       
       {/* header title */}
-      <h1 className="w-full absolute text-center my-[200px] text-center text-white text-4xl absolute z-1"> Resources </h1>
+      <h1 className="w-full flex items-center justify-center text-center my-[200px] text-center text-white text-4xl absolute z-1"> Resources </h1>
       
       {/* highlighted resource contact info banner */}
-    
+      { resource && 
+      <div className="">
         <ContactInfo
           Name={Name}
           Resources_Type={Resources_Type}
@@ -39,9 +39,10 @@ export default function ResourceHighlightedTiles({ resource }) {
           Contact_Phone={Contact_Phone}
           Contact_Name={Contact_Name}
         />
+      </div>
+      }
     
     </div>
-    </>
   );
 }
 
