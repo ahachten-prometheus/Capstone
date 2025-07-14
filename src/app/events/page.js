@@ -3,17 +3,17 @@ import { useState, useEffect } from 'react';
 import { HiMagnifyingGlass } from 'react-icons/hi2';
 import EventTilesGrid from '../../components/EventTilesGrid';
 import eventsBanner from '../../../public/eventsBanner.png';
-import default1 from '../../../public/default1.jpg';
-import default2 from '../../../public/default2.jpg';
-import default3 from '../../../public/default3.jpg';
-import default4 from '../../../public/default4.jpg';
-import default5 from '../../../public/default5.jpg';
-import default6 from '../../../public/default6.jpg';
-import default7 from '../../../public/default7.jpg';
-import default8 from '../../../public/default8.jpg';
-import default9 from '../../../public/default9.jpg';
-import default10 from '../../../public/default10.jpg';
-import default11 from '../../../public/default11.jpg';
+import default1 from '../../../public/eventsDefault1.jpg';
+import default2 from '../../../public/eventsDefault2.jpg';
+import default3 from '../../../public/eventsDefault3.jpg';
+import default4 from '../../../public/eventsDefault4.jpg';
+import default5 from '../../../public/eventsDefault5.jpg';
+import default6 from '../../../public/eventsDefault6.jpg';
+import default7 from '../../../public/eventsDefault7.jpg';
+import default8 from '../../../public/eventsDefault8.jpg';
+import default9 from '../../../public/eventsDefault9.jpg';
+import default10 from '../../../public/eventsDefault10.jpg';
+import default11 from '../../../public/eventsDefault11.jpg';
 
 export default function Events() {
 	const [events, setEvents] = useState([]); // holds only the events currently shown
