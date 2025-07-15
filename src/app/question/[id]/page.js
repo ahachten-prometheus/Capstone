@@ -15,9 +15,16 @@ export default function QuestionPage() {
   const [nextPath, setNextPath] = useState([]) //will be cloning the global "next" in surveyQuestions to get the right values
   const [isDisabled, setIsDisabled] = useState(true) //disabling button when value is not yet selected
 
+
   const [localAnswer, setLocalAnswer] = useState(
     question.type === "multi-select" ? [] : ""
   );
+
+  useEffect(() => {
+    if (question.type === "multi-select") {
+      setIsDisabled(localAnswer.length === 0)
+    }
+  }, [localAnswer, question.type])
 
   if (!question) {
     return <div className="p-4 text-red-600">Question not found</div>;
@@ -98,7 +105,7 @@ export default function QuestionPage() {
   };
 
   return (
-    <div className="p-6 bg-[#FFF5EA] h-screen">
+    <div className="p-6 bg-[#FFF5EA] h-screen min-h-200">
       <div>
         <button
           onClick={handleBack}
@@ -111,7 +118,7 @@ export default function QuestionPage() {
 
       <div className="flex flex-col justify-center items-center pt-5 gap-10">
         <h1
-          className="text-2xl font-bold mb-4 text-black w-90 text-center"
+          className="text-2xl font-bold mb-4 text-black w-90 text-center max-sm:text-lg max-sm:w-70"
           id={`question-${question.id}-label`}
         >
           {question.text}
@@ -197,7 +204,9 @@ export default function QuestionPage() {
         <button
           disabled={isDisabled}
           onClick={handleContinue}
-          className="w-full max-w-md h-[55px] bg-[#C96C86] rounded-[8px] text-white font-semibold mt-30 cursor-pointer"
+          className={`w-full max-w-md h-[55px] bg-[#C96C86] rounded-[8px] text-white font-semibold mt-15
+            ${isDisabled ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#C96C86] text-white cursor-pointer transition-transform duration-300 hover:scale-105'}
+            `}
           aria-disabled={isDisabled}
           aria-label="Continue to next question"
         >
@@ -205,9 +214,9 @@ export default function QuestionPage() {
         </button>
       </div>
 
-  {/* <pre className="mt-4 bg-gray-100 p-2 rounded">
+      {/* <pre className="mt-4 bg-gray-100 p-2 rounded">
     {JSON.stringify(answers, null, 2)}
   </pre> */}
-</div>
+    </div >
   );
 }
