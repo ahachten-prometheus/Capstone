@@ -101,9 +101,8 @@ export default function Providers() {
       className="
       w-screen h-[407px] 
       flex flex-col items-center justify-center
-      bg-[url('/desiray-green-x83vATF85HQ-unsplash.jpg')] 
-      bg-cover bg-center bg-no-repeat
-      sm:bg-contain">
+      bg-[url('/junior-reis-9ooYPL2Tffg-unsplash.jpg')] bg-cover bg-[50%_32%]
+      ">
       <h1 id="providers-hero-header" className="text-white text-4xl font-bold">Providers</h1>
     </section>
 
