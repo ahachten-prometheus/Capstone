@@ -5,6 +5,39 @@ import { surveyQuestions } from "@/data/questions";
 import { useSurvey } from "@/services/survey";
 import { useEffect } from "react";
 
+
+// helper function used for final navigation to pages 
+// function buildQueryParams(answers) {
+//   const params = new URLSearchParams();
+
+//   for (const key in answers) {
+//     const value = answers[key];
+
+//     // Support arrays (multi-select)
+//     if (Array.isArray(value)) {
+//       value.forEach((v) => params.append(key, v));
+//     } else {
+//       params.append(key, value);
+//     }
+//   }
+
+//   return params.toString();
+// }
+function buildQueryParams(answers, destination) {
+  const params = new URLSearchParams();
+
+  if (destination === 'find_a_provider') {
+    if (answers.name) params.append('name', answers.name);
+    if (answers.state) params.append('state', answers.state);
+    if (answers.virtualOnly) params.append('virtualOnly', answers.virtualOnly);
+  } else if (destination === 'access_resources') {
+  }
+
+  return params.toString();
+}
+
+//-----------------------------------------------------
+
 export default function QuestionPage() {
   const { storeAnswer, answers } = useSurvey();
   const { id } = useParams();
@@ -27,6 +60,7 @@ export default function QuestionPage() {
     console.log("Initial answers:", answers);
   }, []);
 
+
   //checking all option.next values that matches with the current ID, making that the previous page
   function findPreviousQuestionId(currentQuestionId) {
     for (const [id, question] of Object.entries(surveyQuestions)) {
@@ -42,6 +76,7 @@ export default function QuestionPage() {
     }
     return null; // not found
   }
+
 
   const handleBack = () => {
     const prevId = findPreviousQuestionId(questionId);
@@ -73,27 +108,44 @@ export default function QuestionPage() {
 
   const handleContinue = () => {
     if (!selectedValue) {
-      setIsDisabled(true)
-    };
+      setIsDisabled(true);
+      return;
+    }
+
+    // Save answer
     storeAnswer(question, localAnswer);
     console.log("Updated answers:", answers);
 
+    // If nextPath is set, go there
     if (nextPath.length > 0) {
-      const nextItem = nextPath[0]
-
-      setNextPath(nextItem)
+      const nextItem = nextPath[0];
 
       if (typeof nextItem === 'string' && nextItem.startsWith('redirect:')) {
-        const redirectPath = nextItem.replace('redirect:', '')
-
-        router.push(redirectPath)
+        const redirectPath = nextItem.replace('redirect:', '');
+        router.push(redirectPath); // goes to event page 
       } else {
-        router.push(`/question/${nextItem}`)
-
+        router.push(`/question/${nextItem}`); // goes to next question
       }
+
+      return;
     } else {
-      alert("There are no more questions, thank you!")
-      router.push('/')
+      const destination = answers.visit_reason;
+
+      if (!destination) {
+        console.warn("redirecting home");
+        router.push('/');
+        return;
+      }
+
+      const query = buildQueryParams(answers, destination)
+
+      if (destination === 'access_resources') {
+        router.push(`/resources?${query}`);
+      } else if (destination === 'find_a_provider') {
+        router.push(`/providers?${query}`);
+      } else {
+        router.push('/');
+      }
     }
   };
 
@@ -205,9 +257,9 @@ export default function QuestionPage() {
         </button>
       </div>
 
-  {/* <pre className="mt-4 bg-gray-100 p-2 rounded">
+      {/* <pre className="mt-4 bg-gray-100 p-2 rounded">
     {JSON.stringify(answers, null, 2)}
   </pre> */}
-</div>
+    </div>
   );
 }
