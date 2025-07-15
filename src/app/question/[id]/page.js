@@ -105,7 +105,7 @@ export default function QuestionPage() {
   };
 
   return (
-    <div className="p-6 bg-[#FFF5EA] h-screen">
+    <div className="p-6 bg-[#FFF5EA] h-screen min-h-200">
       <div>
         <button
           onClick={handleBack}
@@ -204,7 +204,7 @@ export default function QuestionPage() {
         <button
           disabled={isDisabled}
           onClick={handleContinue}
-          className={`w-full max-w-md h-[55px] bg-[#C96C86] rounded-[8px] text-white font-semibold mt-30 
+          className={`w-full max-w-md h-[55px] bg-[#C96C86] rounded-[8px] text-white font-semibold mt-15
             ${isDisabled ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#C96C86] text-white cursor-pointer transition-transform duration-300 hover:scale-105'}
             `}
           aria-disabled={isDisabled}
