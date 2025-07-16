@@ -98,9 +98,11 @@ export default function Providers() {
   return <>
     {/* hero header */}
     <section 
-      className="w-screen h-[407px] flex flex-col items-center justify-center"
-      style={{ backgroundColor: '#C96C86B0' }}
-    >
+      className="
+      w-screen h-[407px] 
+      flex flex-col items-center justify-center
+      bg-[url('/junior-reis-9ooYPL2Tffg-unsplash.jpg')] bg-cover bg-[50%_32%]
+      ">
       <h1 id="providers-hero-header" className="text-white text-4xl font-bold">Providers</h1>
     </section>
 
