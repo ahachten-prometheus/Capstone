@@ -1,6 +1,7 @@
 'use client';
 import { useState } from "react";
 import ProvidersContainer from "@/components/ProvidersContainer";
+import ProvidersFilters from "@/components/ProvidersFilters";
 import debounce from "lodash.debounce";
 
 export default function Providers() {
@@ -67,30 +68,31 @@ export default function Providers() {
     WY: "Wyoming"
   };
 
-  const handleChange = (event) => {
-    const id = event.target.id;
-    const value = event.target.value;
-    if (id === "provider-name-input") {
-        setName(value);
-        setQuery((prev) => ({
-          ...prev,
-          name: value || null,
-      }));
-    } 
-    if (id === "provider-state") {
+  const handleChange = (option) => {
+    const value = option?.value
+    // const id = event.target.id;
+    // const value = event.target.value;
+    // if (id === "provider-name-input") {
+    //     setName(value);
+    //     setQuery((prev) => ({
+    //       ...prev,
+    //       name: value || null,
+    //   }));
+    // } 
+    if (true === true) {
         setState(value);
         setQuery((prev) => ({
           ...prev,
           state: value || null,
       }));
     } 
-    if (id === "provider-mode") {
-        setMode(value);
-        setQuery((prev) => ({
-          ...prev,
-          virtualOnly: value || null,
-      }));
-    }
+    // if (id === "provider-mode") {
+    //     setMode(value);
+    //     setQuery((prev) => ({
+    //       ...prev,
+    //       virtualOnly: value || null,
+    //   }));
+    // }
   }
 
   const debounceChange = debounce(handleChange, 400);
@@ -122,6 +124,7 @@ export default function Providers() {
       </h3>
 
       {/* filters section */}
+      <ProvidersFilters query={query} debounceChange={debounceChange}/>
       <form
         id="providers-filters"
         className="
