@@ -32,7 +32,8 @@ export default function ProvidersContainer({ query }) {
               className="
               text-white font-bold bg-[#B36078] 
               hover:ring-4 hover:ring-yellow-400 transition duration-300 ease-in-out 
-              rounded-full py-2 px-4 mt-6"
+              rounded-full py-2 px-4 mt-6
+              cursor-pointer"
               onClick={fetchProviders}
               disabled={loading}
             >

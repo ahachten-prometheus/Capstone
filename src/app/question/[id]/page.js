@@ -5,32 +5,22 @@ import { surveyQuestions } from "@/data/questions";
 import { useSurvey } from "@/services/survey";
 import { useEffect } from "react";
 
-
 // helper function used for final navigation to pages 
-// function buildQueryParams(answers) {
-//   const params = new URLSearchParams();
-
-//   for (const key in answers) {
-//     const value = answers[key];
-
-//     // Support arrays (multi-select)
-//     if (Array.isArray(value)) {
-//       value.forEach((v) => params.append(key, v));
-//     } else {
-//       params.append(key, value);
-//     }
-//   }
-
-//   return params.toString();
-// }
 function buildQueryParams(answers, destination) {
   const params = new URLSearchParams();
 
   if (destination === 'find_a_provider') {
-    if (answers.name) params.append('name', answers.name);
-    if (answers.state) params.append('state', answers.state);
-    if (answers.virtualOnly) params.append('virtualOnly', answers.virtualOnly);
-  } else if (destination === 'access_resources') {
+    if (answers.provider_state) params.append('state', answers.provider_state);
+    if (answers.virtual_only) params.append('virtualOnly', answers.virtual_only);
+  }
+
+  if (destination === 'resources_subject') {
+    if (answers.resources_subject && answers.resources_subject.length) {
+      params.append('subject', answers.resources_subject.join(','));
+    }
+    if (answers.resources_category && answers.resources_category.length) {
+      params.append('category', answers.resources_category.join(','));
+    }
   }
 
   return params.toString();
@@ -44,6 +34,8 @@ export default function QuestionPage() {
   const router = useRouter();
   const questionId = Number(id);
   const question = surveyQuestions[questionId];
+  console.log('Question object:', question);        // Check if question exists
+  console.log('Question field:', question?.field);
   const [selectedValue, setSelectedValue] = useState(''); //will be grabbing current selected value
   const [nextPath, setNextPath] = useState([]) //will be cloning the global "next" in surveyQuestions to get the right values
   const [isDisabled, setIsDisabled] = useState(true) //disabling button when value is not yet selected
@@ -51,6 +43,12 @@ export default function QuestionPage() {
   const [localAnswer, setLocalAnswer] = useState(
     question.type === "multi-select" ? [] : ""
   );
+
+  useEffect(() => {
+    if (question.type === "multi-select") {
+      setIsDisabled(localAnswer.length === 0)
+    }
+  }, [localAnswer, question.type])
 
   if (!question) {
     return <div className="p-4 text-red-600">Question not found</div>;
@@ -60,8 +58,6 @@ export default function QuestionPage() {
     console.log("Initial answers:", answers);
   }, []);
 
-
-  //checking all option.next values that matches with the current ID, making that the previous page
   function findPreviousQuestionId(currentQuestionId) {
     for (const [id, question] of Object.entries(surveyQuestions)) {
       for (const option of question.options || []) {
@@ -76,7 +72,6 @@ export default function QuestionPage() {
     }
     return null; // not found
   }
-
 
   const handleBack = () => {
     const prevId = findPreviousQuestionId(questionId);
@@ -112,9 +107,18 @@ export default function QuestionPage() {
       return;
     }
 
+    console.log('Current answers:', answers);          // What answers look like before update
+    console.log('Local answer:', localAnswer);
+
+    const newAnswers = {
+      ...answers,
+      [question.field]: localAnswer
+    };
+    console.log('New answers object:', newAnswers);
+    console.log('Destination:', newAnswers.visit_reason);
+
     // Save answer
     storeAnswer(question, localAnswer);
-    console.log("Updated answers:", answers);
 
     // If nextPath is set, go there
     if (nextPath.length > 0) {
@@ -128,29 +132,27 @@ export default function QuestionPage() {
       }
 
       return;
+    }
+
+    const destination = newAnswers.visit_reason;
+    const query = buildQueryParams(newAnswers, destination);
+
+    if (!destination) {
+      router.push('/');
+      return;
+    }
+
+    if (destination === 'access_resources') {
+      router.push(`/resources?${query}`);
+    } else if (destination === 'find_a_provider') {
+      router.push(`/providers?${query}`);
     } else {
-      const destination = answers.visit_reason;
-
-      if (!destination) {
-        console.warn("redirecting home");
-        router.push('/');
-        return;
-      }
-
-      const query = buildQueryParams(answers, destination)
-
-      if (destination === 'access_resources') {
-        router.push(`/resources?${query}`);
-      } else if (destination === 'find_a_provider') {
-        router.push(`/providers?${query}`);
-      } else {
-        router.push('/');
-      }
+      router.push('/');
     }
   };
 
   return (
-    <div className="p-6 bg-[#FFF5EA] h-screen">
+    <div className="p-6 bg-[#FFF5EA] h-screen min-h-200">
       <div>
         <button
           onClick={handleBack}
@@ -163,7 +165,7 @@ export default function QuestionPage() {
 
       <div className="flex flex-col justify-center items-center pt-5 gap-10">
         <h1
-          className="text-2xl font-bold mb-4 text-black w-90 text-center"
+          className="text-2xl font-bold mb-4 text-black w-90 text-center max-sm:text-lg max-sm:w-70"
           id={`question-${question.id}-label`}
         >
           {question.text}
@@ -249,7 +251,9 @@ export default function QuestionPage() {
         <button
           disabled={isDisabled}
           onClick={handleContinue}
-          className="w-full max-w-md h-[55px] bg-[#C96C86] rounded-[8px] text-white font-semibold mt-30 cursor-pointer"
+          className={`w-full max-w-md h-[55px] bg-[#C96C86] rounded-[8px] text-white font-semibold mt-15
+            ${isDisabled ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#C96C86] text-white cursor-pointer transition-transform duration-300 hover:scale-105'}
+            `}
           aria-disabled={isDisabled}
           aria-label="Continue to next question"
         >
