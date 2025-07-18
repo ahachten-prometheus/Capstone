@@ -30,12 +30,12 @@ export const surveyQuestions = {
     options: [
       {
         label: "Anxiety & Depression",
-        value: "Anxiety_Depression",
+        value: "Anxiety & Depression",
         next: [3],
       },
       {
         label: "ADD & ADHD",
-        value: "ADD_ADHD",
+        value: "ADD & ADHD",
         next: [3],
       },
       {
@@ -45,17 +45,17 @@ export const surveyQuestions = {
       },
       {
         label: "Bipolar Disorder",
-        value: "Bipolar_Disorder",
+        value: "Bipolar Disorder",
         next: [3],
       },
       {
         label: "Drug & Addiction",
-        value: "Drug_Addiction",
+        value: "Drug & Addiction",
         next: [3],
       },
       {
         label: "Eating Disorder",
-        value: "Eating_Disorder",
+        value: "Eating Disorder",
         next: [3],
 
       },
