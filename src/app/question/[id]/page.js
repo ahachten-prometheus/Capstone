@@ -38,17 +38,10 @@ export default function QuestionPage() {
   console.log('Question field:', question?.field);
   const [selectedValue, setSelectedValue] = useState(''); //will be grabbing current selected value
   const [nextPath, setNextPath] = useState([]) //will be cloning the global "next" in surveyQuestions to get the right values
-  const [isDisabled, setIsDisabled] = useState(true) //disabling button when value is not yet selected
 
   const [localAnswer, setLocalAnswer] = useState(
     question.type === "multi-select" ? [] : ""
   );
-
-  useEffect(() => {
-    if (question.type === "multi-select") {
-      setIsDisabled(localAnswer.length === 0)
-    }
-  }, [localAnswer, question.type])
 
   if (!question) {
     return <div className="p-4 text-red-600">Question not found</div>;
@@ -86,7 +79,6 @@ export default function QuestionPage() {
     const value = event.target.value
     setSelectedValue(value)
     setLocalAnswer(value)
-    setIsDisabled(false)
 
     const selectedOption = question.options.find(option => option.value === value)
 
@@ -102,10 +94,6 @@ export default function QuestionPage() {
   };
 
   const handleContinue = () => {
-    if (!selectedValue) {
-      setIsDisabled(true);
-      return;
-    }
 
     console.log('Current answers:', answers);          // What answers look like before update
     console.log('Local answer:', localAnswer);
@@ -191,7 +179,7 @@ export default function QuestionPage() {
                       onChange={(e) => {
                         const value = e.target.value;
                         setSelectedValue(value);
-                        setIsDisabled(false);
+
 
                         const selectedOption = question.options.find(
                           (option) => option.value === value
@@ -249,12 +237,11 @@ export default function QuestionPage() {
         )}
 
         <button
-          disabled={isDisabled}
           onClick={handleContinue}
           className={`w-full max-w-md h-[55px] bg-[#C96C86] rounded-[8px] text-white font-semibold mt-15
-            ${isDisabled ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#C96C86] text-white cursor-pointer transition-transform duration-300 hover:scale-105'}
+             cursor-pointer transition-transform duration-300 hover:scale-105
             `}
-          aria-disabled={isDisabled}
+
           aria-label="Continue to next question"
         >
           Continue
