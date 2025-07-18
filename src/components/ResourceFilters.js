@@ -64,17 +64,38 @@ export default function ResourceFilters({ filters, setFilters }) {
   return (
     <div className='flex flex-box flex-col md:flex-row gap-4 justify-center my-[4px] text-black'>
       <input
+        aria-label="Search by resource name "
         type='text'
         className='
           bg-white
           border
           text-black
-          py-2 px-4'
+          py-1 px-4
+          rounded-full
+          m-[10px]
+          max-w-500
+          min-w-90
+          '
         placeholder='Search...'
         onChange={debouncedHandleNameUpdate}
       />
 
       <Select
+      aria-label='Filter: Category '
+        styles={{
+            control: (baseStyles, state) => ({
+                ...baseStyles,
+                borderColor: state.isFocused ? 'blue' : 'black',
+                borderRadius: 100,
+                maxWidth: 500,
+                minWidth: 90,
+                height: 33,
+                margin: 10
+                }),
+
+            }}
+        name="Category"
+        placeholder="Category"
         options={categoryOptions}
         isClearable
         onChange={handleCategoryUpdate}
@@ -84,9 +105,23 @@ export default function ResourceFilters({ filters, setFilters }) {
         instanceId={1}
       />
       <Select
+      aria-label='Filter: Resources Type '
+        styles={{
+            control: (baseStyles, state) => ({
+                ...baseStyles,
+                borderColor: state.isFocused ? 'blue' : 'black',
+                borderRadius: 100,
+                maxWidth: 500,
+                minWidth: 150,
+                height: 33,
+                margin: 10
+                }),
+
+            }}
         options={resourcesTypeOptions}
         isClearable
         onChange={handleResourcesTypeUpdate}
+        placeholder="Resource Type"
         value={
           Resources_Type.length > 0
             ? { value: Resources_Type, label: Resources_Type }
@@ -95,16 +130,44 @@ export default function ResourceFilters({ filters, setFilters }) {
         instanceId={2}
       />
       <Select
+      aria-label='Filter: Subjects '
+        styles={{
+            control: (baseStyles, state) => ({
+                ...baseStyles,
+                borderColor: state.isFocused ? 'blue' : 'black',
+                borderRadius: 100,
+                maxWidth: 500,
+                minWidth: 90,
+                height: 33,
+                margin: 10
+                }),
+
+            }}
         options={subjectOptions}
         isMulti
         onChange={handleSubjectsUpdate}
+        placeholder="Subject"
         value={Array.from(Subjects).map(filter => ({
           value: filter,
           label: filter,
         }))}
         instanceId={3}
       />
+
       <Select
+      aria-label='Filter: Status '
+       styles={{
+            control: (baseStyles, state) => ({
+                ...baseStyles,
+                borderColor: state.isFocused ? 'blue' : 'black',
+                borderRadius: 100,
+                maxWidth: 500,
+                minWidth: 90,
+                height: 33,
+                margin: 10
+                }),
+
+            }}
         options={statusOptions}
         isClearable
         onChange={handleStatusUpdate}

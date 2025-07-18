@@ -113,18 +113,34 @@ function PageContents() {
 
   return (
     <div className="bg-[#FFF5EA] overscroll-y-none">
-      <h2 className="custom-header-font text-[35px] text-center text-black"> Resources </h2>
-
+      {/* Header, conditional render. If there is a highlighted resource, then the highlighted resource shows as a banner. 
+      If not, it defaults to a pink banner header. */}
       {/* resource page recommendation block component */}
-      {(highlightedResources.length > 0 ) && (
+
+      {(highlightedResources.length > 0 ? (
         <ResourceHighlightedTiles
           resource={
             highlightedResources[
               Math.floor(Math.random() * highlightedResources.length)
-            ] 
+            ] // highlighted resource will show up when theres a resource 
           }
         />
-      )}
+      ):(
+        <div className="grid grid-flow-col justify-center relative w-screen h-[407px] overflow-hidden mb-[20px]">
+          {/* image  */}
+        <div id="image-div" className="relative w-screen h-[207px] sm:h-[307px] md:h-[407px] after:absolute after:inset-0 after:bg-[#C96C86] after:opacity-30">
+          <img
+            className='w-full h-full object-cover object-center z-0 bg-local'
+            src={"/resource-banner-2.webp"}
+            alt='Three young beautiful black girls leaning against a pink wall, posing together and smiling.'
+          />
+        </div>
+      
+      {/* header title */}
+      <h1 className="w-full flex items-center justify-center text-center my-[200px] text-center text-white text-4xl absolute z-1"> Resources </h1>
+      
+        </div>
+      ))}
 
       <div className='flex-col content-center'>
         <h2 className="custom-header-font text-[25px] text-center text-black">All Resources</h2>
@@ -140,7 +156,7 @@ function PageContents() {
         {offset && (
           <button
             onClick={handleLoadMoreClick}
-            className='flex justify-self-center justify-center mt-[3px] mx-[3px] rounded-[47.5px] bg-[#C96C86] hover:bg-[#B55772] color-[#FFF5EA] text-4xl border-[10px] border-[#C96C86] rounded-2xl w-[350px] px-[8px] py-[16px] hover:cursor-pointer'>
+            className='flex justify-self-center justify-center mt-[10px] mx-[3px] rounded-[47.5px] bg-[#C96C86] hover:bg-[#B55772] color-[#FFF5EA] text-2xl rounded-2xl max-w-[350px] px-[30px] py-[15px] hover:cursor-pointer'>
             Load More
           </button>
         )}

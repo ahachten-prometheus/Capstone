@@ -22,32 +22,39 @@ export default function ResourceTiles({ resource, tileIdx}) {
   } = resource;
 
   return (
-    <div className='flex flex-col justify-between w-[265px] px-[8px] py-[16px] m-px '>
+    <div className='flex flex-col justify-between w-[265px] px-[8px] py-[16px] m-px'>
     {clicked ? (
-      <>
-      <img
-        className='w-[265px] h-[187px] border-[#C1DF1F] border-[5px]'
-        src={Image_URL ?? defaultImages[tileIdx % defaultImages.length]}
-      />
-      <h3 className='font-extrabold mt-[15px] mx-[3px] text-black'>{Name}</h3>
+      <div>
+        <div id="image-div" className="w-[265px] h-[187px] overflow-hidden">
+          <img
+            className='object-fit object-top border-[#C1DF1F] border-[3px]'
+            src={Image_URL ?? defaultImages[tileIdx % defaultImages.length]}
+            alt=''
+          />
+        </div>
+      <h3 tabIndex="0" aria-label={"Resource Name: " + Name} className='font-extrabold mt-[15px] mx-[3px] text-black'>{Name}</h3>
       {Status !== "Active" && (
-        <div className='font-bold bg-red-300 text-red-500'>
-          <p>{Status}</p>
+        <div className='mx-[3px] font-bold text-red-500'>
+          <p aria-label={"This resource is "+ Status} tabIndex="0">{Status+'‼️'}</p>
         </div>
       )}
       <p className='font-thin mx-[3px] text-black'>{Resources_Type}</p>
-      <p className='mt-[5px] mx-[3px] text-black'>{Description.length > 150 ? Description.slice(0,147).concat('...') : Description}</p>
-      </>
+      { Description &&
+        <p className='mt-[5px] mx-[3px] text-black'>{Description.length > 150 ? Description.slice(0,147).concat('...') : Description}</p>
+      }
+</div>
     ) : (
-      <>
-      <h3 className='font-bold mt-[15px] mx-[3px] text-black'>{Name}</h3>
+      <div>
+      <h3 tabIndex="0" aria-label={"Resource Name: " + Name} className='font-bold mt-[15px] mx-[3px] text-black'>{Name}</h3>
       {Status !== "Active" && (
-        <div className='font-bold bg-red-300 text-red-500'>
-          <p>{Status}</p>
+        <div className='font-bold mx-[3px] text-red-500'>
+          <p aria-label={"This resource is "+ Status} tabIndex="0">{Status+'‼️'}</p>
         </div>
       )}
       <p className='font-thin mx-[3px] text-black'>{Resources_Type}</p>
-      <p className='mt-[5px] mx-[3px] text-black'>{Description}</p>
+      {Description &&
+      <p tabIndex="0" className='mt-[5px] mx-[3px] text-black'>{Description}</p>
+      }
     {/* Contact Section */}
       <ContactContent
         Name={Name}
@@ -56,10 +63,10 @@ export default function ResourceTiles({ resource, tileIdx}) {
         Contact_Phone={Contact_Phone}
         Contact_Name={Contact_Name}
         />
-    </>
+    </div>
     )}
     <div className="flex justify-self-center justify-center">
-      <button className='mt-[3px] mx-[3px] bg-[#C96C86] border-[2px] border-[#C96C86] rounded-2xl w-[134px]' onClick={()=>setClicked(prev => !prev)}>Read {clicked ? "More" : "Less"}</button>
+      <button className='mt-[3px] mx-[3px] bg-[#C96C86] hover:bg-[#B55772] rounded-2xl w-[134px] hover:cursor-pointer' onClick={()=>setClicked(prev => !prev)}>Read {clicked ? "More" : "Less"}</button>
     </div>
     </div>
   );
@@ -125,16 +132,16 @@ function ContactContent({
       )}
 
       {URL && (
-        <div className='flex justify-center-safe content-center'>
+        <div className='flex justify-center-safe content-center '>
           <a
             href={URL.startsWith("https://") ? URL : "https://".concat(URL)}
             target='_blank'
             rel='noopener noreferrer'
             aria-label={`Visit ${Name} website`}
-            title={`Visit ${URL}`}>
-            <button className='mt-[3px] mx-[3px] border-[#C96C86] text-extrabold rounded-2xl w-[134px] bg-[#C96C86] before:color-[#FFF5EA] hover:bg-[#B55772] hover:cursor-pointer border-[2px] hover:color-[#FFFCFD]'>
-              Visit Site
-            </button>
+            title={`Visit ${URL}`}
+            className="flex justify-self-center justify-center text-extrabold rounded-2xl w-[134px] bg-[#C96C86] before:color-[#FFF5EA] hover:bg-[#B55772] hover:cursor-pointer hover:color-[#FFFCFD] m-[50px]"
+            > 
+            Visit Site
           </a>
         </div>
       )}

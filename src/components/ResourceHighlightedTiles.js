@@ -13,15 +13,24 @@ export default function ResourceHighlightedTiles({ resource }) {
 
   return (
     <div
-      className='grid grid-flow-col justify-center relative'
+      className='grid grid-flow-col justify-center relative w-screen h-[407px] overflow-hidden mb-[20px]'
       id='parent-div'>
-      <img
-        className='w-[530px] h-[374px] border-[#C1DF1F] border-[8px] z-0 bg-local my-[50px]'
-        src={Image_URL ?? "/resource-banner-2.webp"}
-      />
-      <div
-        id='contact-info-flag'
-        className='absolute top-[250px] left-[450px]'>
+
+      {/* image  */}
+      <div id="image-div" className="relative w-screen h-[207px] sm:h-[307px] md:h-[407px] after:absolute after:inset-0 after:bg-[#C96C86] after:opacity-30">
+        <img
+          className='w-full h-full object-cover object-center z-0 bg-local'
+          src={Image_URL ?? "/resource-banner-2.webp"}
+          alt='Three young beautiful black girls leaning against a pink wall, posing together and smiling.'
+        />
+        </div>
+      
+      {/* header title */}
+      <h1 className="w-full flex items-center justify-center text-center my-[200px] text-center text-white text-4xl absolute z-1"> Resources </h1>
+      
+      {/* highlighted resource contact info banner */}
+      { resource && 
+      <div className="">
         <ContactInfo
           Name={Name}
           Resources_Type={Resources_Type}
@@ -31,6 +40,8 @@ export default function ResourceHighlightedTiles({ resource }) {
           Contact_Name={Contact_Name}
         />
       </div>
+      }
+    
     </div>
   );
 }
@@ -45,7 +56,7 @@ function ContactInfo({
 }) {
   return (
     <div
-      className='text-black bg-[#FEFEFE] w-[495px] h-[107px] p-[10px] border rounded-lg shadow-lg z-1'
+      className='absolute text-black bg-[#FEFEFE] w-[495px] h-[107px] pl-[20px] pr-[25px] py-[10px] border rounded-r-lg shadow-lg z-1 bottom-0 left-0'
       id='highlighted-resource-box'>
       <p className='font-extrabold'>{Resources_Type}</p>
       <p>{Name}</p>
@@ -66,7 +77,7 @@ function ContactInfo({
             aria-label={`Visit ${Name} website`}
             title={`Visit ${URL}`}
             className='flex self-end justify-self-end-safe mb-[4px] mr-[2px] '>
-            <div className='hover:underline'>Learn More {">"}</div>
+            <div className='hover:underline left-5'>Learn More {">"}</div>
           </a>
         )) ||
           // Contact Phone Section
