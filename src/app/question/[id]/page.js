@@ -14,7 +14,7 @@ function buildQueryParams(answers, destination) {
     if (answers.virtual_only) params.append('virtualOnly', answers.virtual_only);
   }
 
-  if (destination === 'resources_subject') {
+  if (destination === 'access_resources') {
     if (answers.resources_subject && answers.resources_subject.length) {
       params.append('subject', answers.resources_subject.join(','));
     }
